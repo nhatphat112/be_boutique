@@ -1,9 +1,9 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
-@Entity(name = "reviews")
-public class ReviewsEntity {
+@Entity(name = "review")
+public class ReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,17 +15,17 @@ public class ReviewsEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    public ProductsEntity getProductEntity() {
+    public ProductEntity getProductEntity() {
         return productEntity;
     }
 
-    public void setProductEntity(ProductsEntity productEntity) {
+    public void setProductEntity(ProductEntity productEntity) {
         this.productEntity = productEntity;
     }
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductsEntity productEntity;
+    private ProductEntity productEntity;
 
     public int getId() {
         return id;

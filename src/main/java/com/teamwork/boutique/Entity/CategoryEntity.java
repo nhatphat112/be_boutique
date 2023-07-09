@@ -1,7 +1,6 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "category")
@@ -12,7 +11,7 @@ public class CategoryEntity {
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "categoryEntity")
-    private Set<ProductsEntity> productsEntity;
+    private Set<ProductEntity> productEntity;
 
     public int getId() {
         return id;
@@ -30,11 +29,12 @@ public class CategoryEntity {
         this.name = name;
     }
 
-    public Set<ProductsEntity> getProductsEntity() {
-        return productsEntity;
+    public Set<ProductEntity> getProductEntity() {
+        return productEntity;
     }
 
-    public void setProductsEntity(Set<ProductsEntity> productsEntity) {
-        this.productsEntity = productsEntity;
+    public void setProductEntity(Set<ProductEntity> productEntity) {
+        this.productEntity = productEntity;
     }
+
 }

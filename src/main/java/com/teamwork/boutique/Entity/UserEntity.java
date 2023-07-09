@@ -1,10 +1,9 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "users")
+@Entity(name = "user")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,50 +15,50 @@ public class UserEntity {
     @Column(name = "email")
     private String email;
     @Column(name = "subscribe_promotion")
-    private String subscribe_promotion;
+    private String subscribePromotion;
 
     @OneToMany(mappedBy = "userEntity")
     private Set<AddressEntity> address;
 
     @OneToMany(mappedBy = "userEntity")
-    private Set<OrdersEntity> orders;
+    private Set<OrderEntity> order;
     @OneToMany(mappedBy = "userEntity")
-    private Set<PhonesEntity> phonesEntity;
+    private Set<PhoneEntity> phoneEntity;
     @OneToMany(mappedBy = "userEntity")
-    private Set<CartsEntity> cartsEntity;
+    private Set<CartEntity> cartEntity;
     @OneToMany(mappedBy = "userEntity")
-    private Set<ReviewsEntity> reviewsEntity;
+    private Set<ReviewEntity> reviewEntity;
 
-    public Set<ReviewsEntity> getReviewsEntity() {
-        return reviewsEntity;
+    public Set<ReviewEntity> getReviewEntity() {
+        return reviewEntity;
     }
 
-    public void setReviewsEntity(Set<ReviewsEntity> reviewsEntity) {
-        this.reviewsEntity = reviewsEntity;
+    public void setReviewEntity(Set<ReviewEntity> reviewEntity) {
+        this.reviewEntity = reviewEntity;
     }
 
-    public Set<CartsEntity> getCartsEntity() {
-        return cartsEntity;
+    public Set<CartEntity> getCartEntity() {
+        return cartEntity;
     }
 
-    public void setCartsEntity(Set<CartsEntity> cartsEntity) {
-        this.cartsEntity = cartsEntity;
+    public void setCartEntity(Set<CartEntity> cartEntity) {
+        this.cartEntity = cartEntity;
     }
 
-    public Set<PhonesEntity> getPhonesEntity() {
-        return phonesEntity;
+    public Set<PhoneEntity> getPhoneEntity() {
+        return phoneEntity;
     }
 
-    public void setPhonesEntity(Set<PhonesEntity> phonesEntity) {
-        this.phonesEntity = phonesEntity;
+    public void setPhoneEntity(Set<PhoneEntity> phoneEntity) {
+        this.phoneEntity = phoneEntity;
     }
 
-    public Set<OrdersEntity> getOrders() {
-        return orders;
+    public Set<OrderEntity> getOrder() {
+        return order;
     }
 
-    public void setOrders(Set<OrdersEntity> orders) {
-        this.orders = orders;
+    public void setOrder(Set<OrderEntity> order) {
+        this.order = order;
     }
 
     public int getId() {
@@ -94,12 +93,12 @@ public class UserEntity {
         this.email = email;
     }
 
-    public String getSubscribe_promotion() {
-        return subscribe_promotion;
+    public String getSubscribePromotion() {
+        return subscribePromotion;
     }
 
-    public void setSubscribe_promotion(String subscribe_promotion) {
-        this.subscribe_promotion = subscribe_promotion;
+    public void setSubscribePromotion(String subscribePromotion) {
+        this.subscribePromotion = subscribePromotion;
     }
 
     public Set<AddressEntity> getAddress() {

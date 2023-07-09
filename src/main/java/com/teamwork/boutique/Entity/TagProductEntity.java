@@ -1,25 +1,25 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity(name = "tag_product")
-public class TagProducts_Entity {
+public class TagProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductsEntity productEntity;
+    private ProductEntity productEntity;
     @ManyToOne
     @JoinColumn(name = "tag_id")
-    private TagsEntity tagsEntity;
+    private TagEntity tagEntity;
 
-    public TagsEntity getTagsEntity() {
-        return tagsEntity;
+    public TagEntity getTagEntity() {
+        return tagEntity;
     }
 
-    public void setTagsEntity(TagsEntity tagsEntity) {
-        this.tagsEntity = tagsEntity;
+    public void setTagEntity(TagEntity tagEntity) {
+        this.tagEntity = tagEntity;
     }
 
     public int getId() {
@@ -32,11 +32,11 @@ public class TagProducts_Entity {
 
 
 
-    public ProductsEntity getProductEntity() {
+    public ProductEntity getProductEntity() {
         return productEntity;
     }
 
-    public void setProductEntity(ProductsEntity productEntity) {
+    public void setProductEntity(ProductEntity productEntity) {
         this.productEntity = productEntity;
     }
 }

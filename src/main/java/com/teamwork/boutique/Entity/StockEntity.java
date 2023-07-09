@@ -1,6 +1,6 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity(name = "stock")
 public class StockEntity {
@@ -14,7 +14,7 @@ public class StockEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductsEntity productEntity;
+    private ProductEntity productEntity;
     @ManyToOne
     @JoinColumn(name = "color_id")
     private ColorEntity colorEntity;
@@ -51,11 +51,11 @@ public class StockEntity {
         this.price = price;
     }
 
-    public ProductsEntity getProductEntity() {
+    public ProductEntity getProductEntity() {
         return productEntity;
     }
 
-    public void setProductEntity(ProductsEntity productEntity) {
+    public void setProductEntity(ProductEntity productEntity) {
         this.productEntity = productEntity;
     }
 }

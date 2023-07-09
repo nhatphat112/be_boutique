@@ -1,9 +1,10 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
 
-@Entity(name = "carts")
-public class CartsEntity {
+import javax.persistence.*;
+
+@Entity(name = "cart")
+public class CartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -12,7 +13,7 @@ public class CartsEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductsEntity productEntity;
+    private ProductEntity productEntity;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
@@ -41,11 +42,11 @@ public class CartsEntity {
         this.quantity = quantity;
     }
 
-    public ProductsEntity getProductEntity() {
+    public ProductEntity getProductEntity() {
         return productEntity;
     }
 
-    public void setProductEntity(ProductsEntity productEntity) {
+    public void setProductEntity(ProductEntity productEntity) {
         this.productEntity = productEntity;
     }
 }

@@ -1,10 +1,9 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "colors")
+@Entity(name = "color")
 public class ColorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
