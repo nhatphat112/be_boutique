@@ -1,11 +1,10 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name="city_province")
-public class CityProvince_Entity {
+public class CityProvinceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

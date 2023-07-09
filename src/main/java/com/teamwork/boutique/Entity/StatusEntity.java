@@ -1,7 +1,6 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "status")
@@ -12,7 +11,7 @@ public class StatusEntity {
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "statusEntity")
-    private Set<OrdersEntity> orders;
+    private Set<OrderEntity> order;
 
     public int getId() {
         return id;
@@ -30,11 +29,11 @@ public class StatusEntity {
         this.name = name;
     }
 
-    public Set<OrdersEntity> getOrders() {
-        return orders;
+    public Set<OrderEntity> getOrder() {
+        return order;
     }
 
-    public void setOrders(Set<OrdersEntity> orders) {
-        this.orders = orders;
+    public void setOrder(Set<OrderEntity> order) {
+        this.order = order;
     }
 }

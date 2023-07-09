@@ -1,7 +1,6 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "address")
@@ -19,20 +18,20 @@ public class AddressEntity {
 
     @ManyToOne
     @JoinColumn(name = "city_province_id")
-    private CityProvince_Entity cityProvinceEntity;
+    private CityProvinceEntity cityProvinceEntity;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
     @OneToMany(mappedBy = "addressEntity")
-    private Set<OrdersEntity> orders;
+    private Set<OrderEntity> order;
 
-    public Set<OrdersEntity> getOrders() {
-        return orders;
+    public Set<OrderEntity> getOrder() {
+        return order;
     }
 
-    public void setOrders(Set<OrdersEntity> orders) {
-        this.orders = orders;
+    public void setOrder(Set<OrderEntity> order) {
+        this.order = order;
     }
 
     public UserEntity getUserEntity() {
@@ -43,11 +42,11 @@ public class AddressEntity {
         this.userEntity = userEntity;
     }
 
-    public CityProvince_Entity getCityProvinceEntity() {
+    public CityProvinceEntity getCityProvinceEntity() {
         return cityProvinceEntity;
     }
 
-    public void setCityProvinceEntity(CityProvince_Entity cityProvinceEntity) {
+    public void setCityProvinceEntity(CityProvinceEntity cityProvinceEntity) {
         this.cityProvinceEntity = cityProvinceEntity;
     }
 

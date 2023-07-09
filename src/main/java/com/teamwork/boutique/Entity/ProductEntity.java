@@ -1,11 +1,10 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "products")
-public class ProductsEntity {
+@Entity(name = "product")
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -14,32 +13,32 @@ public class ProductsEntity {
     @Column(name = "image")
     private String image;
     @Column(name = "image_list")
-    private String image_list;
+    private String imageList;
     @Column(name = "sold_quantity")
-    private String sold_quantity;
+    private String soldQuantity;
 
     @OneToMany(mappedBy = "productEntity")
-    private Set<Order_Details_Entity> order_Details_Entity;
+    private Set<OrderDetailEntity> orderDetailEntity;
     @OneToMany(mappedBy = "productEntity")
-    private Set<CartsEntity> cartsEntity;
+    private Set<CartEntity> cartEntity;
 
     @OneToMany(mappedBy = "productEntity")
-    private Set<ReviewsEntity> reviewsEntity;
+    private Set<ReviewEntity> reviewEntity;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
     @OneToMany(mappedBy = "productEntity")
-    private Set<TagProducts_Entity> tagProducts_Entity;
+    private Set<TagProductEntity> tagProductEntity;
     @OneToMany(mappedBy = "productEntity")
     private Set<StockEntity> stockEntity;
-    public Set<TagProducts_Entity> getTagProducts_Entity() {
-        return tagProducts_Entity;
+    public Set<TagProductEntity> getTagProductEntity() {
+        return tagProductEntity;
     }
 
-    public void setTagProducts_Entity(Set<TagProducts_Entity> tagProducts_Entity) {
-        this.tagProducts_Entity = tagProducts_Entity;
+    public void setTagProductEntity(Set<TagProductEntity> tagProductEntity) {
+        this.tagProductEntity = tagProductEntity;
     }
 
     public Set<StockEntity> getStockEntity() {
@@ -60,20 +59,20 @@ public class ProductsEntity {
         this.categoryEntity = categoryEntity;
     }
 
-    public Set<ReviewsEntity> getReviewsEntity() {
-        return reviewsEntity;
+    public Set<ReviewEntity> getReviewEntity() {
+        return reviewEntity;
     }
 
-    public void setReviewsEntity(Set<ReviewsEntity> reviewsEntity) {
-        this.reviewsEntity = reviewsEntity;
+    public void setReviewEntity(Set<ReviewEntity> reviewEntity) {
+        this.reviewEntity = reviewEntity;
     }
 
-    public Set<CartsEntity> getCartsEntity() {
-        return cartsEntity;
+    public Set<CartEntity> getCartEntity() {
+        return cartEntity;
     }
 
-    public void setCartsEntity(Set<CartsEntity> cartsEntity) {
-        this.cartsEntity = cartsEntity;
+    public void setCartEntity(Set<CartEntity> cartEntity) {
+        this.cartEntity = cartEntity;
     }
 
     public int getId() {
@@ -100,27 +99,27 @@ public class ProductsEntity {
         this.image = image;
     }
 
-    public String getImage_list() {
-        return image_list;
+    public String getImageList() {
+        return imageList;
     }
 
-    public void setImage_list(String image_list) {
-        this.image_list = image_list;
+    public void setImageList(String imageList) {
+        this.imageList = imageList;
     }
 
-    public String getSold_quantity() {
-        return sold_quantity;
+    public String getSoldQuantity() {
+        return soldQuantity;
     }
 
-    public void setSold_quantity(String sold_quantity) {
-        this.sold_quantity = sold_quantity;
+    public void setSoldQuantity(String soldQuantity) {
+        this.soldQuantity = soldQuantity;
     }
 
-    public Set<Order_Details_Entity> getOrder_Details_Entity() {
-        return order_Details_Entity;
+    public Set<OrderDetailEntity> getOrderDetailEntity() {
+        return orderDetailEntity;
     }
 
-    public void setOrder_Details_Entity(Set<Order_Details_Entity> order_Details_Entity) {
-        this.order_Details_Entity = order_Details_Entity;
+    public void setOrderDetailEntity(Set<OrderDetailEntity> orderDetailEntity) {
+        this.orderDetailEntity = orderDetailEntity;
     }
 }

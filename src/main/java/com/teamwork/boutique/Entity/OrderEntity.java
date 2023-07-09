@@ -1,11 +1,10 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "orders")
-public class OrdersEntity {
+@Entity(name = "u_order")
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -23,25 +22,25 @@ public class OrdersEntity {
     private UserEntity userEntity;
     @ManyToOne
     @JoinColumn(name = "phone_id")
-    private PhonesEntity phonesEntity;
+    private PhoneEntity phoneEntity;
 
-    @OneToMany(mappedBy = "ordersEntity")
-    private Set<Order_Details_Entity> order_Details_Entity;
+    @OneToMany(mappedBy = "orderEntity")
+    private Set<OrderDetailEntity> orderDetailEntity;
 
-    public Set<Order_Details_Entity> getOrder_Details_Entity() {
-        return order_Details_Entity;
+    public Set<OrderDetailEntity> getOrderDetailEntity() {
+        return orderDetailEntity;
     }
 
-    public void setOrder_Details_Entity(Set<Order_Details_Entity> order_Details_Entity) {
-        this.order_Details_Entity = order_Details_Entity;
+    public void setOrderDetailEntity(Set<OrderDetailEntity> orderDetailEntity) {
+        this.orderDetailEntity = orderDetailEntity;
     }
 
-    public PhonesEntity getPhonesEntity() {
-        return phonesEntity;
+    public PhoneEntity getPhoneEntity() {
+        return phoneEntity;
     }
 
-    public void setPhonesEntity(PhonesEntity phonesEntity) {
-        this.phonesEntity = phonesEntity;
+    public void setPhoneEntity(PhoneEntity phoneEntity) {
+        this.phoneEntity = phoneEntity;
     }
 
 

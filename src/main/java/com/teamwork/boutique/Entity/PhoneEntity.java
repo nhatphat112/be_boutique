@@ -1,18 +1,17 @@
 package com.teamwork.boutique.Entity;
 
-import jakarta.persistence.*;
-
+import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "phones")
-public class PhonesEntity {
+@Entity(name = "phone")
+public class PhoneEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "phone_number")
-    private String phone_number;
-    @OneToMany(mappedBy = "phonesEntity")
-    private Set<OrdersEntity> orders;
+    private String phoneNumber;
+    @OneToMany(mappedBy = "phoneEntity")
+    private Set<OrderEntity> order;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -34,19 +33,19 @@ public class PhonesEntity {
         this.id = id;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public Set<OrdersEntity> getOrders() {
-        return orders;
+    public Set<OrderEntity> getOrder() {
+        return order;
     }
 
-    public void setOrders(Set<OrdersEntity> orders) {
-        this.orders = orders;
+    public void setOrder(Set<OrderEntity> order) {
+        this.order = order;
     }
 }
