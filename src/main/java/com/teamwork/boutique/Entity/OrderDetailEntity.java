@@ -16,15 +16,15 @@ public class OrderDetailEntity {
     @JoinColumn(name = "order_id")
     private OrderEntity orderEntity;
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    @JoinColumn(name = "stock_id")
+    private StockEntity stockEntity;
 
-    public ProductEntity getProductEntity() {
-        return productEntity;
+    public StockEntity getStockEntity() {
+        return stockEntity;
     }
 
-    public void setProductEntity(ProductEntity productEntity) {
-        this.productEntity = productEntity;
+    public void setStockEntity(StockEntity stockEntity) {
+        this.stockEntity = stockEntity;
     }
 
     public int getId() {

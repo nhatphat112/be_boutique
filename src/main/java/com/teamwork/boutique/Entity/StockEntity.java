@@ -11,13 +11,14 @@ public class StockEntity {
     private int quantity;
     @Column(name = "price")
     private Double price;
-
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity productEntity;
     @ManyToOne
     @JoinColumn(name = "color_id")
     private ColorEntity colorEntity;
+    @Column (name = "image")
+    private String image;
     public ColorEntity getColorEntity() {
         return colorEntity;
     }
@@ -57,5 +58,13 @@ public class StockEntity {
 
     public void setProductEntity(ProductEntity productEntity) {
         this.productEntity = productEntity;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
