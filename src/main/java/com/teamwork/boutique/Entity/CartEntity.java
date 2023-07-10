@@ -12,8 +12,8 @@ public class CartEntity {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    @JoinColumn(name = "stock_id")
+    private StockEntity stockEntity;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
@@ -42,11 +42,11 @@ public class CartEntity {
         this.quantity = quantity;
     }
 
-    public ProductEntity getProductEntity() {
-        return productEntity;
+    public StockEntity getStockEntity() {
+        return stockEntity;
     }
 
-    public void setProductEntity(ProductEntity productEntity) {
-        this.productEntity = productEntity;
+    public void setStockEntity(StockEntity stockEntity) {
+        this.stockEntity = stockEntity;
     }
 }
