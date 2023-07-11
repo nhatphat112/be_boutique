@@ -1,4 +1,4 @@
-package com.teamwork.boutique.payload.response;
+package com.teamwork.boutique.payload.respone;
 
 public class BaseResponse {
     private int statusCode;

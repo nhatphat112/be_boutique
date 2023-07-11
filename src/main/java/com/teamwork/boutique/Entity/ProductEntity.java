@@ -19,8 +19,6 @@ public class ProductEntity {
 
     @OneToMany(mappedBy = "productEntity")
     private Set<OrderDetailEntity> orderDetailEntity;
-    @OneToMany(mappedBy = "productEntity")
-    private Set<CartEntity> cartEntity;
 
     @OneToMany(mappedBy = "productEntity")
     private Set<ReviewEntity> reviewEntity;
@@ -65,14 +63,6 @@ public class ProductEntity {
 
     public void setReviewEntity(Set<ReviewEntity> reviewEntity) {
         this.reviewEntity = reviewEntity;
-    }
-
-    public Set<CartEntity> getCartEntity() {
-        return cartEntity;
-    }
-
-    public void setCartEntity(Set<CartEntity> cartEntity) {
-        this.cartEntity = cartEntity;
     }
 
     public int getId() {

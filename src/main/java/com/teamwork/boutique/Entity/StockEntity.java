@@ -1,6 +1,7 @@
 package com.teamwork.boutique.Entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "stock")
 public class StockEntity {
@@ -17,8 +18,20 @@ public class StockEntity {
     @ManyToOne
     @JoinColumn(name = "color_id")
     private ColorEntity colorEntity;
+
+    public Set<CartEntity> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<CartEntity> carts) {
+        this.carts = carts;
+    }
+
     @Column (name = "image")
     private String image;
+
+    @OneToMany(mappedBy = "stockEntity")
+    private Set<CartEntity> carts;
     public ColorEntity getColorEntity() {
         return colorEntity;
     }
