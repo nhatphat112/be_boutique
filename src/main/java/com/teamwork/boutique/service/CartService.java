@@ -25,7 +25,7 @@ public class CartService implements CartServiceImp {
         String username = "nguyenvana";//JwtRequestFilter.CURRENT_USER;
         UserEntity user = null;
         if(username!=null){
-            user = userRepository.findByUsername(username);
+            user = userRepository.findByEmail(username);
         }
         try {
             if(stock!=null&&user!=null){
