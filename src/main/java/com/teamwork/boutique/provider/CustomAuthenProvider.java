@@ -1,6 +1,6 @@
 package com.teamwork.boutique.provider;
 
-import com.teamwork.boutique.Entity.UserEntity;
+import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

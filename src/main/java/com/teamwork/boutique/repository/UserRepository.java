@@ -1,6 +1,6 @@
 package com.teamwork.boutique.repository;
 
-import com.teamwork.boutique.Entity.UserEntity;
+import com.teamwork.boutique.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

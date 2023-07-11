@@ -1,17 +1,17 @@
-package com.teamwork.boutique.Entity;
+package com.teamwork.boutique.entity;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name = "tag")
-public class TagEntity {
+@Entity(name = "category")
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "tagEntity")
-    private Set<TagProductEntity> tagProductEntity;
+    @OneToMany(mappedBy = "category")
+    private Set<ProductEntity> products;
 
     public int getId() {
         return id;
@@ -29,11 +29,12 @@ public class TagEntity {
         this.name = name;
     }
 
-    public Set<TagProductEntity> getTagProductEntity() {
-        return tagProductEntity;
+    public Set<ProductEntity> getProducts() {
+        return products;
     }
 
-    public void setTagProductEntity(Set<TagProductEntity> tagProductEntity) {
-        this.tagProductEntity = tagProductEntity;
+    public void setProducts(Set<ProductEntity> products) {
+        this.products = products;
     }
+
 }

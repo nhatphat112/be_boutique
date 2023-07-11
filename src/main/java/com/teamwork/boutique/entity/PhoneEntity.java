@@ -1,4 +1,4 @@
-package com.teamwork.boutique.Entity;
+package com.teamwork.boutique.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,19 +10,19 @@ public class PhoneEntity {
     private int id;
     @Column(name = "phone_number")
     private String phoneNumber;
-    @OneToMany(mappedBy = "phoneEntity")
-    private Set<OrderEntity> order;
+    @OneToMany(mappedBy = "phone")
+    private Set<OrderEntity> orders;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    private UserEntity user;
 
-    public UserEntity getUserEntity() {
-        return userEntity;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserEntity(UserEntity userEntity) {
-        this.userEntity = userEntity;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public int getId() {
@@ -41,11 +41,11 @@ public class PhoneEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public Set<OrderEntity> getOrder() {
-        return order;
+    public Set<OrderEntity> getOrders() {
+        return orders;
     }
 
-    public void setOrder(Set<OrderEntity> order) {
-        this.order = order;
+    public void setOrders(Set<OrderEntity> orders) {
+        this.orders = orders;
     }
 }

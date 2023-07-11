@@ -1,6 +1,6 @@
 package com.teamwork.boutique.service;
 
-import com.teamwork.boutique.Entity.UserEntity;
+import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.repository.UserRepository;
