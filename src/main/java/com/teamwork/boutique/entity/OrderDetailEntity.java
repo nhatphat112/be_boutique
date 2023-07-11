@@ -1,4 +1,4 @@
-package com.teamwork.boutique.Entity;
+package com.teamwork.boutique.entity;
 
 import javax.persistence.*;
 
@@ -14,17 +14,17 @@ public class OrderDetailEntity {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private OrderEntity orderEntity;
+    private OrderEntity order;
     @ManyToOne
     @JoinColumn(name = "stock_id")
-    private StockEntity stockEntity;
+    private StockEntity stock;
 
-    public StockEntity getStockEntity() {
-        return stockEntity;
+    public StockEntity getStock() {
+        return stock;
     }
 
-    public void setStockEntity(StockEntity stockEntity) {
-        this.stockEntity = stockEntity;
+    public void setStock(StockEntity stock) {
+        this.stock = stock;
     }
 
     public int getId() {
@@ -51,11 +51,11 @@ public class OrderDetailEntity {
         this.quantity = quantity;
     }
 
-    public OrderEntity getOrderEntity() {
-        return orderEntity;
+    public OrderEntity getOrder() {
+        return order;
     }
 
-    public void setOrderEntity(OrderEntity orderEntity) {
-        this.orderEntity = orderEntity;
+    public void setOrder(OrderEntity order) {
+        this.order = order;
     }
 }

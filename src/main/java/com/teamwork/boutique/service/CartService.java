@@ -1,8 +1,8 @@
 package com.teamwork.boutique.service;
 
-import com.teamwork.boutique.Entity.CartEntity;
-import com.teamwork.boutique.Entity.StockEntity;
-import com.teamwork.boutique.Entity.UserEntity;
+import com.teamwork.boutique.entity.CartEntity;
+import com.teamwork.boutique.entity.StockEntity;
+import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.repository.CartRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.repository.UserRepository;
@@ -21,7 +21,7 @@ public class CartService implements CartServiceImp {
     @Override
     public boolean addToCart(int productId, int colorId, int quantity) {
         boolean isSuccess = false;
-        StockEntity stock = stockRepository.findByProductIdAndColorId(productId,colorId);
+        StockEntity stock = stockRepository.findByProductAndColor(productId,colorId);
         String username = "nguyenvana";//JwtRequestFilter.CURRENT_USER;
         UserEntity user = null;
         if(username!=null){
@@ -30,9 +30,9 @@ public class CartService implements CartServiceImp {
         try {
             if(stock!=null&&user!=null){
                 System.out.println(stock.getQuantity()+ " product Quantity");
-                CartEntity cart = cartRepository.findByStockIdAndUserId(stock.getId(), user.getId());
+                CartEntity cart = cartRepository.findByStockAndUser(stock.getId(), user.getId());
                 if(cart==null){//nếu product chưa tồn tại
-                    cart.setStockEntity(stock);
+                    cart.setStock(stock);
                     cart.setQuantity(quantity);
                 }
                 else{

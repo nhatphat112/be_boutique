@@ -1,4 +1,4 @@
-package com.teamwork.boutique.Entity;
+package com.teamwork.boutique.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,10 +14,10 @@ public class StockEntity {
     private Double price;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    private ProductEntity product;
     @ManyToOne
     @JoinColumn(name = "color_id")
-    private ColorEntity colorEntity;
+    private ColorEntity color;
 
     public Set<CartEntity> getCarts() {
         return carts;
@@ -29,15 +29,16 @@ public class StockEntity {
 
     @Column (name = "image")
     private String image;
-
-    @OneToMany(mappedBy = "stockEntity")
+    @OneToMany(mappedBy = "stock")
+    private Set<OrderDetailEntity> orderDetails;
+    @OneToMany(mappedBy = "stock")
     private Set<CartEntity> carts;
-    public ColorEntity getColorEntity() {
-        return colorEntity;
+    public ColorEntity getColor() {
+        return color;
     }
 
-    public void setColorEntity(ColorEntity colorEntity) {
-        this.colorEntity = colorEntity;
+    public void setColor(ColorEntity color) {
+        this.color = color;
     }
 
 
@@ -65,12 +66,12 @@ public class StockEntity {
         this.price = price;
     }
 
-    public ProductEntity getProductEntity() {
-        return productEntity;
+    public ProductEntity getProduct() {
+        return product;
     }
 
-    public void setProductEntity(ProductEntity productEntity) {
-        this.productEntity = productEntity;
+    public void setProduct(ProductEntity product) {
+        this.product = product;
     }
 
     public String getImage() {
@@ -79,5 +80,13 @@ public class StockEntity {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Set<OrderDetailEntity> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(Set<OrderDetailEntity> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }

@@ -1,4 +1,4 @@
-package com.teamwork.boutique.Entity;
+package com.teamwork.boutique.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,8 +11,8 @@ public class ColorEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "colorEntity")
-    private Set<StockEntity> stockEntity;
+    @OneToMany(mappedBy = "color")
+    private Set<StockEntity> stocks;
 
     public int getId() {
         return id;
@@ -30,11 +30,11 @@ public class ColorEntity {
         this.name = name;
     }
 
-    public Set<StockEntity> getStockEntity() {
-        return stockEntity;
+    public Set<StockEntity> getStocks() {
+        return stocks;
     }
 
-    public void setStockEntity(Set<StockEntity> stockEntity) {
-        this.stockEntity = stockEntity;
+    public void setStocks(Set<StockEntity> stocks) {
+        this.stocks = stocks;
     }
 }

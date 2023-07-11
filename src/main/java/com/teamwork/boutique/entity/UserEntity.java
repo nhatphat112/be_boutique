@@ -1,4 +1,4 @@
-package com.teamwork.boutique.Entity;
+package com.teamwork.boutique.entity;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -17,48 +17,48 @@ public class UserEntity {
     @Column(name = "subscribe_promotion")
     private String subscribePromotion;
 
-    @OneToMany(mappedBy = "userEntity")
-    private Set<AddressEntity> address;
+    @OneToMany(mappedBy = "user")
+    private Set<AddressEntity> addresses;
 
-    @OneToMany(mappedBy = "userEntity")
-    private Set<OrderEntity> order;
-    @OneToMany(mappedBy = "userEntity")
-    private Set<PhoneEntity> phoneEntity;
-    @OneToMany(mappedBy = "userEntity")
-    private Set<CartEntity> cartEntity;
-    @OneToMany(mappedBy = "userEntity")
-    private Set<ReviewEntity> reviewEntity;
+    @OneToMany(mappedBy = "user")
+    private Set<OrderEntity> orders;
+    @OneToMany(mappedBy = "user")
+    private Set<PhoneEntity> phones;
+    @OneToMany(mappedBy = "user")
+    private Set<CartEntity> carts;
+    @OneToMany(mappedBy = "user")
+    private Set<ReviewEntity> reviews;
 
-    public Set<ReviewEntity> getReviewEntity() {
-        return reviewEntity;
+    public Set<ReviewEntity> getReviews() {
+        return reviews;
     }
 
-    public void setReviewEntity(Set<ReviewEntity> reviewEntity) {
-        this.reviewEntity = reviewEntity;
+    public void setReviews(Set<ReviewEntity> reviews) {
+        this.reviews = reviews;
     }
 
-    public Set<CartEntity> getCartEntity() {
-        return cartEntity;
+    public Set<CartEntity> getCarts() {
+        return carts;
     }
 
-    public void setCartEntity(Set<CartEntity> cartEntity) {
-        this.cartEntity = cartEntity;
+    public void setCarts(Set<CartEntity> carts) {
+        this.carts = carts;
     }
 
-    public Set<PhoneEntity> getPhoneEntity() {
-        return phoneEntity;
+    public Set<PhoneEntity> getPhones() {
+        return phones;
     }
 
-    public void setPhoneEntity(Set<PhoneEntity> phoneEntity) {
-        this.phoneEntity = phoneEntity;
+    public void setPhones(Set<PhoneEntity> phones) {
+        this.phones = phones;
     }
 
-    public Set<OrderEntity> getOrder() {
-        return order;
+    public Set<OrderEntity> getOrders() {
+        return orders;
     }
 
-    public void setOrder(Set<OrderEntity> order) {
-        this.order = order;
+    public void setOrders(Set<OrderEntity> orders) {
+        this.orders = orders;
     }
 
     public int getId() {
@@ -101,11 +101,11 @@ public class UserEntity {
         this.subscribePromotion = subscribePromotion;
     }
 
-    public Set<AddressEntity> getAddress() {
-        return address;
+    public Set<AddressEntity> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(Set<AddressEntity> address) {
-        this.address = address;
+    public void setAddresses(Set<AddressEntity> addresses) {
+        this.addresses = addresses;
     }
 }
