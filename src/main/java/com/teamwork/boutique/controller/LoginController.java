@@ -2,6 +2,7 @@ package com.teamwork.boutique.controller;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.respone.BaseResponse;
+import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import com.teamwork.boutique.utils.JwtHelper;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping ("")
 public class LoginController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -41,7 +43,7 @@ public class LoginController {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(jwt);
-        return new ResponseEntity<>("response", HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
