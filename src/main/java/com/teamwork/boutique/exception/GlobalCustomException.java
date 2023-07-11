@@ -5,10 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-@RestControllerAdvice // lắng nghe các exception
+@RestControllerAdvice
 public class GlobalCustomException {
 
-//    Nơi đăng ký các Exception sẽ kích hoạt code bên trong hàm
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> handleCustomException(Exception e){
 

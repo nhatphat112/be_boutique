@@ -24,14 +24,14 @@ public class CustomAuthenProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        //lấy username
-        String username = authentication.getName();
+        //lấy email
+        String email = authentication.getName();
         //lấy password
         String password = authentication.getCredentials().toString();
-        UserEntity user = userRepository.findByUsername(username);
+        UserEntity user = userRepository.findByEmail(email);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             //đăng nhập thành công
-            return new UsernamePasswordAuthenticationToken(username, user.getPassword(), new ArrayList<>());
+            return new UsernamePasswordAuthenticationToken(email, user.getPassword(), new ArrayList<>());
         }
         return null;
     }

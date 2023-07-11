@@ -32,16 +32,13 @@ public class LoginController {
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<?> signin(@RequestParam String email, @RequestParam String password) {
-        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        String strKey = Encoders.BASE64.encode(key.getEncoded());
-        System.out.println(strKey);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
         authenticationManager.authenticate(token);
         String jwt = jwtHelper.generateToken(email);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(jwt);
-        return new ResponseEntity<>("response", HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
