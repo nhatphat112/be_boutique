@@ -11,8 +11,8 @@ public class StockEntity {
     @Column(name = "quantity")
     private int quantity;
     @Column(name = "price")
-    private Double price;
-    @ManyToOne
+    private double price;
+    @ManyToOne()
     @JoinColumn(name = "product_id")
     private ProductEntity product;
     @ManyToOne
