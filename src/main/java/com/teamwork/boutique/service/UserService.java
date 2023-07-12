@@ -14,7 +14,7 @@ public class UserService implements UserServiceImp {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
     @Override
     public boolean addUser(SignupRequest request) {

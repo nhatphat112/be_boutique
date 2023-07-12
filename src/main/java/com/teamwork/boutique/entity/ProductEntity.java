@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "product")
-public class ProductEntity {
+public class
+ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -112,4 +113,5 @@ public class ProductEntity {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
 }

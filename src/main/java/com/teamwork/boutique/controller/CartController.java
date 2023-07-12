@@ -1,6 +1,6 @@
 package com.teamwork.boutique.controller;
 
-import com.teamwork.boutique.payload.respone.BaseResponse;
+import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.CartServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,5 +24,13 @@ public class CartController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
 
+    }
+    @GetMapping("")
+    public ResponseEntity<?> getAllCart() {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(cartServiceImp.getAllCart());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

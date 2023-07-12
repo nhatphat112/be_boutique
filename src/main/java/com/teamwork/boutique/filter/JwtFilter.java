@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
     @Autowired
-    private JwtHelper jwtHelper;
+    JwtHelper jwtHelper;
 
     /**
      * Nhận được token truyền trên header
@@ -33,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
        try {
            //lấy giá trị của heaader có key là Authorization
            String header = request.getHeader("Authorization");
-           if (header.startsWith("Bearer ")) {
+           if (header!=null && header.startsWith("Bearer ")) {
 // Cắt bỏ chuỗi Bearer và lấy ra token
                String token = header.substring(7);
 //  Giải mã token

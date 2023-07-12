@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StockRepository extends JpaRepository<StockEntity,Integer>{
-    StockEntity findByProductAndColor(int productId, int colorId);
+    StockEntity findByProductIdAndColorId(int productId, int colorId);
 }

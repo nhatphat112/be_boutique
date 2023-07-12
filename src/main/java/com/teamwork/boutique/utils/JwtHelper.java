@@ -12,12 +12,12 @@ import java.security.Key;
 @Component
 public class JwtHelper {
     // @Value:lấy giá trị của key khai báo bên application.yml/properties
-    @Value("${jwt.secrect.key}")
-    public String secrectKey;
+    @Value("${jwt.secret.key}")
+    public String secretKey;
     // Mã hoá
     public String generateToken(String data) {
         //lấy key
-        Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secrectKey));
+        Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
         String token = Jwts.builder()
                 .setSubject(data)
                 .signWith(key)
@@ -27,7 +27,7 @@ public class JwtHelper {
     // giải mã
     public Claims decodeToken(String token) {
         //lấy key
-        Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secrectKey));
+        Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
         //giải mã token
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
