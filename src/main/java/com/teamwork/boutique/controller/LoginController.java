@@ -53,6 +53,5 @@ public class LoginController {
         response.setStatusCode(200);
         response.setData(isSuccess);
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 }
