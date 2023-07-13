@@ -49,4 +49,5 @@ public class CartEntity {
     public void setStock(StockEntity stock) {
         this.stock = stock;
     }
+
 }

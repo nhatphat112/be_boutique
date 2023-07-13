@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ public class PhoneEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
     @OneToMany(mappedBy = "phone")
+    @JsonIgnore
     private Set<OrderEntity> orders;
 
     @ManyToOne
@@ -48,4 +51,6 @@ public class PhoneEntity {
     public void setOrders(Set<OrderEntity> orders) {
         this.orders = orders;
     }
+
+
 }

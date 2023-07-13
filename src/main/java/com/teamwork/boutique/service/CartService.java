@@ -2,14 +2,11 @@ package com.teamwork.boutique.service;
 
 import com.google.gson.Gson;
 import com.teamwork.boutique.entity.CartEntity;
-import com.teamwork.boutique.entity.CategoryEntity;
+import com.teamwork.boutique.entity.ProductEntity;
 import com.teamwork.boutique.entity.StockEntity;
-import com.teamwork.boutique.entity.UserEntity;
-import com.teamwork.boutique.filter.JwtFilter;
 import com.teamwork.boutique.payload.response.CartResponse;
-import com.teamwork.boutique.payload.response.CategoryResponse;
-import com.teamwork.boutique.payload.response.UserResponse;
 import com.teamwork.boutique.repository.CartRepository;
+import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.CartServiceImp;
@@ -24,6 +21,9 @@ import java.util.List;
 public class CartService implements CartServiceImp {
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private ProductRepository productRepository;;
+
     @Autowired
     private StockRepository stockRepository;
     @Autowired
@@ -70,7 +70,10 @@ public class CartService implements CartServiceImp {
             CartResponse response = new CartResponse();
 
             response.setId(data.getId());
-            //response.setStock(data.getStock());
+            StockEntity stock = stockRepository.findById(data.getStock().getId());
+            ProductEntity product = productRepository.findById(stock.getProduct().getId());
+            response.setStockName(product.getName());
+            response.setStockPrice(stock.getPrice());
             response.setQuantity(data.getQuantity());
             listResponse.add(response);
         }

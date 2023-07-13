@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,6 +14,8 @@ public class ColorEntity {
     private String name;
 
     @OneToMany(mappedBy = "color")
+    @JsonIgnore
+
     private Set<StockEntity> stocks;
 
     public int getId() {

@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,6 +13,7 @@ public class TagEntity {
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "tag")
+    @JsonIgnore
     private Set<TagProductEntity> tagProducts;
 
     public int getId() {

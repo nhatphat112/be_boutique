@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -30,9 +32,20 @@ public class StockEntity {
     @Column (name = "image")
     private String image;
     @OneToMany(mappedBy = "stock")
+    @JsonIgnore
     private Set<OrderDetailEntity> orderDetails;
     @OneToMany(mappedBy = "stock")
+    @JsonIgnore
     private Set<CartEntity> carts;
+
+    public ProductEntity getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductEntity product) {
+        this.product = product;
+    }
+
     public ColorEntity getColor() {
         return color;
     }
@@ -40,8 +53,6 @@ public class StockEntity {
     public void setColor(ColorEntity color) {
         this.color = color;
     }
-
-
     public int getId() {
         return id;
     }
@@ -66,13 +77,7 @@ public class StockEntity {
         this.price = price;
     }
 
-    public ProductEntity getProduct() {
-        return product;
-    }
 
-    public void setProduct(ProductEntity product) {
-        this.product = product;
-    }
 
     public String getImage() {
         return image;
@@ -89,4 +94,6 @@ public class StockEntity {
     public void setOrderDetails(Set<OrderDetailEntity> orderDetails) {
         this.orderDetails = orderDetails;
     }
+
+
 }

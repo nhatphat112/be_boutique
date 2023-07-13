@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class CityProvinceEntity {
     private String name;
 
     @OneToMany(mappedBy = "cityProvince")
+    @JsonIgnore
     private Set<AddressEntity> addresses;
 
     public int getId() {

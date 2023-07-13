@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,6 +24,7 @@ ProductEntity {
     private String desc;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private Set<ReviewEntity> reviews;
 
     @ManyToOne
@@ -29,26 +32,11 @@ ProductEntity {
     private CategoryEntity category;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private Set<TagProductEntity> tagProducts;
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private Set<StockEntity> stocks;
-    public Set<TagProductEntity> getTagProducts() {
-        return tagProducts;
-    }
-
-    public void setTagProducts(Set<TagProductEntity> tagProducts) {
-        this.tagProducts = tagProducts;
-    }
-
-    public Set<StockEntity> getStocks() {
-        return stocks;
-    }
-
-    public void setStocks(Set<StockEntity> stocks) {
-        this.stocks = stocks;
-    }
-
-
 
     public CategoryEntity getCategory() {
         return category;
@@ -58,12 +46,12 @@ ProductEntity {
         this.category = category;
     }
 
-    public Set<ReviewEntity> getReviews() {
-        return reviews;
+    public Set<StockEntity> getStocks() {
+        return stocks;
     }
 
-    public void setReviews(Set<ReviewEntity> reviews) {
-        this.reviews = reviews;
+    public void setStocks(Set<StockEntity> stocks) {
+        this.stocks = stocks;
     }
 
     public int getId() {
@@ -113,5 +101,6 @@ ProductEntity {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
 
 }

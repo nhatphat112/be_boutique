@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -25,6 +27,7 @@ public class OrderEntity {
     private PhoneEntity phone;
 
     @OneToMany(mappedBy = "order")
+    @JsonIgnore
     private Set<OrderDetailEntity> orderDetails;
 
     public Set<OrderDetailEntity> getOrderDetails() {

@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -24,6 +26,8 @@ public class AddressEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
     @OneToMany(mappedBy = "address")
+    @JsonIgnore
+
     private Set<OrderEntity> orders;
 
     public Set<OrderEntity> getOrders() {
