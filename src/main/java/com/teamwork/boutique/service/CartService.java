@@ -33,10 +33,6 @@ public class CartService implements CartServiceImp {
     public boolean addToCart(int productId, int colorId, int quantity) {
         boolean isSuccess = false;
         StockEntity stock = stockRepository.findByProductIdAndColorId(productId, colorId);
-//        UserResponse user = null;
-//        user.setUsername(SecurityUtils.getPrincipal().getUsername());
-//        System.out.println(user.getUsername());
-//        System.out.println(stock + " stock is null?" + stock.getId());
         try {
             if (stock != null) {
                 System.out.println(stock.getQuantity() + " product Quantity");
@@ -46,8 +42,9 @@ public class CartService implements CartServiceImp {
                     System.out.println(cart + " cart is null?");
                     cart.setStock(stock);
                     cart.setQuantity(quantity);
-                } else {
-                    // cart = new CartEntity();
+                }
+                else {
+
                     cart.setQuantity(cart.getQuantity() + quantity);
                 }
 

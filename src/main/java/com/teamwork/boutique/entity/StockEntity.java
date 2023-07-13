@@ -37,18 +37,10 @@ public class StockEntity {
     @OneToMany(mappedBy = "stock")
     @JsonIgnore
     private Set<CartEntity> carts;
-
-    public ProductEntity getProduct() {
-        return product;
-    }
-
-    public void setProduct(ProductEntity product) {
-        this.product = product;
-    }
-
     public ColorEntity getColor() {
         return color;
     }
+
 
     public void setColor(ColorEntity color) {
         this.color = color;
@@ -76,7 +68,13 @@ public class StockEntity {
     public void setPrice(Double price) {
         this.price = price;
     }
+    public ProductEntity getProduct() {
+        return product;
+    }
 
+    public void setProduct(ProductEntity product) {
+        this.product = product;
+    }
 
 
     public String getImage() {

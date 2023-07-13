@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
     @Autowired
-    JwtHelper jwtHelper;
+    private JwtHelper jwtHelper;
 
     /**
      * Nhận được token truyền trên header
