@@ -30,8 +30,7 @@ public class LoginController {
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<?> signin(@RequestParam String email, @RequestParam String password) {
-        UsernamePasswordAuthenticationToken token =
-                new UsernamePasswordAuthenticationToken(email, password);
+       UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
         authenticationManager.authenticate(token);
 
         String jwt = jwtHelper.generateToken(email);
