@@ -2,7 +2,7 @@ package com.teamwork.boutique.controller;
 
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.SignupRequest;
-import com.teamwork.boutique.payload.respone.BaseResponse;
+import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import com.teamwork.boutique.utils.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
