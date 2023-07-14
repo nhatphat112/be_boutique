@@ -32,4 +32,21 @@ public class ProductService implements ProductServiceImp {
 
         return productResponses;
     }
+
+    @Override
+    public List<ProductResponse> getProductByCategory(int id) {
+        List<ProductEntity>list=productRepository.findByCategoryId(id);
+        List<ProductResponse>responseList=new ArrayList<>();
+        for (ProductEntity data:    list
+        ) {ProductResponse productResponse = new ProductResponse();
+            productResponse.setId(data.getId());
+            productResponse.setName(data.getName());
+            productResponse.setImage(data.getImage());
+            productResponse.setPrice(stockRepository.findMinPriceByProductId(data.getId()));
+            productResponse.setDesciption(data.getDesc());
+            responseList.add(productResponse);
+
+        }
+        return responseList;
+    }
 }

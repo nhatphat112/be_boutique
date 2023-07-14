@@ -7,4 +7,7 @@ import java.util.List;
 @Service
 public interface ProductServiceImp {
     List<ProductResponse> getAllCategory();
+
+    Object getProductByCategory(int id);
+
 }
