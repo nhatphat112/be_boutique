@@ -1,7 +1,7 @@
 package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
-import com.teamwork.boutique.payload.respone.BaseResponse;
+import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.ProductServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
