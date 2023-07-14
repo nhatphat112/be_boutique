@@ -1,14 +1,20 @@
 package com.teamwork.boutique.service;
 
+import com.google.gson.Gson;
 import com.teamwork.boutique.entity.CartEntity;
+import com.teamwork.boutique.entity.ProductEntity;
 import com.teamwork.boutique.entity.StockEntity;
-import com.teamwork.boutique.entity.UserEntity;
+import com.teamwork.boutique.payload.response.CartResponse;
 import com.teamwork.boutique.repository.CartRepository;
+import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.CartServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartService implements CartServiceImp {
@@ -18,6 +24,8 @@ public class CartService implements CartServiceImp {
     private StockRepository stockRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProductRepository productRepository;
     @Override
     public boolean addToCart(int productId, int colorId, int quantity) {
         boolean isSuccess = false;
@@ -43,5 +51,24 @@ public class CartService implements CartServiceImp {
             System.out.println("Lỗi addToCart " + e.getMessage());
         }
         return isSuccess;
+    }
+    @Override
+    public List<CartResponse> getAllCart() {
+        System.out.println("Kiem tra category");
+        List<CartResponse> listResponse = new ArrayList<>();
+        List<CartEntity> list = cartRepository.findAll();
+        for (CartEntity data : list) {
+            CartResponse response = new CartResponse();
+            response.setId(data.getId());
+            StockEntity stock = data.getStock();
+            ProductEntity product = productRepository.findById(stock.getProduct().getId());
+            response.setProductName(product.getName());
+            response.setStockPrice(stock.getPrice());
+            response.setQuantity(data.getQuantity());
+            listResponse.add(response);
+        }
+        Gson gson = new Gson();
+        String data = gson.toJson(listResponse);
+        return listResponse;
     }
 }
