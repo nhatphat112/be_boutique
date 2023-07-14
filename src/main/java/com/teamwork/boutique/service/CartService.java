@@ -21,17 +21,14 @@ public class CartService implements CartServiceImp {
     @Override
     public boolean addToCart(int productId, int colorId, int quantity) {
         boolean isSuccess = false;
-        StockEntity stock = stockRepository.findByProductAndColor(productId,colorId);
-        String username = "nguyenvana";//JwtRequestFilter.CURRENT_USER;
-        UserEntity user = null;
-        if(username!=null){
-            user = userRepository.findByEmail(username);
-        }
+        StockEntity stock = stockRepository.findByProductIdAndColorId(productId, colorId);
         try {
-            if(stock!=null&&user!=null){
-                System.out.println(stock.getQuantity()+ " product Quantity");
-                CartEntity cart = cartRepository.findByStockAndUser(stock.getId(), user.getId());
-                if(cart==null){//nếu product chưa tồn tại
+            if (stock != null) {
+                System.out.println(stock.getQuantity() + " product Quantity");
+                CartEntity cart = cartRepository.findByStockId(stock.getId());
+                if (cart == null) {//nếu product chưa tồn tại
+                    cart = new CartEntity();
+                    System.out.println(cart + " cart is null?");
                     cart.setStock(stock);
                     cart.setQuantity(quantity);
                 }
