@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.teamwork.boutique.entity.CartEntity;
 import com.teamwork.boutique.entity.ProductEntity;
 import com.teamwork.boutique.entity.StockEntity;
+import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.payload.response.CartResponse;
 import com.teamwork.boutique.repository.CartRepository;
 import com.teamwork.boutique.repository.ProductRepository;

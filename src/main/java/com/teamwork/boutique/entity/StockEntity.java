@@ -40,11 +40,11 @@ public class StockEntity {
     public ColorEntity getColor() {
         return color;
     }
-
-
     public void setColor(ColorEntity color) {
         this.color = color;
     }
+
+
     public int getId() {
         return id;
     }
@@ -76,7 +76,6 @@ public class StockEntity {
         this.product = product;
     }
 
-
     public String getImage() {
         return image;
     }
@@ -92,6 +91,4 @@ public class StockEntity {
     public void setOrderDetails(Set<OrderDetailEntity> orderDetails) {
         this.orderDetails = orderDetails;
     }
-
-
 }

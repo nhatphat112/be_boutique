@@ -6,8 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity(name = "product")
-public class
-ProductEntity {
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -37,6 +36,23 @@ ProductEntity {
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     private Set<StockEntity> stocks;
+    public Set<TagProductEntity> getTagProducts() {
+        return tagProducts;
+    }
+
+    public void setTagProducts(Set<TagProductEntity> tagProducts) {
+        this.tagProducts = tagProducts;
+    }
+
+    public Set<StockEntity> getStocks() {
+        return stocks;
+    }
+
+    public void setStocks(Set<StockEntity> stocks) {
+        this.stocks = stocks;
+    }
+
+
 
     public CategoryEntity getCategory() {
         return category;
@@ -46,12 +62,12 @@ ProductEntity {
         this.category = category;
     }
 
-    public Set<StockEntity> getStocks() {
-        return stocks;
+    public Set<ReviewEntity> getReviews() {
+        return reviews;
     }
 
-    public void setStocks(Set<StockEntity> stocks) {
-        this.stocks = stocks;
+    public void setReviews(Set<ReviewEntity> reviews) {
+        this.reviews = reviews;
     }
 
     public int getId() {
@@ -101,6 +117,4 @@ ProductEntity {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-
-
 }
