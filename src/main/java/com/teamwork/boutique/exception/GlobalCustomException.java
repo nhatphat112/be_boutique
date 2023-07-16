@@ -10,7 +10,6 @@ public class GlobalCustomException {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<?> handleCustomException(Exception e){
-
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(500);
         baseResponse.setData(e.getMessage());
