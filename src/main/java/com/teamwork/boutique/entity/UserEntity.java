@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -27,6 +29,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private Set<CartEntity> carts;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<ReviewEntity> reviews;
 
     public Set<ReviewEntity> getReviews() {

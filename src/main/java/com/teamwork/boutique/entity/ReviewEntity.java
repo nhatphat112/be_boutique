@@ -1,5 +1,7 @@
 package com.teamwork.boutique.entity;
 
+import org.springframework.context.annotation.Lazy;
+
 import javax.persistence.*;
 
 @Entity(name = "review")
