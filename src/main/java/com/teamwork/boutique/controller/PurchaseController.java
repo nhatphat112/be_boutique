@@ -22,7 +22,7 @@ public class PurchaseController {
     PurchaseServiceImp purchaseServiceImp;
 
     @PostMapping("/rate")
-    public ResponseEntity<?> rate(@RequestBody  @Valid  ReviewRequest reviewRequest, BindingResult result) {
+    public ResponseEntity<?> rate(  @Valid  ReviewRequest reviewRequest, BindingResult result) {
         List<FieldError> list = result.getFieldErrors();
         for (FieldError data :
                 list) {
