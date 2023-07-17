@@ -15,9 +15,9 @@ public class ReviewRequest {
     @Max(value = 5, message = "starnumber must be greater less or equal to 5")
     private int starNumber;
 
-    @NotNull(message = "userid not null")
+//    @NotNull(message = "userid not null")
     private UserEntity userId;
-    @NotNull(message = "productId not null")
+//    @NotNull(message = "productId not null")
     private ProductEntity productId;
 
     public String getContent() {
