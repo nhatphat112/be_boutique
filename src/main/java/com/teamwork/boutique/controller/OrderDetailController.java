@@ -1,0 +1,31 @@
+package com.teamwork.boutique.controller;
+
+import com.google.gson.Gson;
+import com.teamwork.boutique.payload.response.BaseResponse;
+import com.teamwork.boutique.service.imp.OrderDetailServiceImp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@CrossOrigin(value = "*")
+@RequestMapping("/order-detail")
+public class OrderDetailController {
+    @Autowired
+    private OrderDetailServiceImp orderDetailServiceImp;
+    private Logger logger = LoggerFactory.getLogger(OrderDetailController.class);
+    private Gson gson = new Gson();
+    @GetMapping("/user")
+    public ResponseEntity<?> getByUserId(@RequestParam int id){
+        logger.info("Request :"+id);
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(orderDetailServiceImp.getByUserId(id));
+        baseResponse.setStatusCode(200);
+        baseResponse.setMessage("List Product Ordered By User Id ");
+        logger.info("Response :"+gson.toJson(baseResponse));
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    };
+}
