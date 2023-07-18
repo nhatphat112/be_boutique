@@ -18,6 +18,17 @@ public class OrderDetailEntity {
     @ManyToOne
     @JoinColumn(name = "stock_id")
     private StockEntity stock;
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 
     public StockEntity getStock() {
         return stock;
