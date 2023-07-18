@@ -45,7 +45,6 @@ public class ProductService implements ProductServiceImp {
             productResponse.setPrice(stockRepository.findMinPriceByProductId(data.getId()));
             productResponse.setDesciption(data.getDesc());
             responseList.add(productResponse);
-
         }
         return responseList;
     }
