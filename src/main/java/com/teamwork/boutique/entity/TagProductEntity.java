@@ -1,17 +1,18 @@
 package com.teamwork.boutique.entity;
 
+import com.teamwork.boutique.entity.ids.TagProductEntityIds;
+
 import javax.persistence.*;
 
 @Entity(name = "tag_product")
 public class TagProductEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private TagProductEntityIds ids;
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", insertable = false, updatable = false)
     private ProductEntity product;
     @ManyToOne
-    @JoinColumn(name = "tag_id")
+    @JoinColumn(name = "tag_id", insertable = false, updatable = false)
     private TagEntity tag;
 
     public TagEntity getTag() {
@@ -22,15 +23,13 @@ public class TagProductEntity {
         this.tag = tag;
     }
 
-    public int getId() {
-        return id;
+    public TagProductEntityIds getIds() {
+        return ids;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIds(TagProductEntityIds ids) {
+        this.ids = ids;
     }
-
-
 
     public ProductEntity getProduct() {
         return product;
