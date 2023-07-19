@@ -1,6 +1,7 @@
 package com.teamwork.boutique.controller;
 
 import com.teamwork.boutique.payload.response.BaseResponse;
+import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.service.imp.DetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +13,8 @@ import org.springframework.web.bind.annotation.*;
 public class DetailController {
     @Autowired
     DetailServiceImp detailServiceImp;
-
     @GetMapping("")
-    public ResponseEntity<?> detailProduct(@RequestParam int id){
+    public ResponseEntity<?> detailProduct(@RequestParam int id) {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(detailServiceImp.getDetailProductByProductId(id));
         baseResponse.setMessage("Detail by product id");
