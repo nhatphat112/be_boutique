@@ -11,6 +11,8 @@ public class AddressEntity {
 
     @Column(name = "fee")
     private Double fee;
+    private String detail;
+
 
     @ManyToOne
     @JoinColumn(name = "country_id")
@@ -23,8 +25,10 @@ public class AddressEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+
     @OneToMany(mappedBy = "address")
     private Set<OrderEntity> orders;
+
 
     public Set<OrderEntity> getOrders() {
         return orders;
@@ -72,5 +76,13 @@ public class AddressEntity {
 
     public void setCountry(CountryEntity country) {
         this.country = country;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 }

@@ -11,6 +11,8 @@ public class CityProvinceEntity {
     @Column(name = "name")
 
     private String name;
+    private String city;
+
 
     @OneToMany(mappedBy = "cityProvince")
     private Set<AddressEntity> addresses;
@@ -33,6 +35,14 @@ public class CityProvinceEntity {
 
     public Set<AddressEntity> getAddresses() {
         return addresses;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public void setAddresses(Set<AddressEntity> addresses) {
