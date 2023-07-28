@@ -1,6 +1,10 @@
 package com.teamwork.boutique.service;
 
 import com.teamwork.boutique.entity.OrderDetailEntity;
+import com.teamwork.boutique.entity.OrderEntity;
+import com.teamwork.boutique.entity.StockEntity;
+import com.teamwork.boutique.entity.UserEntity;
+import com.teamwork.boutique.payload.request.OrderDetailSaveRequest;
 import com.teamwork.boutique.payload.response.OrderDetailResponse;
 import com.teamwork.boutique.repository.OrderDetailRepository;
 import com.teamwork.boutique.service.imp.OrderDetailServiceImp;
@@ -29,5 +33,23 @@ public class OrderDetailService implements OrderDetailServiceImp {
             orderDetailResponses.add(response);
         }
         return orderDetailResponses;
+    }
+
+    @Override
+    public void save(List<OrderDetailSaveRequest> request) {
+        List<OrderDetailEntity> orderDetailEntities = new ArrayList<>();
+        for(OrderDetailSaveRequest item : request){
+            OrderDetailEntity entity = new OrderDetailEntity();
+            entity.setOrder(new OrderEntity());
+            entity.getOrder().setId(item.getId());
+            entity.setUser(new UserEntity());
+            entity.getUser().setId(item.getId());
+            entity.setStock(new StockEntity());
+            entity.getStock().setId(item.getId());
+            entity.setQuantity(item.getQuantity());
+            entity.setPrice(item.getPrice());
+            orderDetailEntities.add(entity);
+        }
+        repository.saveAll(orderDetailEntities);
     }
 }
