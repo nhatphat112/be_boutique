@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface PhoneRepository extends JpaRepository<PhoneEntity,Integer> {
     List<PhoneEntity> getByUserId(int userId);
+    List<PhoneEntity> getByUserIdAndAndPhoneNumber(int userId,String phoneNumber);
 }

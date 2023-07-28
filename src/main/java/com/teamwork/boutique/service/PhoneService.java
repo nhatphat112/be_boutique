@@ -1,6 +1,8 @@
 package com.teamwork.boutique.service;
 
 import com.teamwork.boutique.entity.PhoneEntity;
+import com.teamwork.boutique.entity.UserEntity;
+import com.teamwork.boutique.payload.request.PhoneSaveRequest;
 import com.teamwork.boutique.payload.response.PhoneResponse;
 import com.teamwork.boutique.repository.PhoneRepository;
 import com.teamwork.boutique.service.imp.PhoneServiceImp;
@@ -25,5 +27,22 @@ public class PhoneService implements PhoneServiceImp {
             phoneResponses.add(response);
         }
         return phoneResponses;
+    }
+
+    @Override
+    public PhoneResponse save(PhoneSaveRequest request) {
+        PhoneEntity entity = new PhoneEntity();
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(request.getUserId());
+        entity.setPhoneNumber(request.getPhoneNumber());
+        entity.setUser(userEntity);
+        repository.save(entity);
+        PhoneResponse response = new PhoneResponse();
+        for (PhoneEntity item : repository.getByUserIdAndAndPhoneNumber(request.getUserId(),request.getPhoneNumber())){
+            response.setId(item.getId());
+            break;
+
+        }
+        return response;
     }
 }
