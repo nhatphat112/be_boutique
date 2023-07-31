@@ -31,4 +31,16 @@ public class UserService implements UserServiceImp {
         }
         return isSuccess;
     }
+
+    @Override
+    public boolean deleteUser(int userId) {
+        boolean isSuccess = false;
+        try {
+            userRepository.deleteById(userId);
+            isSuccess = true;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi delete user " + e.getMessage());
+        }
+        return isSuccess;
+    }
 }

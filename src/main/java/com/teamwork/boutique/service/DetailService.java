@@ -21,9 +21,9 @@ public class DetailService implements DetailServiceImp {
 
     @Override
     public DetailResponse getDetailProductByProductId(int productId) {
-        System.out.println(productId);
         ProductEntity item = productRepository.findById(productId);
         DetailResponse detailResponse = new DetailResponse();
+        detailResponse.setName(item.getName());
         detailResponse.setProductId(item.getId());
         detailResponse.setCategory(item.getCategory().getName());
         detailResponse.setDescription(item.getDesc());
