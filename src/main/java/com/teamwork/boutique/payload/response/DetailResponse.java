@@ -3,6 +3,7 @@ package com.teamwork.boutique.payload.response;
 import java.util.List;
 
 public class DetailResponse {
+    private String name;
     private int productId;
     private String description;
     private String category;
@@ -12,6 +13,14 @@ public class DetailResponse {
     private List<ReviewResponse> reviewList;
 
     private List<StockResponse> stockResponseList;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public List<StockResponse> getStockResponseList() {
         return stockResponseList;

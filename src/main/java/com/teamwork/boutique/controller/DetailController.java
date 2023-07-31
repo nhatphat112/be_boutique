@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/detail")
+@CrossOrigin("*")
 public class DetailController {
     @Autowired
     DetailServiceImp detailServiceImp;
