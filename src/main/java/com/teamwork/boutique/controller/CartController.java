@@ -8,8 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cart")
 @CrossOrigin("*")
+
+@RequestMapping("/cart")
 public class CartController {
     @Autowired
     private CartServiceImp cartServiceImp;
