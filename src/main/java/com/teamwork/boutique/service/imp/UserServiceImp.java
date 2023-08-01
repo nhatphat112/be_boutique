@@ -1,8 +1,10 @@
 package com.teamwork.boutique.service.imp;
 
 
+import com.teamwork.boutique.payload.request.FindUserIdRequest;
 import com.teamwork.boutique.payload.request.SignupRequest;
 
 public interface UserServiceImp {
     boolean addUser(SignupRequest request);
+    int findUserId(FindUserIdRequest request);
 }

@@ -29,7 +29,8 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/signin", "/signup","/cart/**","/color/**","/product/**","/stock/**","/category/**").permitAll()
+                .antMatchers("/signin/**", "/signup","/cart/**","/color/**","/product/**","/stock/**","/category/**","/purchase/**"
+                        ,"/order-detail/**","/detail","/phone/**","/address/**","/country/**","/city-province/**","/order/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

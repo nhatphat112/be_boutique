@@ -4,8 +4,14 @@ import com.teamwork.boutique.entity.CartEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CartRepository extends JpaRepository<CartEntity, Integer> {
-    CartEntity findByStockAndUser(int stockId, int userId);
+    CartEntity findByStockIdAndUserId(int stockId, int userId);
     CartEntity findByStockId(int stockId);
+    CartEntity findById(int id);
+
+    List<CartEntity> findByUserId(int userId);
+    CartEntity deleteById(int id);
 }
