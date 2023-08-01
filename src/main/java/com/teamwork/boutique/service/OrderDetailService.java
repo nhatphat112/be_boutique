@@ -41,9 +41,9 @@ public class OrderDetailService implements OrderDetailServiceImp {
         for(OrderDetailSaveRequest item : request){
             OrderDetailEntity entity = new OrderDetailEntity();
             entity.setOrder(new OrderEntity());
-            entity.getOrder().setId(item.getId());
+            entity.getOrder().setId(item.getOrderId());
             entity.setUser(new UserEntity());
-            entity.getUser().setId(item.getId());
+            entity.getUser().setId(item.getUserId());
             entity.setStock(new StockEntity());
             entity.getStock().setId(item.getId());
             entity.setQuantity(item.getQuantity());
