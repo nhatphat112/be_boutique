@@ -2,6 +2,7 @@ package com.teamwork.boutique.service;
 
 import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.request.FindUserIdRequest;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.UserServiceImp;
@@ -42,5 +43,14 @@ public class UserService implements UserServiceImp {
             throw new CustomException("Lỗi delete user " + e.getMessage());
         }
         return isSuccess;
+    }
+    @Override
+    public int findUserId(FindUserIdRequest request){
+        try {
+            UserEntity user = userRepository.findByEmail(request.getEmail());
+            return user.getId();
+        } catch (Exception e) {
+            throw new CustomException("Lỗi add user " + e.getMessage());
+        }
     }
 }

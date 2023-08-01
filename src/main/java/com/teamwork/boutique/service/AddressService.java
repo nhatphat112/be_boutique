@@ -22,7 +22,7 @@ public class AddressService implements AddressServiceImp {
     @Override
     public List<AddressResponse> getByUserId(int userId) {
         List<AddressResponse> addressResponses = new ArrayList<>();
-        for (AddressEntity item : repository.getByUserId(userId)){
+        for (AddressEntity item : repository.findByUserId(userId)){
             AddressResponse response = new AddressResponse();
             response.setId(item.getId());
             response.setCountryName(item.getCountry().getName());
