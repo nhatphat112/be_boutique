@@ -30,6 +30,17 @@ public class UserEntity {
     private Set<ReviewEntity> reviews;
     @OneToMany(mappedBy = "user")
     private Set<OrderDetailEntity> orderDetails;
+    @ManyToOne()
+    @JoinColumn(name = "role_id")
+    RoleEntity role;
+
+    public RoleEntity getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEntity role) {
+        this.role = role;
+    }
 
     public Set<OrderDetailEntity> getOrderDetails() {
         return orderDetails;

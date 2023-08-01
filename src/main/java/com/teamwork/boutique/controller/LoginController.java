@@ -1,10 +1,13 @@
 package com.teamwork.boutique.controller;
 
+import com.google.gson.Gson;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import com.teamwork.boutique.utils.JwtHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -26,9 +31,12 @@ public class LoginController {
     JwtHelper jwtHelper;
     @Autowired
     UserServiceImp userServiceImp;
+    private Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private Gson gson = new Gson();
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<?> signin(@RequestParam String email, @RequestParam String password) {
+
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
         authenticationManager.authenticate(token);
         String jwt = jwtHelper.generateToken(email);
@@ -39,17 +47,21 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<?> signup(@Valid SignupRequest request, BindingResult result) {
+    public ResponseEntity<?> signup(@RequestBody SignupRequest request, BindingResult result) {
+        logger.info("Request :"+gson.toJson(request));
         List<FieldError> list = result.getFieldErrors();
         for (FieldError data :
                 list) {
             throw new CustomException(data.getDefaultMessage());
         }
-        boolean isSuccess = userServiceImp.addUser(request);
         BaseResponse response = new BaseResponse();
+        HashMap<String,Object> dataList = new HashMap<>();
+        dataList.put("userInfo",userServiceImp.addUser(request));
+        dataList.put("token",jwtHelper.generateToken(request.getEmail()));
         response.setStatusCode(200);
-        response.setData(isSuccess);
+        response.setMessage("Saved user");
+        response.setData(dataList);
+        logger.info("Response :"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 }
