@@ -1,8 +1,10 @@
 package com.teamwork.boutique.service;
 
+import com.teamwork.boutique.entity.RoleEntity;
 import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.SignupRequest;
+import com.teamwork.boutique.payload.response.LoginSigupResponse;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +19,24 @@ public class UserService implements UserServiceImp {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public boolean addUser(SignupRequest request) {
+    public LoginSigupResponse addUser(SignupRequest request) {
+        LoginSigupResponse response = new LoginSigupResponse();
         boolean isSuccess = false;
-        try {
             UserEntity user = new UserEntity();
             user.setUsername(request.getUsername());
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             user.setEmail(request.getEmail());
-            userRepository.save(user);
-            isSuccess = true;
-        } catch (Exception e) {
-            throw new CustomException("Lỗi add user " + e.getMessage());
-        }
-        return isSuccess;
+            user.setRole(new RoleEntity());
+            user.getRole().setId(2);
+            if(userRepository.findByEmail(request.getEmail())!=null){
+                throw new CustomException("This email already exists.");
+            }
+            user = userRepository.saveAndFlush(user);
+            response.setId(user.getId());
+            response.setRoleId(user.getRole().getId());
+            response.setUsername(user.getUsername());
+
+        return response;
     }
 
     @Override

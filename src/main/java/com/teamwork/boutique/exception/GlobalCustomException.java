@@ -13,6 +13,6 @@ public class GlobalCustomException {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(500);
         baseResponse.setData(e.getMessage());
-        return new ResponseEntity<>(baseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }
 }
