@@ -2,6 +2,7 @@ package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
 import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.request.FindUserIdRequest;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.UserServiceImp;
@@ -62,6 +63,15 @@ public class LoginController {
         response.setMessage("Saved user");
         response.setData(dataList);
         logger.info("Response :"+gson.toJson(response));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/signin/findUserId", method = RequestMethod.POST)
+    public ResponseEntity<?> findUserId(FindUserIdRequest request) {
+        int id = userServiceImp.findUserId(request);
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(id);
+        System.out.println(id+" newuserId");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -11,6 +11,16 @@ public class CartResponse {
     private int quantity;
     private double stockPrice;
     private String productName;
+    private String stockImage;
+
+    public String getStockImage() {
+        return stockImage;
+    }
+
+    public void setStockImage(String stockImage) {
+        this.stockImage = stockImage;
+    }
+
     public int getId() {
         return id;
     }
