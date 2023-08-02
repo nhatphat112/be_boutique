@@ -4,9 +4,15 @@ package com.teamwork.boutique.service.imp;
 import com.teamwork.boutique.payload.request.FindUserIdRequest;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.response.LoginSigupResponse;
+import com.teamwork.boutique.payload.response.UserResponse;
+
+import java.util.List;
 
 public interface UserServiceImp {
     LoginSigupResponse addUser(SignupRequest request);
     boolean deleteUser(int userId);
-    public int findUserId(FindUserIdRequest request);
+    int findUserId(FindUserIdRequest request);
+
+    List<UserResponse> getAllUser();
+
 }
