@@ -1,9 +1,12 @@
 package com.teamwork.boutique.controller;
 
+import com.google.gson.Gson;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.CartUpdateRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.CartServiceImp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +22,19 @@ import java.util.List;
 public class CartController {
     @Autowired
     private CartServiceImp cartServiceImp;
+    private Logger logger = LoggerFactory.getLogger(CartController.class);
+    private Gson gson = new Gson();
 
     @GetMapping("/addToCart/{productId}/{colorId}/{quantity}/{userId}")
     public ResponseEntity<?> addToCart(@PathVariable int productId,
                                        @PathVariable int colorId,
                                        @PathVariable int quantity,
                                        @PathVariable int userId) {
+        logger.info("Request :");
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(cartServiceImp.addToCart(productId, colorId, quantity, userId));
+        logger.info("Response :"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

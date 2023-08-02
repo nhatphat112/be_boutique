@@ -10,5 +10,6 @@ import java.util.List;
 public interface OrderDetailServiceImp {
     public List<OrderDetailResponse> getByUserId(int userId);
     public  void save(List<OrderDetailSaveRequest> request);
+    public void delete(int id);
 
 }

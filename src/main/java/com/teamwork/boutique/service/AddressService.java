@@ -50,11 +50,9 @@ public class AddressService implements AddressServiceImp {
         addressEntity.setDetail(request.getDetail());
         addressEntity.setCountry(countryEntity);
         addressEntity.setCityProvince(cityProvinceEntity);
-        repository.save(addressEntity);
-        for (AddressEntity item :repository.getByUserIdAndCountryIdAndCityProvinceIdAndDetail(request.getUserId(), request.getCountryId(), request.getCityProvinceId(), request.getDetail())){
-            response.setId(item.getId());
-            break;
-        }
+        addressEntity = repository.saveAndFlush(addressEntity);
+        response.setId(addressEntity.getId());
+
 
         return response;
     }
