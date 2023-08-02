@@ -8,5 +8,5 @@ import javax.swing.plaf.PanelUI;
 
 @Service
 public interface OrderServiceImp {
-    public OrderSaveResponse save(OrderSaveRequest request);
+    public void  save(OrderSaveRequest request);
 }

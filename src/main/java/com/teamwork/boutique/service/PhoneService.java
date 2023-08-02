@@ -36,13 +36,9 @@ public class PhoneService implements PhoneServiceImp {
         userEntity.setId(request.getUserId());
         entity.setPhoneNumber(request.getPhoneNumber());
         entity.setUser(userEntity);
-        repository.save(entity);
+        entity =repository.saveAndFlush(entity);
         PhoneResponse response = new PhoneResponse();
-        for (PhoneEntity item : repository.getByUserIdAndAndPhoneNumber(request.getUserId(),request.getPhoneNumber())){
-            response.setId(item.getId());
-            break;
-
-        }
+        response.setId(entity.getId());
         return response;
     }
 }

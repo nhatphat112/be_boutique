@@ -1,19 +1,28 @@
 package com.teamwork.boutique.service;
 
 import com.teamwork.boutique.entity.*;
+import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.request.OrderDetailSaveRequest;
 import com.teamwork.boutique.payload.request.OrderSaveRequest;
+import com.teamwork.boutique.payload.response.OrderDetailResponse;
 import com.teamwork.boutique.payload.response.OrderSaveResponse;
+import com.teamwork.boutique.repository.OrderDetailRepository;
 import com.teamwork.boutique.repository.OrderRepository;
 import com.teamwork.boutique.service.imp.OrderServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class OrderService implements OrderServiceImp {
     @Autowired
     private OrderRepository repository;
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
     @Override
-    public OrderSaveResponse save(OrderSaveRequest request) {
+    public void  save(OrderSaveRequest request) {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setAddress(new AddressEntity());
         orderEntity.getAddress().setId(request.getAddressId());
@@ -25,9 +34,27 @@ public class OrderService implements OrderServiceImp {
         orderEntity.getStatus().setId(request.getStatusId());
         orderEntity.setTotal(request.getTotal());
         orderEntity = repository.saveAndFlush(orderEntity);
+        if(orderEntity==null){
+            throw new CustomException("Error add Order");
+        }
+        List<OrderDetailEntity> orderDetailEntities = new ArrayList<>();
+        for(OrderDetailSaveRequest item : request.getOrderDetailSaveRequests()){
+            OrderDetailEntity entity = new OrderDetailEntity();
+            entity.setOrder(new OrderEntity());
+            entity.getOrder().setId(orderEntity.getId());
+            entity.setUser(new UserEntity());
+            entity.getUser().setId(orderEntity.getUser().getId());
+            entity.setStock(new StockEntity());
+            entity.getStock().setId(item.getId());
+            entity.setQuantity(item.getQuantity());
+            entity.setPrice(item.getPrice());
+            orderDetailEntities.add(entity);
+        }
+       try {
+           orderDetailRepository.saveAll(orderDetailEntities);
+       }catch (Exception e){
+           throw new CustomException("Error add order_detail");
+       }
         OrderSaveResponse response = new OrderSaveResponse();
-        response.setId(orderEntity.getId());
-        response.setUserId(orderEntity.getUser().getId());
-        return response;
     }
 }

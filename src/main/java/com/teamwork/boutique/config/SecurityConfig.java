@@ -1,10 +1,12 @@
 package com.teamwork.boutique.config;
 
+
 import com.teamwork.boutique.filter.JwtFilter;
 import com.teamwork.boutique.provider.CustomAuthenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,7 +31,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/signin/**", "/signup","/cart/**","/color/**","/product/**","/stock/**","/category/**","/purchase/**","/order-detail/**","/detail","/phone/**","/address/**","/country/**","/city-province/**","/order/**").permitAll()
+                .antMatchers("/signin", "/signup","/cart/**","/color/**","/product/**","/stock/**","/category/**","/purchase/**","/order-detail/**","/detail","/phone/**","/address/**","/country/**","/city-province/**","/order/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

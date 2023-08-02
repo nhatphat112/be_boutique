@@ -27,10 +27,12 @@ public class OrderController {
         if(result.hasErrors()){
             throw new CustomException(result.getObjectName().toString());
         }
+        orderServiceImp.save(request);
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setMessage("Saved Order");
         baseResponse.setStatusCode(200);
-        baseResponse.setData(orderServiceImp.save(request));
+        baseResponse.setData("");
+
         logger.info("Response :"+gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }

@@ -9,6 +9,33 @@ public class OrderDetailResponse {
     private int quantity;
    private String colorName;
    private int stockId;
+   private int statusId;
+   private String StatusName;
+   private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    public String getStatusName() {
+        return StatusName;
+    }
+
+    public void setStatusName(String statusName) {
+        StatusName = statusName;
+    }
 
     public String getColorName() {
         return colorName;

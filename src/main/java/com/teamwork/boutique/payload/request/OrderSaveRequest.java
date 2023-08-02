@@ -1,6 +1,7 @@
 package com.teamwork.boutique.payload.request;
 
 import javax.swing.*;
+import java.util.List;
 
 public class OrderSaveRequest {
     private int userId;
@@ -8,6 +9,15 @@ public class OrderSaveRequest {
     private int phoneId;
     private double total;
     private int statusId;
+    List<OrderDetailSaveRequest> orderDetailSaveRequests;
+
+    public List<OrderDetailSaveRequest> getOrderDetailSaveRequests() {
+        return orderDetailSaveRequests;
+    }
+
+    public void setOrderDetailSaveRequests(List<OrderDetailSaveRequest> orderDetailSaveRequests) {
+        this.orderDetailSaveRequests = orderDetailSaveRequests;
+    }
 
     public int getUserId() {
         return userId;
@@ -53,3 +63,4 @@ public class OrderSaveRequest {
 
     }
 }
+
