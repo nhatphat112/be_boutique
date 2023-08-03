@@ -48,29 +48,30 @@ public class LoginController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody SignupRequest request, BindingResult result) {
-        logger.info("Request :"+gson.toJson(request));
+        logger.info("Request :" + gson.toJson(request));
         List<FieldError> list = result.getFieldErrors();
         for (FieldError data :
                 list) {
             throw new CustomException(data.getDefaultMessage());
         }
         BaseResponse response = new BaseResponse();
-        HashMap<String,Object> dataList = new HashMap<>();
-        dataList.put("userInfo",userServiceImp.addUser(request));
-        dataList.put("token",jwtHelper.generateToken(request.getEmail()));
+        HashMap<String, Object> dataList = new HashMap<>();
+        dataList.put("userInfo", userServiceImp.addUser(request));
+        dataList.put("token", jwtHelper.generateToken(request.getEmail()));
         response.setStatusCode(200);
         response.setMessage("Saved user");
         response.setData(dataList);
-        logger.info("Response :"+gson.toJson(response));
+        logger.info("Response :" + gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/signin/findUserId", method = RequestMethod.POST)
     public ResponseEntity<?> findUserId(FindUserIdRequest request) {
         int id = userServiceImp.findUserId(request);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(id);
-        System.out.println(id+" newuserId");
+        System.out.println(id + " newUserId");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -89,6 +89,7 @@ public class ProductService implements ProductServiceImp {
             stockResponse.setPrice(stock.getPrice());
             stockResponse.setColorId(stock.getColor().getId());
             stockResponse.setColorName(stock.getColor().getName());
+
             stockResponseList.add(stockResponse);
         }
         detailResponse.setStockResponseList(stockResponseList);
