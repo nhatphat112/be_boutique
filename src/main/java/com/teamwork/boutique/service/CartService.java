@@ -60,8 +60,7 @@ public class CartService implements CartServiceImp {
     public List<CartResponse> getAllCart(int userId) {
         System.out.println("Kiem tra category");
         List<CartResponse> listResponse = new ArrayList<>();
-        UserEntity user = userRepository.findById(userId);
-        List<CartEntity> list = cartRepository.findByUserId(user.getId());
+        List<CartEntity> list = cartRepository.findByUserId(userId);
         for (CartEntity data : list) {
             CartResponse response = new CartResponse();
             response.setId(data.getId());
@@ -69,6 +68,7 @@ public class CartService implements CartServiceImp {
             ProductEntity product = productRepository.findById(stock.getProduct().getId());
             response.setStockId(stock.getId());
             response.setProductName(product.getName());
+            response.setProductId(product.getId());
             response.setStockPrice(stock.getPrice());
             response.setStockImage(stock.getImage());
             response.setQuantity(data.getQuantity());

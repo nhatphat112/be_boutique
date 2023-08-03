@@ -13,6 +13,7 @@ public class CartResponse {
     private String productName;
     private String stockImage;
     private int stockId;
+    private int productId;
     public String getStockImage() {
         return stockImage;
     }
@@ -67,5 +68,13 @@ public class CartResponse {
 
     public void setStockId(int stockId) {
         this.stockId = stockId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }
