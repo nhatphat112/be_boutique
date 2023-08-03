@@ -14,5 +14,6 @@ public interface StockRepository extends JpaRepository<StockEntity,Integer>{
     double findMinPriceByProductId(int productId);
 //    @Query(value = "select s.id,s.color.id,s.color.name,s.quantity,s.image from stock s where s.product.id=?1")
     List<StockEntity> findByProductId(int productId);
+    List<StockEntity> findByIdIn(List<Integer> ids);
 
 }
