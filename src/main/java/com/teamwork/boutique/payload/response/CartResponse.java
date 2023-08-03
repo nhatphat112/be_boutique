@@ -12,7 +12,7 @@ public class CartResponse {
     private double stockPrice;
     private String productName;
     private String stockImage;
-
+    private int stockId;
     public String getStockImage() {
         return stockImage;
     }
@@ -59,5 +59,13 @@ public class CartResponse {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public int getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
     }
 }

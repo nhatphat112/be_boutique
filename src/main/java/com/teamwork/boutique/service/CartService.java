@@ -67,6 +67,7 @@ public class CartService implements CartServiceImp {
             response.setId(data.getId());
             StockEntity stock = data.getStock();
             ProductEntity product = productRepository.findById(stock.getProduct().getId());
+            response.setStockId(stock.getId());
             response.setProductName(product.getName());
             response.setStockPrice(stock.getPrice());
             response.setStockImage(stock.getImage());
