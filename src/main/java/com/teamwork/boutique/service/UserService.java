@@ -26,21 +26,26 @@ public class UserService implements UserServiceImp {
     @Override
     public LoginSigupResponse addUser(SignupRequest request) {
         LoginSigupResponse response = new LoginSigupResponse();
-        boolean isSuccess = false;
-        UserEntity user = new UserEntity();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setEmail(request.getEmail());
-        user.setRole(new RoleEntity());
-        user.getRole().setId(2);
-        if (userRepository.findByEmail(request.getEmail()) != null) {
-            throw new CustomException("This email already exists.");
-        }
-        user = userRepository.saveAndFlush(user);
-        response.setId(user.getId());
-        response.setRoleId(user.getRole().getId());
-        response.setUsername(user.getUsername());
+       try {
 
+           boolean isSuccess = false;
+           UserEntity user = new UserEntity();
+           user.setUsername(request.getUsername());
+           user.setPassword(passwordEncoder.encode(request.getPassword()));
+           user.setEmail(request.getEmail());
+           user.setRole(new RoleEntity());
+           user.getRole().setId(2);
+           if (userRepository.findByEmail(request.getEmail()) != null) {
+               throw new CustomException("This email already exists.",400);
+           }
+           user = userRepository.saveAndFlush(user);
+           response.setId(user.getId());
+           response.setRoleId(user.getRole().getId());
+           response.setUsername(user.getUsername());
+
+       }catch (Exception e){
+           throw new CustomException(e.getMessage(),400);
+       }
         return response;
     }
 

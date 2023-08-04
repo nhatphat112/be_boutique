@@ -56,7 +56,7 @@ public class LoginController {
         }
         BaseResponse response = new BaseResponse();
         HashMap<String, Object> dataList = new HashMap<>();
-        dataList.put("userInfo", userServiceImp.addUser(request));
+        userServiceImp.addUser(request);
         dataList.put("token", jwtHelper.generateToken(request.getEmail()));
         response.setStatusCode(200);
         response.setMessage("Saved user");
