@@ -4,15 +4,18 @@ import com.teamwork.boutique.payload.response.BaseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
+
 public class GlobalCustomException {
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<?> handleCustomException(Exception e){
+    @ResponseBody
+    public ResponseEntity<?> handleCustomException(CustomException e){
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setStatusCode(500);
-        baseResponse.setData(e.getMessage());
+        baseResponse.setStatusCode(e.getStatusCode());
+        baseResponse.setMessage(e.getMessage());
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }
 }
