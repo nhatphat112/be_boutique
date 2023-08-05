@@ -10,8 +10,12 @@ import java.util.List;
 
 public interface UserServiceImp {
     LoginSigupResponse addUser(SignupRequest request);
+
     boolean deleteUser(int userId);
+
     int findUserId(FindUserIdRequest request);
+
+    boolean updateUserRole(int userId, int roleId);
 
     List<UserResponse> getAllUser();
 

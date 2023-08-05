@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers("/signin/**", "/signup/**","/cart/**","/color/**","/product/**","/stock/**","/category/**","/detail","/country/**","/city-province/**","/user/**").permitAll()
-                .antMatchers("/order/**","/phone/**","/order-detail/**","/purchase/**","/address/**","/order/**").hasAnyAuthority("ADMIN","USER")
+                .antMatchers("/order/**","/phone/**","/order-detail/**","/purchase/**","/address/**").hasAnyAuthority("ADMIN","USER")
                 .anyRequest().authenticated()
                 .and()
                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

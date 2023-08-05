@@ -7,6 +7,7 @@ import com.teamwork.boutique.payload.request.FindUserIdRequest;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.response.LoginSigupResponse;
 import com.teamwork.boutique.payload.response.UserResponse;
+import com.teamwork.boutique.repository.RoleRepository;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,31 +22,33 @@ public class UserService implements UserServiceImp {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public LoginSigupResponse addUser(SignupRequest request) {
         LoginSigupResponse response = new LoginSigupResponse();
-       try {
+        try {
 
-           boolean isSuccess = false;
-           UserEntity user = new UserEntity();
-           user.setUsername(request.getUsername());
-           user.setPassword(passwordEncoder.encode(request.getPassword()));
-           user.setEmail(request.getEmail());
-           user.setRole(new RoleEntity());
-           user.getRole().setId(2);
-           if (userRepository.findByEmail(request.getEmail()) != null) {
-               throw new CustomException("This email already exists.",400);
-           }
-           user = userRepository.saveAndFlush(user);
-           response.setId(user.getId());
-           response.setRoleId(user.getRole().getId());
-           response.setUsername(user.getUsername());
+            boolean isSuccess = false;
+            UserEntity user = new UserEntity();
+            user.setUsername(request.getUsername());
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            user.setEmail(request.getEmail());
+            user.setRole(new RoleEntity());
+            user.getRole().setId(2);
+            if (userRepository.findByEmail(request.getEmail()) != null) {
+                throw new CustomException("This email already exists.", 400);
+            }
+            user = userRepository.saveAndFlush(user);
+            response.setId(user.getId());
+            response.setRoleId(user.getRole().getId());
+            response.setUsername(user.getUsername());
 
-       }catch (Exception e){
-           throw new CustomException(e.getMessage(),400);
-       }
+        } catch (Exception e) {
+            throw new CustomException(e.getMessage(), 400);
+        }
         return response;
     }
 
@@ -69,6 +72,18 @@ public class UserService implements UserServiceImp {
         } catch (Exception e) {
             throw new CustomException("Lỗi add user " + e.getMessage());
         }
+    }
+
+    @Override
+    public boolean updateUserRole(int userId, int roleId) {
+        boolean isSuccess = false;
+        UserEntity user = userRepository.findById(userId);
+        if (user != null && user.getRole().getId() != roleId) {
+            user.setRole(roleRepository.findById(roleId));
+            userRepository.save(user);
+            isSuccess = true;
+        }
+        return isSuccess;
     }
 
     @Override
