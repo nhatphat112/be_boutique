@@ -38,47 +38,46 @@ public class JwtFilter extends OncePerRequestFilter {
      * Giải mã token
      * Nếu giải mã thành công thì hợp lệ
      * Tạo chứng thực và cho đi vào link người dùng gọi
-     *
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             //lấy giá trị của heaader có key là Authorization
             String header = request.getHeader("Authorization");
-            System.out.println("check header :"+header);
-            if (header!=null && header.startsWith("Bearer ")) {
+            System.out.println("check header :" + header);
+            if (header != null && header.startsWith("Bearer ")) {
 
 // Cắt bỏ chuỗi Bearer và lấy ra token
                 String token = header.substring(7);
 //  Giải mã token
                 Claims claims = jwtHelper.decodeToken(token);
-                System.out.println("claims.getSubject():"+claims.getSubject());
+                System.out.println("claims.getSubject():" + claims.getSubject());
 
                 if (claims != null) {
                     // Tạo chứng thực cho security
 
                     UserEntity userEntity = userRepository.findByEmail(claims.getSubject());
-                   ArrayList<GrantedAuthority> roleList = new ArrayList<>();
-                   roleList.add(new SimpleGrantedAuthority(userEntity.getRole().getName()));
-                    System.out.println("check role :"+roleList.get(0));
-                    if(userEntity!=null){
+                    ArrayList<GrantedAuthority> roleList = new ArrayList<>();
+                    roleList.add(new SimpleGrantedAuthority(userEntity.getRole().getName()));
+                    System.out.println("check role :" + roleList.get(0));
+                    if (userEntity != null) {
 //                        request.setAttribute("userId",userEntity.getId());
                         SecurityContext context = SecurityContextHolder.getContext();
                         UsernamePasswordAuthenticationToken user =
-                                new UsernamePasswordAuthenticationToken(userEntity.getEmail(), "",roleList);
+                                new UsernamePasswordAuthenticationToken(userEntity.getEmail(), "", roleList);
                         context.setAuthentication(user);
-                    }else {
-                        throw new CustomException("User with"+claims.getSubject()+" is null",500);
+                    } else {
+                        throw new CustomException("User with" + claims.getSubject() + " is null", 500);
                     }
 
-                }else {
-                    throw new CustomException("This token is invalid.",401);
+                } else {
+                    throw new CustomException("This token is invalid.", 401);
                 }
             }
 //            else {
 //                throw new CustomException("This token is malformed or empty.");
 //            }
-        }catch (CustomException e){
+        } catch (CustomException e) {
             throw new CustomException(e.getMessage());
         }
         filterChain.doFilter(request, response);

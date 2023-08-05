@@ -15,10 +15,10 @@ public class ReviewRequest {
     @Max(value = 5, message = "starnumber must be greater less or equal to 5")
     private int starNumber;
 
-//    @NotNull(message = "userid not null")
-    private UserEntity userId;
-//    @NotNull(message = "productId not null")
-    private ProductEntity productId;
+    @NotNull(message = "userid not null")
+    private int  userId;
+    @NotNull(message = "productId not null")
+    private int productId;
 
     public String getContent() {
         return content;
@@ -36,19 +36,19 @@ public class ReviewRequest {
         this.starNumber = starNumber;
     }
 
-    public UserEntity getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(UserEntity userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public ProductEntity getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(ProductEntity productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 }

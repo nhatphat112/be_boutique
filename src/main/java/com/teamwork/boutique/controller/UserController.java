@@ -5,10 +5,7 @@ import com.teamwork.boutique.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -22,6 +19,15 @@ public class UserController {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(userServiceImp.getAllUser());
         baseResponse.setMessage("Get All User");
+        baseResponse.setStatusCode(200);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/updaterole")
+    public ResponseEntity<?> updateUserRole(int userId, int roleId) {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(userServiceImp.updateUserRole(userId, roleId));
+        baseResponse.setMessage("Update user's role");
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
