@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ColorServiceImp {
     List<ColorResponse> getAllColor();
+    boolean addColor(String colorName);
 }

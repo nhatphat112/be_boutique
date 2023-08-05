@@ -5,10 +5,7 @@ import com.teamwork.boutique.service.imp.ColorServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/color")
@@ -22,6 +19,14 @@ public class ColorController {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(colorServiceImp.getAllColor());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addColor(String colorName) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(colorServiceImp.addColor(colorName));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
