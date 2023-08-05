@@ -33,4 +33,23 @@ public class ColorService implements ColorServiceImp {
 
         return listResponse;
     }
+
+    @Override
+    public boolean addColor(String colorName) {
+        boolean isSuccess = true;
+        if (colorName != null && !colorName.isEmpty()) {
+            for (ColorResponse colorResponse : getAllColor()) {
+                if (colorResponse.getName().equalsIgnoreCase(colorName)) {
+                    isSuccess = false;
+                }
+            }
+            if (isSuccess) {
+                ColorEntity color = new ColorEntity();
+                color.setName(colorName);
+                colorRepository.save(color);
+            }
+        }
+        return isSuccess;
+    }
+
 }
