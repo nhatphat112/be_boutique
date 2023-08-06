@@ -45,16 +45,16 @@ public class CartController {
         response.setData(cartServiceImp.getAllCart(userId));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    /*
-    @GetMapping("/count/{email}")
-    public ResponseEntity<?> cartCount(@PathVariable String email) {
+
+    @GetMapping("/count/{userId}")
+    public ResponseEntity<?> cartCount(@PathVariable int userId) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
-        response.setData(cartServiceImp.countCartItems(email));
+        response.setData(cartServiceImp.countCartItems(userId));
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-     */
+
 
     @GetMapping("/delete/{cartId}")
     public ResponseEntity<?> delete(@PathVariable int cartId) {
