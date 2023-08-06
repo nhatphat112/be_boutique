@@ -1,9 +1,11 @@
 package com.teamwork.boutique.utils;
 
+import com.teamwork.boutique.exception.CustomException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,10 +31,15 @@ public class JwtHelper {
         //lấy key
         Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));
         //giải mã token
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build().parseClaimsJws(token)
-                .getBody();
+        Claims claims = null;
+        try {
+           claims= Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build().parseClaimsJws(token)
+                    .getBody();
+        }catch (SignatureException customException){
+//            throw new CustomException("Don't decoded token.");z
+        }
         return claims;
     }
 }

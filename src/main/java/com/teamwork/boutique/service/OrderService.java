@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class OrderService implements OrderServiceImp {
@@ -43,12 +44,12 @@ public class OrderService implements OrderServiceImp {
             throw new CustomException("Error add Order");
         }
         // create list stock need to checking
-        List<Integer> idStock = new ArrayList<>();
+        List<Integer> idStocks = new ArrayList<>();
         for (OrderDetailSaveRequest item : request.getOrderDetailSaveRequests()){
-            idStock.add(item.getId());
+            idStocks.add(item.getId());
         }
         // get list stock from database
-        List<StockEntity> stockEntities = stockRepository.findByIdIn(idStock);
+        List<StockEntity> stockEntities = stockRepository.findByIdIn(idStocks);
         List<OrderDetailEntity> orderDetailEntities = new ArrayList<>();
         // check list stock valid and update quantity stockList?
         for(OrderDetailSaveRequest orderDetailItem : request.getOrderDetailSaveRequests()){
@@ -65,8 +66,10 @@ public class OrderService implements OrderServiceImp {
             orderDetailEntities.add(entity);
             // check valid and update
             for (StockEntity stockItem: stockEntities){
+
                 if(stockItem.getId()==orderDetailItem.getId()){
                     if(stockItem.getQuantity()>=orderDetailItem.getQuantity()){
+                        stockItem.getProduct().setSoldQuantity(stockItem.getProduct().getSoldQuantity()+stockItem.getQuantity());
                         stockItem.setQuantity(stockItem.getQuantity()-orderDetailItem.getQuantity());
                         break;
                     }else {

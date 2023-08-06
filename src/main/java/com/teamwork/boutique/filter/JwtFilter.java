@@ -1,18 +1,25 @@
 package com.teamwork.boutique.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.utils.JwtHelper;
 import io.jsonwebtoken.Claims;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -21,6 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -32,7 +40,8 @@ public class JwtFilter extends OncePerRequestFilter {
     private JwtHelper jwtHelper;
     @Autowired
     private UserRepository userRepository;
-
+    private Logger logger = LoggerFactory.getLogger(JwtHelper.class);
+    private Gson gson = new Gson();
     /**
      * Nhận được token truyền trên header
      * Giải mã token
@@ -51,34 +60,30 @@ public class JwtFilter extends OncePerRequestFilter {
                 String token = header.substring(7);
 //  Giải mã token
                 Claims claims = jwtHelper.decodeToken(token);
-                System.out.println("claims.getSubject():" + claims.getSubject());
 
                 if (claims != null) {
                     // Tạo chứng thực cho security
 
                     UserEntity userEntity = userRepository.findByEmail(claims.getSubject());
-                    ArrayList<GrantedAuthority> roleList = new ArrayList<>();
-                    roleList.add(new SimpleGrantedAuthority(userEntity.getRole().getName()));
-                    System.out.println("check role :" + roleList.get(0));
+
                     if (userEntity != null) {
+                        ArrayList<GrantedAuthority> roleList = new ArrayList<>();
+                        roleList.add(new SimpleGrantedAuthority(userEntity.getRole().getName()));
 //                        request.setAttribute("userId",userEntity.getId());
                         SecurityContext context = SecurityContextHolder.getContext();
                         UsernamePasswordAuthenticationToken user =
                                 new UsernamePasswordAuthenticationToken(userEntity.getEmail(), "", roleList);
                         context.setAuthentication(user);
-                    } else {
-                        throw new CustomException("User with" + claims.getSubject() + " is null", 500);
+                    }
+                    else {
+                        returnBaseReponseEntity(response,"User with" + claims.getSubject() + " is null", 401);
                     }
 
-                } else {
-                    throw new CustomException("This token is invalid.", 401);
                 }
             }
-//            else {
-//                throw new CustomException("This token is malformed or empty.");
-//            }
         } catch (CustomException e) {
-            throw new CustomException(e.getMessage());
+
+           returnBaseReponseEntity(response,e.getMessage(),500);
         }
         filterChain.doFilter(request, response);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -93,5 +98,16 @@ public class JwtFilter extends OncePerRequestFilter {
             System.out.println("Authentication result - Not authenticated");
         }
 
+
+    }
+    private void returnBaseReponseEntity(HttpServletResponse response,String message,int statusCode) throws IOException {
+        BaseResponse baseResponse = new BaseResponse();
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType("application/json");
+        baseResponse.setMessage(message);
+        baseResponse.setStatusCode(statusCode);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(response.getWriter(),baseResponse);
+        return;
     }
 }

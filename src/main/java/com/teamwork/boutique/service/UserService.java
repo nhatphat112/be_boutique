@@ -39,7 +39,7 @@ public class UserService implements UserServiceImp {
             user.setRole(new RoleEntity());
             user.getRole().setId(2);
             if (userRepository.findByEmail(request.getEmail()) != null) {
-                throw new CustomException("This email already exists.", 400);
+                throw new CustomException("This email already exists.", 500);
             }
             user = userRepository.saveAndFlush(user);
             response.setId(user.getId());
@@ -47,7 +47,7 @@ public class UserService implements UserServiceImp {
             response.setUsername(user.getUsername());
 
         } catch (Exception e) {
-            throw new CustomException(e.getMessage(), 400);
+            throw new CustomException(e.getMessage());
         }
         return response;
     }
