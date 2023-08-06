@@ -19,7 +19,7 @@ public class StockService implements StockServiceImp {
         List<StockResponse> stockResponses = new ArrayList<>();
         for (StockEntity item : stockRepository.findByProductId(productId)){
             StockResponse response = new StockResponse();
-            response.setId(item.getId());
+//            response.setId(item.getId());
             response.setColorName(item.getColor().getName());
             response.setQuantity(item.getQuantity());
             response.setPrice(item.getPrice());
