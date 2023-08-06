@@ -71,6 +71,7 @@ public class CartService implements CartServiceImp {
             response.setProductId(product.getId());
             response.setStockPrice(stock.getPrice());
             response.setStockImage(stock.getImage());
+            response.setMaxQuantity(stock.getQuantity());
             response.setQuantity(data.getQuantity());
             listResponse.add(response);
         }

@@ -14,6 +14,15 @@ public class CartResponse {
     private String stockImage;
     private int stockId;
     private int productId;
+    private int maxQuantity;
+
+    public int getMaxQuantity() {
+        return maxQuantity;
+    }
+    public void setMaxQuantity(int maxQuantity) {
+        this.maxQuantity = maxQuantity;
+    }
+
     public String getStockImage() {
         return stockImage;
     }
