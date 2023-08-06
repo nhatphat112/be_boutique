@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -32,17 +33,23 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new AuthenticationEntryPointConfig();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/signin/**", "/signup/**","/cart/**","/color/**","/product/**","/stock/**","/category/**","/detail","/country/**","/city-province/**","/user/**").permitAll()
-                .antMatchers("/order/**","/phone/**","/order-detail/**","/purchase/**","/address/**").hasAnyAuthority("ADMIN","USER")
+                .antMatchers("/signin/**", "/signup/**", "/cart/**", "/color/**", "/product/**", "/stock/**", "/category/**", "/detail", "/country/**", "/city-province/**", "/user/**").permitAll()
+                .antMatchers("/order/**", "/phone/**", "/order-detail/**", "/purchase/**", "/address/**").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
-               .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
+                .and().build();
 
     }
 
@@ -51,6 +58,7 @@ public class SecurityConfig {
         // Add the custom LoggingFilter before JwtFilter
         http.addFilterBefore(new JwtFilter(), JwtFilter.class);
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -62,6 +70,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
     @Bean
     public CorsFilter corsFilter() {
         return new CorsFilter(corsConfigurationSource());
