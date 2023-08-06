@@ -4,10 +4,10 @@ import com.teamwork.boutique.entity.ProductEntity;
 import com.teamwork.boutique.entity.ReviewEntity;
 import com.teamwork.boutique.entity.StockEntity;
 import com.teamwork.boutique.entity.TagProductEntity;
-import com.teamwork.boutique.payload.response.DetailResponse;
-import com.teamwork.boutique.payload.response.ProductResponse;
-import com.teamwork.boutique.payload.response.ReviewResponse;
-import com.teamwork.boutique.payload.response.StockResponse;
+import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.request.ProductRequest;
+import com.teamwork.boutique.payload.request.SignupRequest;
+import com.teamwork.boutique.payload.response.*;
 import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.service.imp.ProductServiceImp;
@@ -94,5 +94,21 @@ public class ProductService implements ProductServiceImp {
         }
         detailResponse.setStockResponseList(stockResponseList);
         return detailResponse;
+    }
+@Override
+    public boolean addProduct(ProductRequest request) {
+        boolean isSuccess = false;
+        try{
+            ProductEntity product = new ProductEntity();
+            product.setId(request.getId());
+            product.setName(request.getName());
+            product.setImage(request.getImage());
+            product.setDesc(request.getDesc());
+            productRepository.save(product);
+            return isSuccess = true;
+        }catch (Exception e) {
+            throw new CustomException(e.getMessage());
+        }
+
     }
 }

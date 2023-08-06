@@ -55,7 +55,6 @@ public class CartController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
     @GetMapping("/delete/{cartId}")
     public ResponseEntity<?> delete(@PathVariable int cartId) {
         BaseResponse response = new BaseResponse();

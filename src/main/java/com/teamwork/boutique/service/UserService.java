@@ -30,8 +30,7 @@ public class UserService implements UserServiceImp {
     public LoginSigupResponse addUser(SignupRequest request) {
         LoginSigupResponse response = new LoginSigupResponse();
         try {
-
-            boolean isSuccess = false;
+//            boolean isSuccess = false;
             UserEntity user = new UserEntity();
             user.setUsername(request.getUsername());
             user.setPassword(passwordEncoder.encode(request.getPassword()));

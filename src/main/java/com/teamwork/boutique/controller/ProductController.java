@@ -1,6 +1,7 @@
 package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
+import com.teamwork.boutique.payload.request.ProductRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.ProductServiceImp;
 import org.slf4j.Logger;
@@ -33,6 +34,14 @@ public class ProductController {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(productServiceImp.getDetailProductByProductId(id));
         baseResponse.setMessage("Detail by product id");
+        baseResponse.setStatusCode(200);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    public ResponseEntity<?> addProduct(ProductRequest request) {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(productServiceImp.addProduct(request));
+        baseResponse.setMessage("add product");
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
