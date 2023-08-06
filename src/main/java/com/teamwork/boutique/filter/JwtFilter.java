@@ -1,11 +1,14 @@
 package com.teamwork.boutique.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.utils.JwtHelper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -67,18 +70,13 @@ public class JwtFilter extends OncePerRequestFilter {
                                 new UsernamePasswordAuthenticationToken(userEntity.getEmail(), "", roleList);
                         context.setAuthentication(user);
                     } else {
-                        throw new CustomException("User with" + claims.getSubject() + " is null", 500);
+                        returnBaseReponseEntity(response, "User with" + claims.getSubject() + " is null", 500);
                     }
 
-                } else {
-                    throw new CustomException("This token is invalid.", 401);
                 }
             }
-//            else {
-//                throw new CustomException("This token is malformed or empty.");
-//            }
         } catch (CustomException e) {
-            throw new CustomException(e.getMessage());
+            returnBaseReponseEntity(response, e.getMessage(), 500);
         }
         filterChain.doFilter(request, response);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -93,5 +91,16 @@ public class JwtFilter extends OncePerRequestFilter {
             System.out.println("Authentication result - Not authenticated");
         }
 
+    }
+
+    private void returnBaseReponseEntity(HttpServletResponse response, String message, int statusCode) throws IOException {
+        BaseResponse baseResponse = new BaseResponse();
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType("application/json");
+        baseResponse.setMessage(message);
+        baseResponse.setStatusCode(statusCode);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.writeValue(response.getWriter(), baseResponse);
+        return;
     }
 }

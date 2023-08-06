@@ -25,9 +25,10 @@ public class OrderService implements OrderServiceImp {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private StockRepository stockRepository;
+
     @Transactional
     @Override
-    public void  save(OrderSaveRequest request) {
+    public void save(OrderSaveRequest request) {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setAddress(new AddressEntity());
         orderEntity.getAddress().setId(request.getAddressId());
@@ -39,19 +40,19 @@ public class OrderService implements OrderServiceImp {
         orderEntity.getStatus().setId(request.getStatusId());
         orderEntity.setTotal(request.getTotal());
         orderEntity = repository.saveAndFlush(orderEntity);
-        if(orderEntity==null){
+        if (orderEntity == null) {
             throw new CustomException("Error add Order");
         }
         // create list stock need to checking
-        List<Integer> idStock = new ArrayList<>();
-        for (OrderDetailSaveRequest item : request.getOrderDetailSaveRequests()){
-            idStock.add(item.getId());
+        List<Integer> idStocks = new ArrayList<>();
+        for (OrderDetailSaveRequest item : request.getOrderDetailSaveRequests()) {
+            idStocks.add(item.getId());
         }
         // get list stock from database
-        List<StockEntity> stockEntities = stockRepository.findByIdIn(idStock);
+        List<StockEntity> stockEntities = stockRepository.findByIdIn(idStocks);
         List<OrderDetailEntity> orderDetailEntities = new ArrayList<>();
         // check list stock valid and update quantity stockList?
-        for(OrderDetailSaveRequest orderDetailItem : request.getOrderDetailSaveRequests()){
+        for (OrderDetailSaveRequest orderDetailItem : request.getOrderDetailSaveRequests()) {
             // create list OrderDetail
             OrderDetailEntity entity = new OrderDetailEntity();
             entity.setOrder(new OrderEntity());
@@ -64,13 +65,15 @@ public class OrderService implements OrderServiceImp {
             entity.setPrice(orderDetailItem.getPrice());
             orderDetailEntities.add(entity);
             // check valid and update
-            for (StockEntity stockItem: stockEntities){
-                if(stockItem.getId()==orderDetailItem.getId()){
-                    if(stockItem.getQuantity()>=orderDetailItem.getQuantity()){
-                        stockItem.setQuantity(stockItem.getQuantity()-orderDetailItem.getQuantity());
+            for (StockEntity stockItem : stockEntities) {
+
+                if (stockItem.getId() == orderDetailItem.getId()) {
+                    if (stockItem.getQuantity() >= orderDetailItem.getQuantity()) {
+                        stockItem.getProduct().setSoldQuantity(stockItem.getProduct().getSoldQuantity() + stockItem.getQuantity());
+                        stockItem.setQuantity(stockItem.getQuantity() - orderDetailItem.getQuantity());
                         break;
-                    }else {
-                        throw new CustomException(stockItem.getProduct().getName()+"with "+stockItem.getColor().getName()+"color no longer availabe in sufficient quantity");
+                    } else {
+                        throw new CustomException(stockItem.getProduct().getName() + "with " + stockItem.getColor().getName() + "color no longer availabe in sufficient quantity");
                     }
                 }
             }
