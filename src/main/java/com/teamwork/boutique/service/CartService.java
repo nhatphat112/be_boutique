@@ -79,17 +79,17 @@ public class CartService implements CartServiceImp {
         String data = gson.toJson(listResponse);
         return listResponse;
     }
-/*
+
     @Override
-    public int countCartItems(String email) {
-        UserEntity user = userRepository.findByEmail(email);
-        List<CartEntity> allCartList = cartRepository.findByUserId(user.getId());
-        int totalQuantity =0;
+    public int countCartItems(int userId) {
+//        UserEntity user = userRepository.findById(email);
+        List<CartEntity> allCartList = cartRepository.findByUserId(userId);
+        int totalQuantity=0;
         for(CartEntity cart:allCartList){
             totalQuantity+=cart.getQuantity();
         }
-        return allCartList.size();
-    }*/
+        return totalQuantity;
+    }
 
     @Override
     public boolean delete(int cartId) {

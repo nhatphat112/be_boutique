@@ -14,6 +14,6 @@ public interface CartServiceImp {
 
     boolean delete(int cartId);
 
-    // int countCartItems(String email);
+    int countCartItems(int userId);
     boolean updateCart(int id, int quantity);
 }
