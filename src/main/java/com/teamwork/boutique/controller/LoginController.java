@@ -19,7 +19,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseEntity<?> signup(@RequestBody SignupRequest request, BindingResult result) {
+    public ResponseEntity<?> signup(@RequestBody @Valid SignupRequest request, BindingResult result) {
         logger.info("Request :" + gson.toJson(request));
         List<FieldError> list = result.getFieldErrors();
         for (FieldError data :

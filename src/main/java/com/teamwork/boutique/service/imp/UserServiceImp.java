@@ -19,4 +19,6 @@ public interface UserServiceImp {
 
     List<UserResponse> getAllUser();
 
+    int getUserIdByToken(String token);
+
 }
