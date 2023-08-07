@@ -2,6 +2,7 @@ package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
 import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.request.CartDeleteByIdsRequest;
 import com.teamwork.boutique.payload.request.CartUpdateRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.CartServiceImp;
@@ -15,6 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/cart")
@@ -70,6 +72,16 @@ public class CartController {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(isSuccess);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PostMapping("/delete/ids")
+    public ResponseEntity<?> deleteByIds(@RequestBody Set<CartDeleteByIdsRequest> ids) {
+        logger.info("Request :"+gson.toJson(ids));
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setMessage("Deleted list cart.");
+        response.setData(cartServiceImp.deleteByIds(ids));
+        logger.info("Response :"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
