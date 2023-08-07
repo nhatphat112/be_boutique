@@ -1,13 +1,10 @@
 package com.teamwork.boutique.service;
 
-import com.teamwork.boutique.entity.ProductEntity;
-import com.teamwork.boutique.entity.ReviewEntity;
-import com.teamwork.boutique.entity.StockEntity;
-import com.teamwork.boutique.entity.TagProductEntity;
+import com.teamwork.boutique.entity.*;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.ProductRequest;
-import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.response.*;
+import com.teamwork.boutique.repository.CategoryRepository;
 import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.service.imp.ProductServiceImp;
@@ -23,6 +20,8 @@ public class ProductService implements ProductServiceImp {
     private ProductRepository productRepository;
     @Autowired
     private StockRepository stockRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<ProductResponse> getAllCategory() {
@@ -34,7 +33,9 @@ public class ProductService implements ProductServiceImp {
             response.setName(item.getName());
             response.setImage(item.getImage());
             response.setPrice(stockRepository.findMinPriceByProductId(item.getId()));
-            response.setDesciption(item.getDesc());
+            response.setDescription(item.getDesc());
+            response.setCategoryId(item.getCategory().getId());
+            response.setSoldQuantity(item.getSoldQuantity());
             productResponses.add(response);
         }
 
@@ -52,7 +53,7 @@ public class ProductService implements ProductServiceImp {
             productResponse.setName(data.getName());
             productResponse.setImage(data.getImage());
             productResponse.setPrice(stockRepository.findMinPriceByProductId(data.getId()));
-            productResponse.setDesciption(data.getDesc());
+            productResponse.setDescription(data.getDesc());
             responseList.add(productResponse);
         }
         return responseList;
@@ -100,10 +101,12 @@ public class ProductService implements ProductServiceImp {
         boolean isSuccess = false;
         try{
             ProductEntity product = new ProductEntity();
-            product.setId(request.getId());
+//            product.setId(request.getId());
             product.setName(request.getName());
             product.setImage(request.getImage());
             product.setDesc(request.getDesc());
+            CategoryEntity category = categoryRepository.findById(request.getCategoryId());
+            product.setCategory(category);
             productRepository.save(product);
             return isSuccess = true;
         }catch (Exception e) {

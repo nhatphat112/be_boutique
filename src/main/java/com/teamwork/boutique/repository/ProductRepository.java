@@ -11,6 +11,4 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<ProductEntity,Integer> {
     ProductEntity findById(int productId);
     List<ProductEntity> findByCategoryId(int idCategory);
-
-
 }
