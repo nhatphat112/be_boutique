@@ -41,29 +41,44 @@ public class CategoryController {
         response.setData(productServiceImp.getProductByCategory(id));
         return new ResponseEntity<>(response , HttpStatus.OK);
     }
-    @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public ResponseEntity<?> createCategory(CategorySaveRequest request){
-        Boolean isSuccess =categoryServiceImp.createCate(request);
-        BaseResponse response=new BaseResponse();
+
+@PostMapping("/add")
+public ResponseEntity<?> createcate(String catename) {
+    BaseResponse response = new BaseResponse();
+    response.setStatusCode(200);
+    response.setData(categoryServiceImp.createCate(catename));
+    return new ResponseEntity<>(response, HttpStatus.OK);
+}
+    @GetMapping("/delete")
+    public ResponseEntity<?> deleteColor(int id) {
+        BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
-        response.setData(isSuccess);
+        response.setData(categoryServiceImp.deletecate(id));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public ResponseEntity<?> deletecategory(@Valid CategorySaveRequest request){
-        Boolean isSuccess =categoryServiceImp.deleteCate(request);
-        BaseResponse response=new BaseResponse();
-        response.setStatusCode(200);
-        response.setData(isSuccess);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public ResponseEntity<?> updateCategory(@Valid CategorySaveRequest request){
-        Boolean isSuccess =categoryServiceImp.updateCate(request);
-        BaseResponse response=new BaseResponse();
-        response.setStatusCode(200);
-        response.setData(isSuccess);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/create",method = RequestMethod.POST)
+//    public ResponseEntity<?> createCategory(CategorySaveRequest request){
+//        Boolean isSuccess =categoryServiceImp.createCate(request);
+//        BaseResponse response=new BaseResponse();
+//        response.setStatusCode(200);
+//        response.setData(isSuccess);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+//    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+//    public ResponseEntity<?> deletecategory(@Valid CategorySaveRequest request){
+//        Boolean isSuccess =categoryServiceImp.deleteCate(request);
+//        BaseResponse response=new BaseResponse();
+//        response.setStatusCode(200);
+//        response.setData(isSuccess);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
+//    @RequestMapping(value = "/update",method = RequestMethod.POST)
+//    public ResponseEntity<?> updateCategory(@Valid CategorySaveRequest request){
+//        Boolean isSuccess =categoryServiceImp.updateCate(request);
+//        BaseResponse response=new BaseResponse();
+//        response.setStatusCode(200);
+//        response.setData(isSuccess);
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
 }

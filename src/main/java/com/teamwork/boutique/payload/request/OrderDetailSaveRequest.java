@@ -1,7 +1,8 @@
 package com.teamwork.boutique.payload.request;
 
 public class OrderDetailSaveRequest {
-    private int id;
+    private int stockId;
+    private int cartId;
     private int userId;
     private int orderId;
     private int quantity;
@@ -10,12 +11,21 @@ public class OrderDetailSaveRequest {
     public OrderDetailSaveRequest() {
     }
 
-    public int getId() {
-        return id;
+    public int getStockId() {
+        return stockId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStockId(int stockId) {
+        this.stockId = stockId;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+
     }
 
     public int getUserId() {
