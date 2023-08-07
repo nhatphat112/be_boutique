@@ -29,4 +29,12 @@ public class ColorController {
         response.setData(colorServiceImp.addColor(colorName));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/delete")
+    public ResponseEntity<?> deleteColor(int id) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(colorServiceImp.deleteColor(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
