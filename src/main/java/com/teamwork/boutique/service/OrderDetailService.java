@@ -52,7 +52,7 @@ public class OrderDetailService implements OrderDetailServiceImp {
             entity.setUser(new UserEntity());
             entity.getUser().setId(item.getUserId());
             entity.setStock(new StockEntity());
-            entity.getStock().setId(item.getId());
+            entity.getStock().setId(item.getStockId());
             entity.setQuantity(item.getQuantity());
             entity.setPrice(item.getPrice());
             orderDetailEntities.add(entity);
