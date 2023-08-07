@@ -5,8 +5,9 @@ public class ProductResponse {
     private String name;
     private double price;
     private String image;
-    private String desciption;
-
+    private String description;
+    private int categoryId;
+    private int soldQuantity;
     public ProductResponse(int id, String name, double price, String image) {
         this.id = id;
         this.name = name;
@@ -14,12 +15,28 @@ public class ProductResponse {
         this.image = image;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public int getSoldQuantity() {
+        return soldQuantity;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setSoldQuantity(int soldQuantity) {
+        this.soldQuantity = soldQuantity;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public ProductResponse() {

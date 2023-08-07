@@ -5,6 +5,14 @@ public class ProductRequest {
     private String name;
     private String image;
     private String desc;
+    private int categoryId;
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public int getId() {
         return id;
