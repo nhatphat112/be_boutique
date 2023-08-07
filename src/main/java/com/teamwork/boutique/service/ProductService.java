@@ -32,8 +32,15 @@ public class ProductService implements ProductServiceImp {
             response.setId(item.getId());
             response.setName(item.getName());
             response.setImage(item.getImage());
-            response.setPrice(stockRepository.findMinPriceByProductId(item.getId()));
+            double minPrice = 0;
+            try {
+                minPrice =  stockRepository.findMinPriceByProductId(item.getId());
+            }catch (Exception e){
+
+            }
+            response.setPrice(minPrice);
             response.setDescription(item.getDesc());
+            
             response.setCategoryId(item.getCategory().getId());
             response.setSoldQuantity(item.getSoldQuantity());
             productResponses.add(response);
