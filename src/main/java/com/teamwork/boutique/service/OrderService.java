@@ -46,7 +46,7 @@ public class OrderService implements OrderServiceImp {
         // create list stock need to checking
         List<Integer> idStocks = new ArrayList<>();
         for (OrderDetailSaveRequest item : request.getOrderDetailSaveRequests()) {
-            idStocks.add(item.getId());
+            idStocks.add(item.getStockId());
         }
         // get list stock from database
         List<StockEntity> stockEntities = stockRepository.findByIdIn(idStocks);
@@ -60,14 +60,14 @@ public class OrderService implements OrderServiceImp {
             entity.setUser(new UserEntity());
             entity.getUser().setId(orderEntity.getUser().getId());
             entity.setStock(new StockEntity());
-            entity.getStock().setId(orderDetailItem.getId());
+            entity.getStock().setId(orderDetailItem.getStockId());
             entity.setQuantity(orderDetailItem.getQuantity());
             entity.setPrice(orderDetailItem.getPrice());
             orderDetailEntities.add(entity);
             // check valid and update
             for (StockEntity stockItem : stockEntities) {
 
-                if (stockItem.getId() == orderDetailItem.getId()) {
+                if (stockItem.getId() == orderDetailItem.getStockId()) {
                     if (stockItem.getQuantity() >= orderDetailItem.getQuantity()) {
                         stockItem.getProduct().setSoldQuantity(stockItem.getProduct().getSoldQuantity() + stockItem.getQuantity());
                         stockItem.setQuantity(stockItem.getQuantity() - orderDetailItem.getQuantity());

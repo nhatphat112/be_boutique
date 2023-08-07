@@ -5,6 +5,8 @@ import com.teamwork.boutique.entity.CartEntity;
 import com.teamwork.boutique.entity.ProductEntity;
 import com.teamwork.boutique.entity.StockEntity;
 import com.teamwork.boutique.entity.UserEntity;
+import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.request.CartDeleteByIdsRequest;
 import com.teamwork.boutique.payload.request.CartUpdateRequest;
 import com.teamwork.boutique.payload.response.CartResponse;
 import com.teamwork.boutique.repository.CartRepository;
@@ -14,9 +16,12 @@ import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.CartServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CartService implements CartServiceImp {
@@ -101,6 +106,24 @@ public class CartService implements CartServiceImp {
             System.out.println("Lỗi cart delete " + e.getMessage());
         }
         return isSuccess;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteByIds(Set<CartDeleteByIdsRequest> requests) {
+
+        try {
+            Set<Integer> ids = new HashSet<>();
+            for (CartDeleteByIdsRequest item :requests){
+                ids.add(item.getCartId());
+            }
+            cartRepository.deleteByIdIn(ids);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            throw new CustomException("Error delete list cart");
+        }
     }
 
     @Override
