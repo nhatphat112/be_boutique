@@ -17,7 +17,7 @@ public class ProductEntity {
     @Column(name = "image_list")
     private String imageList;
     @Column(name = "sold_quantity")
-    private String soldQuantity;
+    private int soldQuantity;
 
     @Column(name = "description")
     private String desc;
@@ -100,11 +100,11 @@ public class ProductEntity {
         this.imageList = imageList;
     }
 
-    public String getSoldQuantity() {
+    public int getSoldQuantity() {
         return soldQuantity;
     }
 
-    public void setSoldQuantity(String soldQuantity) {
+    public void setSoldQuantity(int soldQuantity) {
         this.soldQuantity = soldQuantity;
     }
 
