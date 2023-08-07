@@ -10,6 +10,7 @@ import com.teamwork.boutique.payload.response.UserResponse;
 import com.teamwork.boutique.repository.RoleRepository;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.UserServiceImp;
+import com.teamwork.boutique.utils.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+
 public class UserService implements UserServiceImp {
     @Autowired
     private UserRepository userRepository;
@@ -25,6 +27,8 @@ public class UserService implements UserServiceImp {
     private RoleRepository roleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtHelper jwtHelper;
 
     @Override
     public LoginSigupResponse addUser(SignupRequest request) {
@@ -38,7 +42,7 @@ public class UserService implements UserServiceImp {
             user.setRole(new RoleEntity());
             user.getRole().setId(2);
             if (userRepository.findByEmail(request.getEmail()) != null) {
-                throw new CustomException("This email already exists.", 500);
+                throw new CustomException("This email have already exists.", 500);
             }
             user = userRepository.saveAndFlush(user);
             response.setId(user.getId());
@@ -76,11 +80,15 @@ public class UserService implements UserServiceImp {
     @Override
     public boolean updateUserRole(int userId, int roleId) {
         boolean isSuccess = false;
-        UserEntity user = userRepository.findById(userId);
-        if (user != null && user.getRole().getId() != roleId) {
-            user.setRole(roleRepository.findById(roleId));
-            userRepository.save(user);
-            isSuccess = true;
+        try {
+            UserEntity user = userRepository.findById(userId);
+            if (user != null && user.getRole().getId() != roleId) {
+                user.setRole(roleRepository.findById(roleId));
+                userRepository.save(user);
+                isSuccess = true;
+            }
+        } catch (Exception e) {
+            throw new CustomException("Lỗi update user role " + e.getMessage());
         }
         return isSuccess;
     }
@@ -101,6 +109,16 @@ public class UserService implements UserServiceImp {
             return listUser;
         } catch (Exception e) {
             throw new CustomException("Lỗi add user " + e.getMessage());
+        }
+    }
+
+    @Override
+    public int getUserIdByToken(String token) {
+        try{
+            String email = jwtHelper.decodeToken(token).getSubject();
+            return userRepository.findByEmail(email).getId();
+        }catch (Exception e){
+            throw new CustomException("Lỗi get user by token " + e.getMessage());
         }
     }
 }

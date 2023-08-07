@@ -24,11 +24,21 @@ public class UserController {
     }
 
     @PostMapping("/updaterole")
-    public ResponseEntity<?> updateUserRole(int userId, int roleId) {
+    public ResponseEntity<?> updateUserRole(@RequestParam int userId, @RequestParam int roleId) {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(userServiceImp.updateUserRole(userId, roleId));
         baseResponse.setMessage("Update user's role");
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/getid")
+    public ResponseEntity<?> getUserIdByToken(@RequestParam String token) {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(userServiceImp.getUserIdByToken(token));
+        baseResponse.setMessage("Get user id by token");
+        baseResponse.setStatusCode(200);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+
     }
 }

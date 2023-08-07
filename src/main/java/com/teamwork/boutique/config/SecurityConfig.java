@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/signin/**", "/signup/**", "/cart/**", "/color/**", "/product/**", "/stock/**", "/category/**", "/detail", "/country/**", "/city-province/**", "/user/**").permitAll()
+                .antMatchers("/signin/**", "/signup", "/cart/**", "/color/**", "/product/**", "/stock/**", "/category/**", "/detail", "/country/**", "/city-province/**", "/user/**").permitAll()
                 .antMatchers("/order/**", "/phone/**", "/order-detail/**", "/purchase/**", "/address/**").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
