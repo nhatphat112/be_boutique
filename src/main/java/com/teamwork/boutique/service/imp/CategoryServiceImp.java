@@ -9,7 +9,11 @@ import java.util.List;
 
 public interface CategoryServiceImp {
     List<CategoryRespone>getAllCategory();
-    boolean createCate(CategorySaveRequest request);
-    boolean deleteCate(CategorySaveRequest request);
-    boolean updateCate(CategorySaveRequest request);
+    String createCate(String catename);
+    boolean deletecate(int id);
+
+
+//    //    boolean createCate(CategorySaveRequest request);
+//    boolean deleteCate(CategorySaveRequest request);
+//    boolean updateCate(CategorySaveRequest request);
 }

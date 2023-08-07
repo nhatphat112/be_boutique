@@ -66,7 +66,7 @@ public class ColorService implements ColorServiceImp {
             colorRepository.delete(color);
             isSuccess = true;
         } catch (Exception e) {
-            throw new CustomException("Lỗi delete color " + e.getMessage());
+            throw new CustomException("Lỗi delete category " + e.getMessage());
         }
         return isSuccess;
     }
