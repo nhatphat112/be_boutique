@@ -2,6 +2,7 @@ package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
 import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.request.CartDeleteByIdsListRequest;
 import com.teamwork.boutique.payload.request.CartDeleteByIdsRequest;
 import com.teamwork.boutique.payload.request.CartUpdateRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
@@ -75,12 +76,12 @@ public class CartController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/delete/ids")
-    public ResponseEntity<?> deleteByIds(@RequestBody Set<CartDeleteByIdsRequest> ids) {
-        logger.info("Request :"+gson.toJson(ids));
+    public ResponseEntity<?> deleteByIds(@RequestBody CartDeleteByIdsListRequest cartDeleteByIdsListRequest) {
+        logger.info("Request :"+gson.toJson(cartDeleteByIdsListRequest));
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setMessage("Deleted list cart.");
-        response.setData(cartServiceImp.deleteByIds(ids));
+        response.setData(cartServiceImp.deleteByIds(cartDeleteByIdsListRequest.getIds()));
         logger.info("Response :"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
