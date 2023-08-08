@@ -1,15 +1,11 @@
 package com.teamwork.boutique.service;
-
-<<<<<<< HEAD
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.teamwork.boutique.entity.ProductEntity;
 import com.teamwork.boutique.entity.ReviewEntity;
 import com.teamwork.boutique.entity.StockEntity;
 import com.teamwork.boutique.entity.TagProductEntity;
-=======
 import com.teamwork.boutique.entity.*;
->>>>>>> 2a0aaaa1f2a2f72ae76098f3d42e7d7e73b12b92
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.ProductRequest;
 import com.teamwork.boutique.payload.response.*;
@@ -32,16 +28,12 @@ public class ProductService implements ProductServiceImp {
     @Autowired
     private StockRepository stockRepository;
     @Autowired
-<<<<<<< HEAD
     private RedisTemplate redisTemplate;
-=======
     private CategoryRepository categoryRepository;
->>>>>>> 2a0aaaa1f2a2f72ae76098f3d42e7d7e73b12b92
 
     @Override
     public List<ProductResponse> getAllCategory() {
         List<ProductResponse> productResponses = new ArrayList<>();
-<<<<<<< HEAD
         if (redisTemplate.hasKey("listProduct")) {
             System.out.println("co gia tri tren redis");
             String data = redisTemplate.opsForValue().get("listProduct").toString();
@@ -50,38 +42,28 @@ public class ProductService implements ProductServiceImp {
             productResponses = new Gson().fromJson(data, listType);
         } else {
             System.out.println("khong co gia tri tren redis");
+//        System.out.println("Check price:"+price);
             for (ProductEntity item : productRepository.findAll()) {
                 ProductResponse response = new ProductResponse();
                 response.setId(item.getId());
                 response.setName(item.getName());
                 response.setImage(item.getImage());
-                response.setPrice(stockRepository.findMinPriceByProductId(item.getId()));
-                response.setDesciption(item.getDesc());
+                double minPrice = 0;
+                try {
+                    minPrice = stockRepository.findMinPriceByProductId(item.getId());
+                } catch (Exception e) {
+
+                }
+                response.setPrice(minPrice);
+                response.setDescription(item.getDesc());
+
+                response.setCategoryId(item.getCategory().getId());
+                response.setSoldQuantity(item.getSoldQuantity());
                 productResponses.add(response);
             }
             Gson gson = new Gson();
             String data = gson.toJson(productResponses);
             redisTemplate.opsForValue().set("listProduct", data);
-=======
-//        System.out.println("Check price:"+price);
-        for (ProductEntity item : productRepository.findAll()) {
-            ProductResponse response = new ProductResponse();
-            response.setId(item.getId());
-            response.setName(item.getName());
-            response.setImage(item.getImage());
-            double minPrice = 0;
-            try {
-                minPrice =  stockRepository.findMinPriceByProductId(item.getId());
-            }catch (Exception e){
-
-            }
-            response.setPrice(minPrice);
-            response.setDescription(item.getDesc());
-            
-            response.setCategoryId(item.getCategory().getId());
-            response.setSoldQuantity(item.getSoldQuantity());
-            productResponses.add(response);
->>>>>>> 2a0aaaa1f2a2f72ae76098f3d42e7d7e73b12b92
         }
         return productResponses;
     }
