@@ -73,7 +73,7 @@ public class OrderService implements OrderServiceImp {
                         stockItem.setQuantity(stockItem.getQuantity() - orderDetailItem.getQuantity());
                         break;
                     } else {
-                        throw new CustomException(stockItem.getProduct().getName() + "with " + stockItem.getColor().getName() + "color no longer availabe in sufficient quantity");
+                        throw new CustomException(stockItem.getProduct().getName() + "with " + stockItem.getColor().getName() + " no longer available in sufficient quantity");
                     }
                 }
             }
