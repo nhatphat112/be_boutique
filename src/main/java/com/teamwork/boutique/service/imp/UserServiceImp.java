@@ -1,6 +1,7 @@
 package com.teamwork.boutique.service.imp;
 
 
+import com.teamwork.boutique.payload.request.ChangePasswordRequest;
 import com.teamwork.boutique.payload.request.FindUserIdRequest;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.response.LoginSigupResponse;
@@ -20,5 +21,5 @@ public interface UserServiceImp {
     List<UserResponse> getAllUser();
 
     int getUserIdByToken(String token);
-
+    boolean changePassword(ChangePasswordRequest request);
 }

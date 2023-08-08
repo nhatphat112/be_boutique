@@ -1,5 +1,6 @@
 package com.teamwork.boutique.controller;
 
+import com.teamwork.boutique.payload.request.ChangePasswordRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,13 @@ public class UserController {
         baseResponse.setMessage("Get user id by token");
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
-
+    }
+    @RequestMapping(value = "/changepass",method = RequestMethod.POST)
+    public ResponseEntity<?> changePassword(ChangePasswordRequest request){
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(userServiceImp.changePassword(request));
+        baseResponse.setMessage("change password");
+        baseResponse.setStatusCode(200);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 }

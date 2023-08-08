@@ -1,4 +1,5 @@
 package com.teamwork.boutique.service;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.teamwork.boutique.entity.ProductEntity;
@@ -29,6 +30,7 @@ public class ProductService implements ProductServiceImp {
     private StockRepository stockRepository;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
     private CategoryRepository categoryRepository;
 
     @Override
@@ -129,10 +131,13 @@ public class ProductService implements ProductServiceImp {
     public boolean saveProduct(ProductRequest request) {
         boolean isSuccess = false;
         try {
+            System.out.println("da thuc hien lenh");
             ProductEntity product = new ProductEntity();
             try {
                 product.setId(request.getId());
+
             } catch (Exception e) {
+
             }
             product.setName(request.getName());
             product.setImage(request.getImage());
@@ -140,12 +145,21 @@ public class ProductService implements ProductServiceImp {
             CategoryEntity category = categoryRepository.findById(request.getCategoryId());
             product.setCategory(category);
             productRepository.save(product);
-            return isSuccess = true;
+
+            isSuccess = true;
+            if (isSuccess) {
+                System.out.println("da thanh cong");
+            } else {
+                System.out.println("da that bai");
+            }
+            List<ProductResponse> list = getAllProduct();
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
+        return isSuccess;
 
     }
+
     @Override
     public boolean deleteProduct(int id) {
         boolean isSuccess = false;
