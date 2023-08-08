@@ -3,6 +3,7 @@ package com.teamwork.boutique.service;
 import com.teamwork.boutique.entity.RoleEntity;
 import com.teamwork.boutique.entity.UserEntity;
 import com.teamwork.boutique.exception.CustomException;
+import com.teamwork.boutique.payload.request.ChangePasswordRequest;
 import com.teamwork.boutique.payload.request.FindUserIdRequest;
 import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.response.LoginSigupResponse;
@@ -12,6 +13,7 @@ import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import com.teamwork.boutique.utils.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -114,11 +116,36 @@ public class UserService implements UserServiceImp {
 
     @Override
     public int getUserIdByToken(String token) {
-        try{
+        try {
             String email = jwtHelper.decodeToken(token).getSubject();
             return userRepository.findByEmail(email).getId();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new CustomException("Lỗi get user by token " + e.getMessage());
         }
+    }
+@Override
+    public boolean changePassword(ChangePasswordRequest request) {
+        boolean isSuccess = false;
+        try {
+            UserEntity user = userRepository.findById(request.getId());
+            System.out.println(request.getId());
+            System.out.println(passwordEncoder.encode(request.getCurrentPass()));
+            System.out.println(user.getPassword());
+            boolean passwordsMatch = BCrypt.checkpw(request.getCurrentPass(), user.getPassword());
+            System.out.println(passwordsMatch);
+
+            if(passwordsMatch){
+                user.setPassword(passwordEncoder.encode(request.getNewPass()));
+                userRepository.save(user);
+                isSuccess = true;
+            }
+            else{
+                isSuccess = false;
+            }
+
+        } catch (Exception e) {
+            throw new CustomException("Lỗi change password " + e.getMessage());
+        }
+        return isSuccess;
     }
 }
