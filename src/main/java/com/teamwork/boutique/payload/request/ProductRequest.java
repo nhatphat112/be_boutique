@@ -6,6 +6,8 @@ public class ProductRequest {
     private String image;
     private String desc;
     private int categoryId;
+    public ProductRequest() {
+    }
     public int getCategoryId() {
         return categoryId;
     }
@@ -45,4 +47,5 @@ public class ProductRequest {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
 }
