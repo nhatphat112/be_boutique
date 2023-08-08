@@ -1,6 +1,7 @@
 package com.teamwork.boutique.exception;
 
 import com.teamwork.boutique.payload.response.BaseResponse;
+import io.jsonwebtoken.MalformedJwtException;
 import org.hibernate.TransientPropertyValueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,13 @@ public class GlobalCustomException {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatusCode(500);
         baseResponse.setMessage("data in valid");
+        return new ResponseEntity<>(baseResponse,HttpStatus.OK);
+    }
+    @ExceptionHandler(MalformedJwtException.class)
+    public ResponseEntity<?> handleMalformedJwtException(MalformedJwtException e){
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatusCode(401);
+        baseResponse.setMessage("Unauthorized.");
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }
 }

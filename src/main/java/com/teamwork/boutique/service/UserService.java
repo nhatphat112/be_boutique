@@ -88,7 +88,7 @@ public class UserService implements UserServiceImp {
                 isSuccess = true;
             }
         } catch (Exception e) {
-            throw new CustomException("Lỗi update user role " + e.getMessage());
+            throw new CustomException("Lỗi update user role " + e.getMessage() );
         }
         return isSuccess;
     }
@@ -118,7 +118,7 @@ public class UserService implements UserServiceImp {
             String email = jwtHelper.decodeToken(token).getSubject();
             return userRepository.findByEmail(email).getId();
         }catch (Exception e){
-            throw new CustomException("Lỗi get user by token " + e.getMessage());
+            throw new CustomException("Lỗi get user by token " + e.getMessage(),401);
         }
     }
 }

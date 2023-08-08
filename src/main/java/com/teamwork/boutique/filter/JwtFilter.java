@@ -53,11 +53,16 @@ public class JwtFilter extends OncePerRequestFilter {
 // Cắt bỏ chuỗi Bearer và lấy ra token
                 String token = header.substring(7);
 //  Giải mã token
-                Claims claims = jwtHelper.decodeToken(token);
-                System.out.println("claims.getSubject():" + claims.getSubject());
+                Claims claims = null;
+                try {
+                    claims = jwtHelper.decodeToken(token);
+                }catch (Exception e){
+
+                }
 
                 if (claims != null) {
                     // Tạo chứng thực cho security
+                    System.out.println("claims.getSubject():" + claims.getSubject());
 
                     UserEntity userEntity = userRepository.findByEmail(claims.getSubject());
                     ArrayList<GrantedAuthority> roleList = new ArrayList<>();
