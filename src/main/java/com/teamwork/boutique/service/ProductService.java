@@ -42,28 +42,26 @@ public class ProductService implements ProductServiceImp {
             productResponses = new Gson().fromJson(data, listType);
         } else {
             System.out.println("khong co gia tri tren redis");
-//        System.out.println("Check price:"+price);
             for (ProductEntity item : productRepository.findAll()) {
                 ProductResponse response = new ProductResponse();
                 response.setId(item.getId());
                 response.setName(item.getName());
                 response.setImage(item.getImage());
-                double minPrice = 0;
+                double minPrices = 0;
                 try {
-                    minPrice = stockRepository.findMinPriceByProductId(item.getId());
-                } catch (Exception e) {
+                    minPrices =stockRepository.findMinPriceByProductId(item.getId());
+                }catch (Exception e){
 
                 }
-                response.setPrice(minPrice);
+                response.setPrice(minPrices);
                 response.setDescription(item.getDesc());
-
-                response.setCategoryId(item.getCategory().getId());
-                response.setSoldQuantity(item.getSoldQuantity());
                 productResponses.add(response);
             }
             Gson gson = new Gson();
             String data = gson.toJson(productResponses);
             redisTemplate.opsForValue().set("listProduct", data);
+//        System.out.println("Check price:"+price);
+
         }
         return productResponses;
     }
