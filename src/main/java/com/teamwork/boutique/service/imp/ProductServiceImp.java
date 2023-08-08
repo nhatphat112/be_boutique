@@ -9,9 +9,10 @@ import java.util.List;
 
 @Service
 public interface ProductServiceImp {
-    List<ProductResponse> getAllCategory();
+    List<ProductResponse> getAllProduct();
     Object getProductByCategory(int id);
     DetailResponse getDetailProductByProductId(int productId);
-    boolean addProduct(ProductRequest request);
+    boolean saveProduct(ProductRequest request);
+    boolean deleteProduct(int id);
 
 }
