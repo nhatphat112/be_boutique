@@ -1,5 +1,10 @@
 package com.teamwork.boutique.service;
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.teamwork.boutique.entity.ProductEntity;
+import com.teamwork.boutique.entity.ReviewEntity;
+import com.teamwork.boutique.entity.StockEntity;
+import com.teamwork.boutique.entity.TagProductEntity;
 import com.teamwork.boutique.entity.*;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.ProductRequest;
@@ -9,8 +14,10 @@ import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.service.imp.ProductServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +28,21 @@ public class ProductService implements ProductServiceImp {
     @Autowired
     private StockRepository stockRepository;
     @Autowired
+    private RedisTemplate redisTemplate;
     private CategoryRepository categoryRepository;
 
     @Override
     public List<ProductResponse> getAllProduct() {
         List<ProductResponse> productResponses = new ArrayList<>();
-        for (ProductEntity item : productRepository.findAll()) {
-            if (item.getName() != null) {
+        if (redisTemplate.hasKey("listProduct")) {
+            System.out.println("co gia tri tren redis");
+            String data = redisTemplate.opsForValue().get("listProduct").toString();
+            Type listType = new TypeToken<ArrayList<ProductResponse>>() {
+            }.getType();
+            productResponses = new Gson().fromJson(data, listType);
+        } else {
+            System.out.println("khong co gia tri tren redis");
+            for (ProductEntity item : productRepository.findAll()) {
                 ProductResponse response = new ProductResponse();
                 response.setId(item.getId());
                 response.setName(item.getName());
@@ -45,6 +60,10 @@ public class ProductService implements ProductServiceImp {
                 response.setSoldQuantity(item.getSoldQuantity());
                 productResponses.add(response);
             }
+            Gson gson = new Gson();
+            String data = gson.toJson(productResponses);
+            redisTemplate.opsForValue().set("listProduct", data);
+//        System.out.println("Check price:"+price);
 
         }
 
