@@ -86,7 +86,7 @@ public String createCate(String catename) {
             categoryRepository.delete(category);
             isSuccess = true;
         } catch (Exception e) {
-            throw new CustomException("Lỗi delete color " + e.getMessage());
+            throw new CustomException("Lỗi delete category " + e.getMessage());
         }
         return isSuccess;    }
 

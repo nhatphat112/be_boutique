@@ -50,7 +50,7 @@ public ResponseEntity<?> createcate(String catename) {
     return new ResponseEntity<>(response, HttpStatus.OK);
 }
     @GetMapping("/delete")
-    public ResponseEntity<?> deleteColor(int id) {
+    public ResponseEntity<?> deleteCategory(int id) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(categoryServiceImp.deletecate(id));

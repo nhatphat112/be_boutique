@@ -23,7 +23,7 @@ public class ProductController {
     public ResponseEntity<?> getAllProduct(){
         logger.info("request :none");
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setData(productServiceImp.getAllCategory());
+        baseResponse.setData(productServiceImp.getAllProduct());
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("List Product");
         logger.info("response"+gson.toJson(baseResponse));
@@ -38,11 +38,18 @@ public class ProductController {
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ResponseEntity<?> addProduct(ProductRequest request) {
+    public ResponseEntity<?> saveProduct(ProductRequest request) {
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setData(productServiceImp.addProduct(request));
+        baseResponse.setData(productServiceImp.saveProduct(request));
         baseResponse.setMessage("add product");
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+    @GetMapping("/delete")
+    public ResponseEntity<?> deleteProduct(int id) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(productServiceImp.deleteProduct(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

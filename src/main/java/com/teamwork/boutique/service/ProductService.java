@@ -24,26 +24,28 @@ public class ProductService implements ProductServiceImp {
     private CategoryRepository categoryRepository;
 
     @Override
-    public List<ProductResponse> getAllCategory() {
+    public List<ProductResponse> getAllProduct() {
         List<ProductResponse> productResponses = new ArrayList<>();
-//        System.out.println("Check price:"+price);
         for (ProductEntity item : productRepository.findAll()) {
-            ProductResponse response = new ProductResponse();
-            response.setId(item.getId());
-            response.setName(item.getName());
-            response.setImage(item.getImage());
-            double minPrice = 0;
-            try {
-                minPrice =  stockRepository.findMinPriceByProductId(item.getId());
-            }catch (Exception e){
+            if (item.getName() != null) {
+                ProductResponse response = new ProductResponse();
+                response.setId(item.getId());
+                response.setName(item.getName());
+                response.setImage(item.getImage());
+                double minPrice = 0;
+                try {
+                    minPrice = stockRepository.findMinPriceByProductId(item.getId());
+                } catch (Exception e) {
 
+                }
+                response.setPrice(minPrice);
+                response.setDescription(item.getDesc());
+
+                response.setCategoryId(item.getCategory().getId());
+                response.setSoldQuantity(item.getSoldQuantity());
+                productResponses.add(response);
             }
-            response.setPrice(minPrice);
-            response.setDescription(item.getDesc());
-            
-            response.setCategoryId(item.getCategory().getId());
-            response.setSoldQuantity(item.getSoldQuantity());
-            productResponses.add(response);
+
         }
 
         return productResponses;
@@ -103,12 +105,16 @@ public class ProductService implements ProductServiceImp {
         detailResponse.setStockResponseList(stockResponseList);
         return detailResponse;
     }
+
     @Override
-    public boolean addProduct(ProductRequest request) {
+    public boolean saveProduct(ProductRequest request) {
         boolean isSuccess = false;
-        try{
+        try {
             ProductEntity product = new ProductEntity();
-//            product.setId(request.getId());
+            try {
+                product.setId(request.getId());
+            } catch (Exception e) {
+            }
             product.setName(request.getName());
             product.setImage(request.getImage());
             product.setDesc(request.getDesc());
@@ -116,9 +122,22 @@ public class ProductService implements ProductServiceImp {
             product.setCategory(category);
             productRepository.save(product);
             return isSuccess = true;
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
 
     }
+    @Override
+    public boolean deleteProduct(int id) {
+        boolean isSuccess = false;
+        try {
+            ProductEntity product = productRepository.findById(id);
+            productRepository.delete(product);
+            isSuccess = true;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi delete product " + e.getMessage());
+        }
+        return isSuccess;
+    }
+
 }
