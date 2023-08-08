@@ -1,10 +1,5 @@
 package com.teamwork.boutique.service;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.teamwork.boutique.entity.ProductEntity;
-import com.teamwork.boutique.entity.ReviewEntity;
-import com.teamwork.boutique.entity.StockEntity;
-import com.teamwork.boutique.entity.TagProductEntity;
+
 import com.teamwork.boutique.entity.*;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.ProductRequest;
@@ -14,10 +9,8 @@ import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.service.imp.ProductServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,43 +21,36 @@ public class ProductService implements ProductServiceImp {
     @Autowired
     private StockRepository stockRepository;
     @Autowired
-    private RedisTemplate redisTemplate;
     private CategoryRepository categoryRepository;
 
     @Override
-    public List<ProductResponse> getAllCategory() {
+    public List<ProductResponse> getAllProduct() {
         List<ProductResponse> productResponses = new ArrayList<>();
-        if (redisTemplate.hasKey("listProduct")) {
-            System.out.println("co gia tri tren redis");
-            String data = redisTemplate.opsForValue().get("listProduct").toString();
-            Type listType = new TypeToken<ArrayList<ProductResponse>>() {
-            }.getType();
-            productResponses = new Gson().fromJson(data, listType);
-        } else {
-            System.out.println("khong co gia tri tren redis");
-            for (ProductEntity item : productRepository.findAll()) {
+        for (ProductEntity item : productRepository.findAll()) {
+            if (item.getName() != null) {
                 ProductResponse response = new ProductResponse();
                 response.setId(item.getId());
                 response.setName(item.getName());
                 response.setImage(item.getImage());
-                double minPrices = 0;
+                double minPrice = 0;
                 try {
-                    minPrices =stockRepository.findMinPriceByProductId(item.getId());
-                }catch (Exception e){
+                    minPrice = stockRepository.findMinPriceByProductId(item.getId());
+                } catch (Exception e) {
 
                 }
-                response.setPrice(minPrices);
+                response.setPrice(minPrice);
                 response.setDescription(item.getDesc());
+
+                response.setCategoryId(item.getCategory().getId());
+                response.setSoldQuantity(item.getSoldQuantity());
                 productResponses.add(response);
             }
-            Gson gson = new Gson();
-            String data = gson.toJson(productResponses);
-            redisTemplate.opsForValue().set("listProduct", data);
-//        System.out.println("Check price:"+price);
 
         }
+
         return productResponses;
     }
+
     @Override
     public List<ProductResponse> getProductByCategory(int id) {
         List<ProductEntity> list = productRepository.findByCategoryId(id);
@@ -81,6 +67,7 @@ public class ProductService implements ProductServiceImp {
         }
         return responseList;
     }
+
     @Override
     public DetailResponse getDetailProductByProductId(int productId) {
         ProductEntity item = productRepository.findById(productId);
@@ -112,17 +99,22 @@ public class ProductService implements ProductServiceImp {
             stockResponse.setPrice(stock.getPrice());
             stockResponse.setColorId(stock.getColor().getId());
             stockResponse.setColorName(stock.getColor().getName());
+
             stockResponseList.add(stockResponse);
         }
         detailResponse.setStockResponseList(stockResponseList);
         return detailResponse;
     }
+
     @Override
-    public boolean addProduct(ProductRequest request) {
+    public boolean saveProduct(ProductRequest request) {
         boolean isSuccess = false;
         try {
             ProductEntity product = new ProductEntity();
-//            product.setId(request.getId());
+            try {
+                product.setId(request.getId());
+            } catch (Exception e) {
+            }
             product.setName(request.getName());
             product.setImage(request.getImage());
             product.setDesc(request.getDesc());
@@ -133,5 +125,19 @@ public class ProductService implements ProductServiceImp {
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
+
     }
+    @Override
+    public boolean deleteProduct(int id) {
+        boolean isSuccess = false;
+        try {
+            ProductEntity product = productRepository.findById(id);
+            productRepository.delete(product);
+            isSuccess = true;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi delete product " + e.getMessage());
+        }
+        return isSuccess;
+    }
+
 }

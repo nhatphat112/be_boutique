@@ -28,11 +28,11 @@ public class CategoryController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllCategory(){
-    BaseResponse response=new BaseResponse();
-    response.setStatusCode(200);
-    response.setData(categoryServiceImp.getAllCategory());
-    return new ResponseEntity<>(response, HttpStatus.OK);
-}
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(categoryServiceImp.getAllCategory());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?>getProductByCategory(@PathVariable int id){
 
@@ -42,15 +42,15 @@ public class CategoryController {
         return new ResponseEntity<>(response , HttpStatus.OK);
     }
 
-@PostMapping("/add")
-public ResponseEntity<?> createcate(String catename) {
-    BaseResponse response = new BaseResponse();
-    response.setStatusCode(200);
-    response.setData(categoryServiceImp.createCate(catename));
-    return new ResponseEntity<>(response, HttpStatus.OK);
-}
+    @PostMapping("/add")
+    public ResponseEntity<?> createcate(String catename) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(categoryServiceImp.createCate(catename));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @GetMapping("/delete")
-    public ResponseEntity<?> deleteColor(int id) {
+    public ResponseEntity<?> deleteCategory(int id) {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(categoryServiceImp.deletecate(id));

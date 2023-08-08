@@ -40,7 +40,7 @@ public class CategoryService implements CategoryServiceImp {
         return responselist;
     }
 
-//    @Override
+    //    @Override
 //    public boolean createCate(CategorySaveRequest request) {
 //        boolean isSuccess=false;
 //        try {
@@ -55,28 +55,28 @@ public class CategoryService implements CategoryServiceImp {
 //
 //        return isSuccess;
 //    }
-@Override
-public String createCate(String catename) {
-    String message = "";
-    boolean check = true;
-    if (catename != null && !catename.isEmpty()) {
-        for (CategoryRespone categoryResponse : getAllCategory()) {
-            if (categoryResponse.getName().equalsIgnoreCase(catename)) {
-                message = "This name have existed already. Please type another name !";
-                check = false;
+    @Override
+    public String createCate(String catename) {
+        String message = "";
+        boolean check = true;
+        if (catename != null && !catename.isEmpty()) {
+            for (CategoryRespone categoryResponse : getAllCategory()) {
+                if (categoryResponse.getName().equalsIgnoreCase(catename)) {
+                    message = "This name have existed already. Please type another name !";
+                    check = false;
+                }
             }
+            if (check) {
+                CategoryEntity category = new CategoryEntity();
+                category.setName(catename);
+                categoryRepository.save(category);
+                message = "Save successfully !";
+            }
+        } else {
+            message = "You have not type category yet. Please type category before click Create button!";
         }
-        if (check) {
-            CategoryEntity category = new CategoryEntity();
-            category.setName(catename);
-            categoryRepository.save(category);
-            message = "Save successfully !";
-        }
-    } else {
-        message = "You have not type category yet. Please type category before click Create button!";
+        return message;
     }
-    return message;
-}
 
     @Override
     public boolean deletecate(int id) {
@@ -86,7 +86,7 @@ public String createCate(String catename) {
             categoryRepository.delete(category);
             isSuccess = true;
         } catch (Exception e) {
-            throw new CustomException("Lỗi delete color " + e.getMessage());
+            throw new CustomException("Lỗi delete category " + e.getMessage());
         }
         return isSuccess;    }
 
