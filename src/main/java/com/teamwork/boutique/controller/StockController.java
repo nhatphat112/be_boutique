@@ -1,6 +1,7 @@
 package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
+import com.teamwork.boutique.payload.request.StockRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.StockServiceImp;
 import org.slf4j.Logger;
@@ -27,5 +28,34 @@ public class StockController {
         baseResponse.setStatusCode(200);
         logger.info("response:"+gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+    @GetMapping("")
+    public ResponseEntity<?> getAllCategory(){
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(stockServiceImp.getAllStock());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> addStock(int colorId, int quantity, int productId, double price, String imageUrl) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(stockServiceImp.addStock(colorId,quantity,productId,price,imageUrl));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ResponseEntity<?> updateStock(StockRequest request) {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(stockServiceImp.updateStock(request));
+        baseResponse.setMessage("update stock");
+        baseResponse.setStatusCode(200);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+    @GetMapping("/delete")
+    public ResponseEntity<?> deletestock(int id) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(stockServiceImp.deletestock(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
