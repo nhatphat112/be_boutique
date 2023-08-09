@@ -15,7 +15,6 @@ import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.service.imp.ProductServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
@@ -29,44 +28,27 @@ public class ProductService implements ProductServiceImp {
     @Autowired
     private StockRepository stockRepository;
     @Autowired
-    private RedisTemplate redisTemplate;
-    @Autowired
     private CategoryRepository categoryRepository;
 
     @Override
     public List<ProductResponse> getAllProduct() {
         List<ProductResponse> productResponses = new ArrayList<>();
-        if (redisTemplate.hasKey("listProduct")) {
-            System.out.println("co gia tri tren redis");
-            String data = redisTemplate.opsForValue().get("listProduct").toString();
-            Type listType = new TypeToken<ArrayList<ProductResponse>>() {
-            }.getType();
-            productResponses = new Gson().fromJson(data, listType);
-        } else {
-            System.out.println("khong co gia tri tren redis");
-            for (ProductEntity item : productRepository.findAll()) {
-                ProductResponse response = new ProductResponse();
-                response.setId(item.getId());
-                response.setName(item.getName());
-                response.setImage(item.getImage());
-                double minPrice = 0;
-                try {
-                    minPrice = stockRepository.findMinPriceByProductId(item.getId());
-                } catch (Exception e) {
-                }
-                response.setPrice(minPrice);
-                response.setDescription(item.getDesc());
-                response.setCategoryId(item.getCategory().getId());
-                response.setSoldQuantity(item.getSoldQuantity());
-                productResponses.add(response);
+        for (ProductEntity item : productRepository.findAll()) {
+            ProductResponse response = new ProductResponse();
+            response.setId(item.getId());
+            response.setName(item.getName());
+            response.setImage(item.getImage());
+            double minPrice = 0;
+            try {
+                minPrice = stockRepository.findMinPriceByProductId(item.getId());
+            } catch (Exception e) {
             }
-            Gson gson = new Gson();
-            String data = gson.toJson(productResponses);
-            redisTemplate.opsForValue().set("listProduct", data);
-//        System.out.println("Check price:"+price);
-
+            response.setPrice(minPrice);
+            response.setDescription(item.getDesc());
+            response.setCategoryId(item.getCategory().getId());
+            response.setSoldQuantity(item.getSoldQuantity());
+            productResponses.add(response);
         }
-
         return productResponses;
     }
 

@@ -1,4 +1,4 @@
-package com.teamwork.boutique.payload.request;
+    package com.teamwork.boutique.payload.request;
 
 public class StockRequest {
     private int id;
