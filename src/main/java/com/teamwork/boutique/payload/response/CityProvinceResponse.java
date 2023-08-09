@@ -1,6 +1,6 @@
 package com.teamwork.boutique.payload.response;
 
-public class CityProviceResponse {
+public class CityProvinceResponse {
     private int id;
     private String name;
 
@@ -20,6 +20,6 @@ public class CityProviceResponse {
         this.name = name;
     }
 
-    public CityProviceResponse() {
+    public CityProvinceResponse() {
     }
 }
