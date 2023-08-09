@@ -8,6 +8,16 @@ public class StockResponse {
     private int colorId;
     private String image;
 
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    private int productId;
+
     public int getColorId() {
         return colorId;
     }

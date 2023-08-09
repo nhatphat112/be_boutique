@@ -28,4 +28,25 @@ public class StockController {
         logger.info("response:"+gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
+    @GetMapping("")
+    public ResponseEntity<?> getAllCategory(){
+        BaseResponse response=new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(stockServiceImp.getAllStock());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> addStock(int colorId, int quantity, int productId, double price, String imageUrl) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(stockServiceImp.addStock(colorId,quantity,productId,price,imageUrl));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/delete")
+    public ResponseEntity<?> deletestock(int id) {
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(stockServiceImp.deletestock(id));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
