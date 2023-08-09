@@ -87,7 +87,6 @@ public class CartService implements CartServiceImp {
     @Override
     @Transactional
     public boolean deleteByIds(Set<CartDeleteByIdsRequest> requests) {
-
         try {
             Set<Integer> ids = new HashSet<>();
             for (CartDeleteByIdsRequest item :requests){

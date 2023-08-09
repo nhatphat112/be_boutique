@@ -1,6 +1,8 @@
 package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
+import com.teamwork.boutique.payload.request.CartDeleteByIdsListRequest;
+import com.teamwork.boutique.payload.request.PhoneIdListRequest;
 import com.teamwork.boutique.payload.request.PhoneSaveRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.PhoneServiceImp;
@@ -11,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(value = "*")
@@ -39,5 +43,15 @@ public class PhoneController {
         baseResponse.setData(phoneServiceImp.save(request));
         logger.info("Response :"+gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
+    }
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteList(@RequestBody PhoneIdListRequest request) {
+        logger.info("Request :"+gson.toJson(request));
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setMessage("Deleted list cart.");
+        response.setData(phoneServiceImp.deleteList(request));
+        logger.info("Response :"+gson.toJson(response));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

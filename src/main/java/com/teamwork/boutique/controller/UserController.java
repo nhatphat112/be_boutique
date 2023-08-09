@@ -49,4 +49,12 @@ public class UserController {
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
+    @PostMapping("/getUser")
+    public ResponseEntity<?> getUserById(@RequestParam int userId) {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData(userServiceImp.getUserById(userId));
+        baseResponse.setMessage("Get username by id");
+        baseResponse.setStatusCode(200);
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
 }
