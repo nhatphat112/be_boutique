@@ -54,7 +54,6 @@ public class CartController {
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(cartServiceImp.countCartItems(userId));
-
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

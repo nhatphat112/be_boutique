@@ -148,4 +148,18 @@ public class UserService implements UserServiceImp {
         }
         return isSuccess;
     }
+    @Override
+    public UserResponse getUserById(int id){
+        UserResponse response = new UserResponse();
+        try{
+            UserEntity userEntity = userRepository.findById(id);
+            response.setName(userEntity.getUsername());
+            response.setEmail(userEntity.getEmail());
+        }
+        catch(Exception e){
+            throw new CustomException("Lỗi getUserById " + e.getMessage());
+        }
+        System.out.println(response.getEmail()+' '+response.getName());
+        return response;
+    }
 }

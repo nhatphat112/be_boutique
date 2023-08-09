@@ -22,4 +22,6 @@ public interface UserServiceImp {
 
     int getUserIdByToken(String token);
     boolean changePassword(ChangePasswordRequest request);
+    UserResponse getUserById(int id);
+
 }
