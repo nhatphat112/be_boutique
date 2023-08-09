@@ -32,15 +32,16 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getAllProduct(){
+    public ResponseEntity<?> getAllProduct() {
         logger.info("request :none");
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(productServiceImp.getAllProduct());
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("List Product");
-        logger.info("response"+gson.toJson(baseResponse));
+        logger.info("response" + gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
+
     @GetMapping("/detail")
     public ResponseEntity<?> detailProduct(@RequestParam int id) {
         BaseResponse baseResponse = new BaseResponse();
@@ -49,7 +50,8 @@ public class ProductController {
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> saveProduct(ProductRequest request) {
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(productServiceImp.saveProduct(request));
@@ -57,6 +59,7 @@ public class ProductController {
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
+
     @GetMapping("/delete")
     public ResponseEntity<?> deleteProduct(int id) {
         BaseResponse response = new BaseResponse();

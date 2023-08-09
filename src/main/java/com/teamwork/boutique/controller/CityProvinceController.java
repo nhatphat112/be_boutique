@@ -6,6 +6,7 @@ import com.teamwork.boutique.service.imp.CityProvinceServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,15 @@ public class CityProvinceController {
     @Autowired
     private CityProvinceServiceImp cityProvinceServiceImp;
     private Logger logger = LoggerFactory.getLogger(CityProvinceController.class);
+    @GetMapping("/clear-cache")
+    @CacheEvict(value = "listCityProvince", allEntries = true)
+    public ResponseEntity<?> clearCache() {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setData("");
+        baseResponse.setStatusCode(200);
+        baseResponse.setMessage("clear cache list city province");
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
     @GetMapping("")
     public ResponseEntity<?> getAll(){
         logger.info("Request :none");
