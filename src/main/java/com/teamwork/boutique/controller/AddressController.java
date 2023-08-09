@@ -2,6 +2,7 @@ package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
 import com.teamwork.boutique.payload.request.AddressSaveRequest;
+import com.teamwork.boutique.payload.request.IdListRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.AddressServiceImp;
 import org.slf4j.Logger;
@@ -39,5 +40,15 @@ public class AddressController {
         baseResponse.setData(addressServiceImp.save(request));
         logger.info("response :"+gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
+    }
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteList(@RequestBody IdListRequest request) {
+        logger.info("Request :"+gson.toJson(request));
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setMessage("Deleted list address.");
+        response.setData(addressServiceImp.deleteList(request));
+        logger.info("Response :"+gson.toJson(response));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
