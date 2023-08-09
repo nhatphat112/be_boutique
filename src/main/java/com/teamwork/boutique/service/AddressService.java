@@ -1,16 +1,15 @@
 package com.teamwork.boutique.service;
 
-import com.teamwork.boutique.entity.AddressEntity;
-import com.teamwork.boutique.entity.CityProvinceEntity;
-import com.teamwork.boutique.entity.CountryEntity;
-import com.teamwork.boutique.entity.UserEntity;
+import com.teamwork.boutique.entity.*;
+import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.AddressSaveRequest;
+import com.teamwork.boutique.payload.request.IdListRequest;
 import com.teamwork.boutique.payload.response.AddressResponse;
 import com.teamwork.boutique.repository.AddressRepository;
 import com.teamwork.boutique.service.imp.AddressServiceImp;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +18,22 @@ import java.util.List;
 public class AddressService implements AddressServiceImp {
     @Autowired
     private AddressRepository repository;
+
     @Override
     public List<AddressResponse> getByUserId(int userId) {
         List<AddressResponse> addressResponses = new ArrayList<>();
-        for (AddressEntity item : repository.getByUserId(userId)){
+        for (AddressEntity item : repository.getByUserId(userId)) {
             AddressResponse response = new AddressResponse();
             response.setId(item.getId());
             response.setCountryName(item.getCountry().getName());
             response.setDetail(item.getDetail());
             response.setFee(item.getFee());
-            response.setCityOrProvinceName(item.getCityProvince().getName());
+            response.setCityOrProvinceName("");
+            try {
+                response.setCityOrProvinceName(item.getCityProvince().getName());
+            } catch (Exception e) {
+
+            }
             addressResponses.add(response);
 
         }
@@ -56,16 +61,31 @@ public class AddressService implements AddressServiceImp {
 
         return response;
     }
-    private double feeComputing(int countryId,int cityProvinceId){
-        if(countryId==191){
-            if(cityProvinceId==58){
+
+    private double feeComputing(int countryId, int cityProvinceId) {
+        if (countryId == 191) {
+            if (cityProvinceId == 58) {
                 return 0;
-            }else {
+            } else {
                 return 30;
             }
         }
         return 50;
     }
 
+    @Override
+//    @Transactional
+    public boolean deleteList(IdListRequest request) {
+        try {
+            for (int id : request.getIdList()) {
+                repository.deleteById(id);
+            }
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            throw new CustomException("Error delete list phone");
+        }
+    }
 
 }
