@@ -6,6 +6,7 @@ public class ProductRequest {
     private String image;
     private String desc;
     private int categoryId;
+    private int soldQuantity;
     public ProductRequest() {
     }
     public int getCategoryId() {
@@ -48,4 +49,11 @@ public class ProductRequest {
         this.desc = desc;
     }
 
+    public int getSoldQuantity() {
+        return soldQuantity;
+    }
+
+    public void setSoldQuantity(int soldQuantity) {
+        this.soldQuantity = soldQuantity;
+    }
 }
