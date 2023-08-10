@@ -14,6 +14,8 @@ import com.teamwork.boutique.repository.CategoryRepository;
 import com.teamwork.boutique.repository.ProductRepository;
 import com.teamwork.boutique.repository.StockRepository;
 import com.teamwork.boutique.service.imp.ProductServiceImp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class ProductService implements ProductServiceImp {
     private RedisTemplate redisTemplate;
     @Autowired
     private CategoryRepository categoryRepository;
+    private Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     @Override
     public List<ProductResponse> getAllProduct() {
@@ -53,7 +56,7 @@ public class ProductService implements ProductServiceImp {
                 try {
                     minPrice = stockRepository.findMinPriceByProductId(item.getId());
                 } catch (Exception e) {
-
+                    logger.info(e.getMessage());
                 }
                 response.setPrice(minPrice);
                 response.setDescription(item.getDesc());

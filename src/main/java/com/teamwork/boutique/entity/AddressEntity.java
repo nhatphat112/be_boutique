@@ -26,18 +26,6 @@ public class AddressEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "address")
-    private Set<OrderEntity> orders;
-
-
-    public Set<OrderEntity> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<OrderEntity> orders) {
-        this.orders = orders;
-    }
-
     public UserEntity getUser() {
         return user;
     }
