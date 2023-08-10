@@ -26,4 +26,12 @@ public class GlobalCustomException {
         baseResponse.setMessage("data in valid");
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }
+    @ExceptionHandler (CustomFileNotFoundException.class)
+    public ResponseEntity<?> handleCustomFileNotFound(Exception e){
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(e.getMessage());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

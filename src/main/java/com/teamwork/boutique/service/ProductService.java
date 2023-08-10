@@ -124,6 +124,7 @@ public class ProductService implements ProductServiceImp {
             product.setDesc(request.getDesc());
             CategoryEntity category = categoryRepository.findById(request.getCategoryId());
             product.setCategory(category);
+            product.setSoldQuantity(request.getSoldQuantity());
             productRepository.save(product);
 
             isSuccess = true;
