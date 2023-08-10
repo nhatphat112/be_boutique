@@ -1,8 +1,16 @@
 package com.teamwork.boutique.payload.request;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ChangePasswordRequest {
     private int id;
     private String currentPass;
+    @NotNull
+    @NotEmpty
+    @Length(min=8)
     private String newPass;
     public ChangePasswordRequest() {
     }
