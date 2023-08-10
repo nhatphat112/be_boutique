@@ -1,5 +1,8 @@
 package com.teamwork.boutique.payload.request;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class PhoneSaveRequest {
     private int userId;
     private String phoneNumber;

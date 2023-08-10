@@ -28,7 +28,6 @@ public class UploadFileController {
     public ResponseEntity<?> uploadFile(
             @RequestParam MultipartFile file
     ) {
-        System.out.println("vao ham upload file");
         boolean isSuccess = false;
         //Định nghĩa đường dẫn
         Path rootPath = Paths.get(spath);//nio library
@@ -36,9 +35,6 @@ public class UploadFileController {
             if(!Files.exists(rootPath)){// nếu đường dẫn không tồn tại, tạo folder ứng với
                 Files.createDirectory(rootPath);
             }
-            //file.getInputStream : copy n
-            //resolve tuơng đương với dấu "/"
-            //file.getOriginalFilename(): Lấy tên file và định dạng
             String fileName = file.getOriginalFilename();
             Files.copy(file.getInputStream(),rootPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
             isSuccess = true;
@@ -46,13 +42,7 @@ public class UploadFileController {
         catch(Exception e){
             System.out.println("Loi" + e.getLocalizedMessage());
         }
-
         return new ResponseEntity<>(isSuccess, HttpStatus.OK);
-    }
-    @GetMapping("/files")
-    public ResponseEntity<?> downloadFile()
-    {
-        return  new ResponseEntity<>("", HttpStatus.OK);
     }
     @GetMapping("/downloadfile/{filename}")
     public ResponseEntity<?> downloadFile(
@@ -68,19 +58,13 @@ public class UploadFileController {
                         .header(HttpHeaders.CONTENT_DISPOSITION,
                                 "attachment; filename=\"" + resource.getFilename() + "\"")
                         .body(file);
-
             }
             else{
-                //chủ động ném lỗi
                 throw new CustomFileNotFoundException(200,"File notfound");
-                        //RuntimeException("could not read the file");
             }
         }
         catch(MalformedURLException e){
             throw new CustomFileNotFoundException(200,"File notfound");
-            //System.out.println("Loi" + e.getMessage());
         }
-
-
     }
 }
