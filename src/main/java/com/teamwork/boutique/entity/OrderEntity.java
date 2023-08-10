@@ -9,6 +9,10 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private double total;
+    @Column(name = "phone_number")
+    private String PhoneNumber;
+    @Column(name = "address_detail")
+    private String addressDetail;
 
     public double getTotal() {
         return total;
@@ -23,15 +27,24 @@ public class OrderEntity {
     private StatusEntity status;
 
     @ManyToOne
-    @JoinColumn(name = "address_id")
-    private AddressEntity address;
-
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
-    @ManyToOne
-    @JoinColumn(name = "phone_id")
-    private PhoneEntity phone;
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        PhoneNumber = phoneNumber;
+    }
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
 
     @OneToMany(mappedBy = "order")
     private Set<OrderDetailEntity> orderDetails;
@@ -43,16 +56,6 @@ public class OrderEntity {
     public void setOrderDetails(Set<OrderDetailEntity> orderDetails) {
         this.orderDetails = orderDetails;
     }
-
-    public PhoneEntity getPhone() {
-        return phone;
-    }
-
-    public void setPhone(PhoneEntity phone) {
-        this.phone = phone;
-    }
-
-
 
     public UserEntity getUser() {
         return user;
@@ -76,13 +79,5 @@ public class OrderEntity {
 
     public void setStatus(StatusEntity status) {
         this.status = status;
-    }
-
-    public AddressEntity getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressEntity address) {
-        this.address = address;
     }
 }

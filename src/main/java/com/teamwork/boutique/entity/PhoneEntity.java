@@ -10,8 +10,6 @@ public class PhoneEntity {
     private int id;
     @Column(name = "phone_number")
     private String phoneNumber;
-    @OneToMany(mappedBy = "phone")
-    private Set<OrderEntity> orders;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -40,12 +38,5 @@ public class PhoneEntity {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    public Set<OrderEntity> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<OrderEntity> orders) {
-        this.orders = orders;
-    }
 }
+

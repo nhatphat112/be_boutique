@@ -6,9 +6,7 @@ import com.teamwork.boutique.payload.request.OrderDetailSaveRequest;
 import com.teamwork.boutique.payload.request.OrderSaveRequest;
 import com.teamwork.boutique.payload.response.OrderDetailResponse;
 import com.teamwork.boutique.payload.response.OrderSaveResponse;
-import com.teamwork.boutique.repository.OrderDetailRepository;
-import com.teamwork.boutique.repository.OrderRepository;
-import com.teamwork.boutique.repository.StockRepository;
+import com.teamwork.boutique.repository.*;
 import com.teamwork.boutique.service.imp.OrderServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,17 +23,42 @@ public class OrderService implements OrderServiceImp {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private StockRepository stockRepository;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private PhoneRepository phoneRepository;
 
     @Transactional
     @Override
     public void save(OrderSaveRequest request) {
+
         OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setAddress(new AddressEntity());
-        orderEntity.getAddress().setId(request.getAddressId());
+        try {
+            AddressEntity address = addressRepository.findById(request.getAddressId());
+            orderEntity.setAddressDetail(address.getDetail());
+            if(address.getCityProvince().getId()!=64){
+                orderEntity.setAddressDetail(orderEntity.getAddressDetail()+","+address.getCountry().getName());
+            }else {
+                orderEntity.setAddressDetail(orderEntity.getAddressDetail()+","+address.getCityProvince().getName()+","+address.getCountry().getName());
+            }
+        }catch (Exception e){
+            throw new CustomException("Address is not exists.",500);
+        }
         orderEntity.setUser(new UserEntity());
         orderEntity.getUser().setId(request.getUserId());
-        orderEntity.setPhone(new PhoneEntity());
-        orderEntity.getPhone().setId(request.getPhoneId());
+
+
+        try {
+           PhoneEntity phone = phoneRepository.findById(request.getPhoneId());
+            if(phone.getId()== request.getPhoneId()){
+                orderEntity.setPhoneNumber(phone.getPhoneNumber());
+            }
+
+
+
+        }catch (Exception e){
+            throw new CustomException("Phone is not exists.",500);
+        }
         orderEntity.setStatus(new StatusEntity());
         orderEntity.getStatus().setId(request.getStatusId());
         orderEntity.setTotal(request.getTotal());
