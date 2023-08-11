@@ -14,8 +14,6 @@ public class ProductEntity {
     private String name;
     @Column(name = "image")
     private String image;
-    @Column(name = "image_list")
-    private String imageList;
     @Column(name = "sold_quantity")
     private int soldQuantity;
 
@@ -91,15 +89,6 @@ public class ProductEntity {
     public void setImage(String image) {
         this.image = image;
     }
-
-    public String getImageList() {
-        return imageList;
-    }
-
-    public void setImageList(String imageList) {
-        this.imageList = imageList;
-    }
-
     public int getSoldQuantity() {
         return soldQuantity;
     }

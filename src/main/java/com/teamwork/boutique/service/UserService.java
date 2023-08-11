@@ -132,17 +132,12 @@ public class UserService implements UserServiceImp {
             System.out.println(passwordEncoder.encode(request.getCurrentPass()));
             System.out.println(user.getPassword());
             boolean passwordsMatch = BCrypt.checkpw(request.getCurrentPass(), user.getPassword());
-            System.out.println(passwordsMatch);
-
+            System.out.println(passwordsMatch +" passwordsMatch");
             if(passwordsMatch){
                 user.setPassword(passwordEncoder.encode(request.getNewPass()));
                 userRepository.save(user);
                 isSuccess = true;
             }
-            else{
-                isSuccess = false;
-            }
-
         } catch (Exception e) {
             throw new CustomException("Lỗi change password " + e.getMessage());
         }
