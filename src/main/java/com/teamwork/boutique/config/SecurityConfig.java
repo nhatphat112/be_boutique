@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .antMatchers("/signin/**", "/signup", "/color/**", "/product/**", "/stock/**", "/category/**",
-                        "/detail", "/country/**", "/city-province/**", "/user/**,").permitAll()
+                        "/detail", "/country/**", "/city-province/**", "/user/**").permitAll()
                 .antMatchers("/order/**", "/phone/**", "/order-detail/**", "/purchase/**", "/address/**", "/cart/**").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/uploadfile/**","/downloadfile/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()

@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -73,39 +75,42 @@ public class ProductService implements ProductServiceImp {
 
     @Override
     public DetailResponse getDetailProductByProductId(int productId) {
-        ProductEntity item = productRepository.findById(productId);
         DetailResponse detailResponse = new DetailResponse();
-        detailResponse.setName(item.getName());
-        detailResponse.setProductId(item.getId());
-        detailResponse.setCategoryId(item.getCategory().getId());
-        detailResponse.setDescription(item.getDesc());
+        try {
+            ProductEntity item = productRepository.findById(productId);
+            detailResponse.setName(item.getName());
+            detailResponse.setProductId(item.getId());
+            detailResponse.setCategoryId(item.getCategory().getId());
+            detailResponse.setDescription(item.getDesc());
 //        set reviewList for detail
-        List<ReviewResponse> reviewList = new ArrayList<>();
-        for (ReviewEntity review : item.getReviews()) {
-            ReviewResponse reviewResponse = new ReviewResponse(item.getId(), review.getUser().getUsername(), review.getContent(), review.getAppriciation());
-            reviewList.add(reviewResponse);
-        }
-        detailResponse.setReviewList(reviewList);
+            List<ReviewResponse> reviewList = new ArrayList<>();
+            for (ReviewEntity review : item.getReviews()) {
+                ReviewResponse reviewResponse = new ReviewResponse(item.getId(), review.getUser().getUsername(), review.getContent(), review.getAppriciation());
+                reviewList.add(reviewResponse);
+            }
+            detailResponse.setReviewList(reviewList);
 //        Set tagList for detail
-        List<String> tagNameList = new ArrayList<>();
-        for (TagProductEntity tagProduct : item.getTagProducts()) {
-            tagNameList.add(tagProduct.getTag().getName());
-        }
-        detailResponse.setTagList(tagNameList);
+            List<String> tagNameList = new ArrayList<>();
+            for (TagProductEntity tagProduct : item.getTagProducts()) {
+                tagNameList.add(tagProduct.getTag().getName());
+            }
+            detailResponse.setTagList(tagNameList);
 //        Set stockList for detail
-        List<StockResponse> stockResponseList = new ArrayList<>();
-        for (StockEntity stock : item.getStocks()) {
-            StockResponse stockResponse = new StockResponse();
-            stockResponse.setId(stock.getId());
-            stockResponse.setQuantity(stock.getQuantity());
-            stockResponse.setImage(stock.getImage());
-            stockResponse.setPrice(stock.getPrice());
-            stockResponse.setColorId(stock.getColor().getId());
-            stockResponse.setColorName(stock.getColor().getName());
-
-            stockResponseList.add(stockResponse);
+            List<StockResponse> stockResponseList = new ArrayList<>();
+            for (StockEntity stock : item.getStocks()) {
+                StockResponse stockResponse = new StockResponse();
+                stockResponse.setId(stock.getId());
+                stockResponse.setQuantity(stock.getQuantity());
+                stockResponse.setImage(stock.getImage());
+                stockResponse.setPrice(stock.getPrice());
+                stockResponse.setColorId(stock.getColor().getId());
+                stockResponse.setColorName(stock.getColor().getName());
+                stockResponseList.add(stockResponse);
+            }
+            detailResponse.setStockResponseList(stockResponseList);
+        } catch (Exception e) {
+            throw new CustomException("Lỗi getDetailProductByProductId");
         }
-        detailResponse.setStockResponseList(stockResponseList);
         return detailResponse;
     }
 
@@ -154,6 +159,18 @@ public class ProductService implements ProductServiceImp {
             throw new CustomException("Lỗi delete product " + e.getMessage());
         }
         return isSuccess;
+    }
+
+    @Override
+    public List<ProductResponse> getBestSellerProduct() {
+        List<ProductResponse> listBestSeller = getAllProduct();
+        try {
+            listBestSeller.sort((o1, o2)
+                    -> o2.getSoldQuantity() - o1.getSoldQuantity());
+        } catch (Exception e) {
+            throw new CustomException("Lỗi getBestSellerProduct");
+        }
+        return listBestSeller;
     }
 
 }

@@ -15,4 +15,6 @@ public interface ProductServiceImp {
     boolean saveProduct(ProductRequest request);
     boolean deleteProduct(int id);
 
+    List<ProductResponse> getBestSellerProduct();
+
 }
