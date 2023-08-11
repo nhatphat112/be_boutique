@@ -64,6 +64,8 @@ public class ProductService implements ProductServiceImp {
             productResponse.setImage(data.getImage());
             productResponse.setPrice(stockRepository.findMinPriceByProductId(data.getId()));
             productResponse.setDescription(data.getDesc());
+            productResponse.setCategoryId(data.getCategory().getId());
+            productResponse.setSoldQuantity(data.getSoldQuantity());
             responseList.add(productResponse);
         }
         return responseList;
@@ -75,7 +77,7 @@ public class ProductService implements ProductServiceImp {
         DetailResponse detailResponse = new DetailResponse();
         detailResponse.setName(item.getName());
         detailResponse.setProductId(item.getId());
-        detailResponse.setCategory(item.getCategory().getName());
+        detailResponse.setCategoryId(item.getCategory().getId());
         detailResponse.setDescription(item.getDesc());
 //        set reviewList for detail
         List<ReviewResponse> reviewList = new ArrayList<>();

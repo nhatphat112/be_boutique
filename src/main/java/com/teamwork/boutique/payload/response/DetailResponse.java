@@ -6,7 +6,7 @@ public class DetailResponse {
     private String name;
     private int productId;
     private String description;
-    private String category;
+    private int categoryId;
 
     private List<String> tagList;
 
@@ -55,12 +55,12 @@ public class DetailResponse {
         this.tagList = tagList;
     }
 
-    public String getCategory() {
-        return category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(int category) {
+        this.categoryId = category;
     }
 
 
