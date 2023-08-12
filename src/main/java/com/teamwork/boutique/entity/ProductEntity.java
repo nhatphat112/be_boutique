@@ -14,8 +14,6 @@ public class ProductEntity {
     private String name;
     @Column(name = "image")
     private String image;
-    @Column(name = "image_list")
-    private String imageList;
     @Column(name = "sold_quantity")
     private int soldQuantity;
 
@@ -29,19 +27,8 @@ public class ProductEntity {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
-
-    @OneToMany(mappedBy = "product")
-    private Set<TagProductEntity> tagProducts;
     @OneToMany(mappedBy = "product")
     private Set<StockEntity> stocks;
-    public Set<TagProductEntity> getTagProducts() {
-        return tagProducts;
-    }
-
-    public void setTagProducts(Set<TagProductEntity> tagProducts) {
-        this.tagProducts = tagProducts;
-    }
-
     public Set<StockEntity> getStocks() {
         return stocks;
     }
@@ -49,9 +36,6 @@ public class ProductEntity {
     public void setStocks(Set<StockEntity> stocks) {
         this.stocks = stocks;
     }
-
-
-
     public CategoryEntity getCategory() {
         return category;
     }
@@ -90,14 +74,6 @@ public class ProductEntity {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getImageList() {
-        return imageList;
-    }
-
-    public void setImageList(String imageList) {
-        this.imageList = imageList;
     }
 
     public int getSoldQuantity() {

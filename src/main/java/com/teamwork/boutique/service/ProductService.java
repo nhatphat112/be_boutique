@@ -1,11 +1,8 @@
 package com.teamwork.boutique.service;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.teamwork.boutique.entity.ProductEntity;
 import com.teamwork.boutique.entity.ReviewEntity;
 import com.teamwork.boutique.entity.StockEntity;
-import com.teamwork.boutique.entity.TagProductEntity;
 import com.teamwork.boutique.entity.*;
 import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.ProductRequest;
@@ -17,10 +14,7 @@ import com.teamwork.boutique.service.imp.ProductServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -81,6 +75,7 @@ public class ProductService implements ProductServiceImp {
             detailResponse.setName(item.getName());
             detailResponse.setProductId(item.getId());
             detailResponse.setCategoryId(item.getCategory().getId());
+            detailResponse.setCategoryName(item.getCategory().getName());
             detailResponse.setDescription(item.getDesc());
 //        set reviewList for detail
             List<ReviewResponse> reviewList = new ArrayList<>();
@@ -89,12 +84,12 @@ public class ProductService implements ProductServiceImp {
                 reviewList.add(reviewResponse);
             }
             detailResponse.setReviewList(reviewList);
-//        Set tagList for detail
-            List<String> tagNameList = new ArrayList<>();
-            for (TagProductEntity tagProduct : item.getTagProducts()) {
-                tagNameList.add(tagProduct.getTag().getName());
-            }
-            detailResponse.setTagList(tagNameList);
+////        Set tagList for detail
+//            List<String> tagNameList = new ArrayList<>();
+//            for (TagProductEntity tagProduct : item.getTagProducts()) {
+//                tagNameList.add(tagProduct.getTag().getName());
+//            }
+//            detailResponse.setTagList(tagNameList);
 //        Set stockList for detail
             List<StockResponse> stockResponseList = new ArrayList<>();
             for (StockEntity stock : item.getStocks()) {
