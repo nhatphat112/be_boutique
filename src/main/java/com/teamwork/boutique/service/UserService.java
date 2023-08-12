@@ -12,6 +12,7 @@ import com.teamwork.boutique.repository.RoleRepository;
 import com.teamwork.boutique.repository.UserRepository;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import com.teamwork.boutique.utils.JwtHelper;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -120,7 +121,7 @@ public class UserService implements UserServiceImp {
             String email = jwtHelper.decodeToken(token).getSubject();
             return userRepository.findByEmail(email).getId();
         } catch (Exception e) {
-            throw new CustomException("Lỗi get user by token " + e.getMessage());
+            throw new CustomException("Lỗi get user by token " + e.getMessage(),401);
         }
     }
 @Override
@@ -162,4 +163,19 @@ public class UserService implements UserServiceImp {
         System.out.println(response.getEmail()+' '+response.getName());
         return response;
     }
+
+    @Override
+    public int getRoleIdByToken(String request) {
+        Claims claims = null;
+        int role = 0;
+        try {
+            claims = jwtHelper.decodeToken(request);
+            UserEntity user = userRepository.findByEmail(claims.getSubject());
+            role = user.getRole().getId();
+        }catch (Exception e){
+            throw new CustomException("Unauthorized",401);
+        }
+        return role;
+    }
+
 }
