@@ -32,7 +32,6 @@ public class OrderController {
         baseResponse.setMessage("Saved Order");
         baseResponse.setStatusCode(200);
         baseResponse.setData("");
-
         logger.info("Response :"+gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse,HttpStatus.OK);
     }

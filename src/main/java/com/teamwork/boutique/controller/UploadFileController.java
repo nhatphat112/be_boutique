@@ -1,6 +1,9 @@
 package com.teamwork.boutique.controller;
 
+import com.google.gson.Gson;
 import com.teamwork.boutique.exception.CustomFileNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -20,6 +23,8 @@ import java.nio.file.StandardCopyOption;
 @RequestMapping("")
 @CrossOrigin(value = "*")
 public class UploadFileController {
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
+    private Gson gson = new Gson();
     //Path: chứa toàn bộ hàm hỗ trợ sẵn liên quan tới đường dẫn
     @Value("${path.root}")
     private String spath;

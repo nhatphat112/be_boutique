@@ -1,10 +1,7 @@
 package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
-import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.CartDeleteByIdsListRequest;
-import com.teamwork.boutique.payload.request.CartDeleteByIdsRequest;
-import com.teamwork.boutique.payload.request.CartUpdateRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.CartServiceImp;
 import org.slf4j.Logger;
@@ -12,13 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Set;
-
 @RestController
 @RequestMapping("/cart")
 @CrossOrigin("*")
@@ -43,35 +34,43 @@ public class CartController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<?> getAllCart(@RequestParam int userId) {
+        logger.info("Request :"+userId);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(cartServiceImp.getAllCart(userId));
+        logger.info("Response :"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/count/{userId}")
     public ResponseEntity<?> cartCount(@PathVariable int userId) {
+        logger.info("Request :"+userId);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(cartServiceImp.countCartItems(userId));
+        logger.info("Response :"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/delete/{cartId}")
     public ResponseEntity<?> delete(@PathVariable int cartId) {
+        logger.info("Request :"+cartId);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(cartServiceImp.delete(cartId));
+        logger.info("Response :"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(value = "/update/{id}/{quantity}")
     public ResponseEntity<?> updateCart(@PathVariable int id, @PathVariable int quantity) {
         System.out.println("dang update");
+        logger.info("Request id: "+id+", quantity: "+quantity);
         boolean isSuccess = cartServiceImp.updateCart(id,quantity);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(isSuccess);
+        logger.info("Response :"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/delete/ids")

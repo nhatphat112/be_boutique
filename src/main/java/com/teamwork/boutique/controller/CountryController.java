@@ -24,15 +24,17 @@ public class CountryController {
     @GetMapping("/clear-cache")
     @CacheEvict(value = "listCountry", allEntries = true)
     public ResponseEntity<?> clearCache() {
+        logger.info("Request :none");
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData("");
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("clear cache list country");
+        logger.info("Response:"+new Gson().toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
     @GetMapping("")
     public ResponseEntity<?> getAll(){
-        logger.info("Request :");
+        logger.info("Request :none");
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setMessage("List Country");
         baseResponse.setStatusCode(200);
