@@ -46,7 +46,7 @@ public class UserController {
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
-    @RequestMapping(value = "/changepass",method = RequestMethod.POST)
+    @PostMapping("/changepass")
     public ResponseEntity<?> changePassword(ChangePasswordRequest request){
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(userServiceImp.changePassword(request));
@@ -54,12 +54,14 @@ public class UserController {
         baseResponse.setStatusCode(200);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
-    @PostMapping("/getUser")
-    public ResponseEntity<?> getUserById(@RequestParam int userId) {
+    @GetMapping("/getUser")
+    public ResponseEntity<?> getUserById(@RequestParam String token) {
+        logger.info("Request :"+token);
         BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setData(userServiceImp.getUserById(userId));
-        baseResponse.setMessage("Get username by id");
+        baseResponse.setData(userServiceImp.getUserByToken(token));
+        baseResponse.setMessage("Get username by token");
         baseResponse.setStatusCode(200);
+        logger.info("Response :"+gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
     @GetMapping("/getRoleId")
