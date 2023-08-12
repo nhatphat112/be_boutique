@@ -51,7 +51,6 @@ public class UserService implements UserServiceImp {
             response.setId(user.getId());
             response.setRoleId(user.getRole().getId());
             response.setUsername(user.getUsername());
-
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
@@ -95,7 +94,6 @@ public class UserService implements UserServiceImp {
         }
         return isSuccess;
     }
-
     @Override
     public List<UserResponse> getAllUser() {
         try {
@@ -150,18 +148,16 @@ public class UserService implements UserServiceImp {
         return isSuccess;
     }
     @Override
-    public UserResponse getUserById(int id){
-        UserResponse response = new UserResponse();
-        try{
-            UserEntity userEntity = userRepository.findById(id);
-            response.setName(userEntity.getUsername());
-            response.setEmail(userEntity.getEmail());
+    public UserResponse getUserByToken(String token) {
+        try {
+            UserResponse user = new UserResponse();
+            String email = jwtHelper.decodeToken(token).getSubject();
+            user.setEmail(email);
+            user.setName(userRepository.findByEmail(email).getUsername());
+            return user;
+        } catch (Exception e) {
+            throw new CustomException("Lỗi get username by token " + e.getMessage(),401);
         }
-        catch(Exception e){
-            throw new CustomException("Lỗi getUserById " + e.getMessage());
-        }
-        System.out.println(response.getEmail()+' '+response.getName());
-        return response;
     }
 
     @Override
