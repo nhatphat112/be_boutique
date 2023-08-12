@@ -14,9 +14,6 @@ public class UserEntity {
     private String password;
     @Column(name = "email")
     private String email;
-    @Column(name = "subscribe_promotion")
-    private String subscribePromotion;
-
     @OneToMany(mappedBy = "user")
     private Set<AddressEntity> addresses;
 
@@ -112,14 +109,6 @@ public class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSubscribePromotion() {
-        return subscribePromotion;
-    }
-
-    public void setSubscribePromotion(String subscribePromotion) {
-        this.subscribePromotion = subscribePromotion;
     }
 
     public Set<AddressEntity> getAddresses() {

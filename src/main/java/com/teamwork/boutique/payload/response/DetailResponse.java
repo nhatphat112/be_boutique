@@ -7,9 +7,7 @@ public class DetailResponse {
     private int productId;
     private String description;
     private int categoryId;
-
-    private List<String> tagList;
-
+    private String categoryName;
     private List<ReviewResponse> reviewList;
 
     private List<StockResponse> stockResponseList;
@@ -46,15 +44,6 @@ public class DetailResponse {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public List<String> getTagList() {
-        return tagList;
-    }
-
-    public void setTagList(List<String> tagList) {
-        this.tagList = tagList;
-    }
-
     public int getCategoryId() {
         return categoryId;
     }
@@ -70,5 +59,13 @@ public class DetailResponse {
 
     public void setReviewList(List<ReviewResponse> reviewList) {
         this.reviewList = reviewList;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }
