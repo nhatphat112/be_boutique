@@ -53,8 +53,6 @@ public class SecurityConfig {
                 .and().build();
 
     }
-
-
     private void addCustomFilters(HttpSecurity http) throws Exception {
         // Add the custom LoggingFilter before JwtFilter
         http.addFilterBefore(new JwtFilter(), JwtFilter.class);

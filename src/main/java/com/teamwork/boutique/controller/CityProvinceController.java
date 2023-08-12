@@ -24,10 +24,12 @@ public class CityProvinceController {
     @GetMapping("/clear-cache")
     @CacheEvict(value = "listCityProvince", allEntries = true)
     public ResponseEntity<?> clearCache() {
+        logger.info("Request :none");
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData("");
         baseResponse.setStatusCode(200);
         baseResponse.setMessage("clear cache list city province");
+        logger.info("Response:"+ new Gson().toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
     @GetMapping("")

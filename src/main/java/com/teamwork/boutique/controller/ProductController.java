@@ -33,35 +33,43 @@ public class ProductController {
 
     @GetMapping("/detail")
     public ResponseEntity<?> detailProduct(@RequestParam int id) {
+        logger.info("request :id "+id);
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(productServiceImp.getDetailProductByProductId(id));
         baseResponse.setMessage("Detail by product id");
         baseResponse.setStatusCode(200);
+        logger.info("response" + gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<?> saveProduct(ProductRequest request) {
+        logger.info("Request :"+gson.toJson(request));
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(productServiceImp.saveProduct(request));
         baseResponse.setMessage("add product");
         baseResponse.setStatusCode(200);
+        logger.info("response" + gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 
     @GetMapping("/delete")
     public ResponseEntity<?> deleteProduct(int id) {
+        logger.info("request :id "+id);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(productServiceImp.deleteProduct(id));
+        logger.info("response" + gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/bestseller")
     public ResponseEntity<?> getBestSellerProduct() {
+        logger.info("request :none");
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(productServiceImp.getBestSellerProduct());
+        logger.info("response" + gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

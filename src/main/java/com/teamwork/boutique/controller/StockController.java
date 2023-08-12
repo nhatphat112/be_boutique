@@ -21,7 +21,7 @@ public class StockController {
     @CrossOrigin(value = "*")
     @GetMapping("/product")
     public ResponseEntity<?> getStockByProductId(@RequestParam int id){
-        logger.info("reuquest:"+id);
+        logger.info("request:"+id);
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(stockServiceImp.getStockByProductId(id));
         baseResponse.setMessage("List Stock By ProDuct Id");
@@ -31,31 +31,40 @@ public class StockController {
     }
     @GetMapping("")
     public ResponseEntity<?> getAllCategory(){
+        logger.info("request:none");
         BaseResponse response=new BaseResponse();
         response.setStatusCode(200);
         response.setData(stockServiceImp.getAllStock());
+        logger.info("response:"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/add")
     public ResponseEntity<?> addStock(int colorId, int quantity, int productId, double price, String imageUrl) {
+        logger.info("request colorId" + colorId+" quantity "+quantity+" productId "+productId
+                +" price "+price +"imageUrl"+ imageUrl);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(stockServiceImp.addStock(colorId,quantity,productId,price,imageUrl));
+        logger.info("response:"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public ResponseEntity<?> updateStock(StockRequest request) {
+        logger.info("Request :"+gson.toJson(request));
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(stockServiceImp.updateStock(request));
         baseResponse.setMessage("update stock");
         baseResponse.setStatusCode(200);
+        logger.info("response:"+gson.toJson(baseResponse));
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
     @GetMapping("/delete")
     public ResponseEntity<?> deletestock(int id) {
+        logger.info("request:id "+id);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(stockServiceImp.deletestock(id));
+        logger.info("response:"+gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

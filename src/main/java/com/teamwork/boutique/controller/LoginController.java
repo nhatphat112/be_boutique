@@ -36,12 +36,14 @@ public class LoginController {
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<?> signin(@RequestParam String email, @RequestParam String password) {
+        logger.info("Request:email "+email+" request: password "+password);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(email, password);
         authenticationManager.authenticate(token);
         String jwt = jwtHelper.generateToken(email);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(jwt);
+        logger.info("Response :" + gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -66,11 +68,13 @@ public class LoginController {
 
     @RequestMapping(value = "/signin/findUserId", method = RequestMethod.POST)
     public ResponseEntity<?> findUserId(FindUserIdRequest request) {
+        logger.info("Request :" + gson.toJson(request));
         int id = userServiceImp.findUserId(request);
         BaseResponse response = new BaseResponse();
         response.setStatusCode(200);
         response.setData(id);
         System.out.println(id + " newUserId");
+        logger.info("Response :" + gson.toJson(response));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
