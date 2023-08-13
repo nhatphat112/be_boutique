@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-<!--    <property name="LOGS" value="/Users/peanhatphat/Desktop/Logger/Boutique"/>-->
+<!--    <property name="LOGS" value="/Users/xiucaliu/Downloads/Main/Boutique_logger"/>-->
     <property name="LOGS" value="/Users/peanhatphat/Desktop/Logger/Boutique_logger"/>
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">

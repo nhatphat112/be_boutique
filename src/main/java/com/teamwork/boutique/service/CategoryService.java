@@ -62,7 +62,7 @@ public class CategoryService implements CategoryServiceImp {
         if (catename != null && !catename.isEmpty()) {
             for (CategoryRespone categoryResponse : getAllCategory()) {
                 if (categoryResponse.getName().equalsIgnoreCase(catename)) {
-                    message = "This name have existed already. Please type another name !";
+                    message = "This category name have existed already. Please type another name !";
                     check = false;
                 }
             }

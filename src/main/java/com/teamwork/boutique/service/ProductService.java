@@ -84,12 +84,6 @@ public class ProductService implements ProductServiceImp {
                 reviewList.add(reviewResponse);
             }
             detailResponse.setReviewList(reviewList);
-////        Set tagList for detail
-//            List<String> tagNameList = new ArrayList<>();
-//            for (TagProductEntity tagProduct : item.getTagProducts()) {
-//                tagNameList.add(tagProduct.getTag().getName());
-//            }
-//            detailResponse.setTagList(tagNameList);
 //        Set stockList for detail
             List<StockResponse> stockResponseList = new ArrayList<>();
             for (StockEntity stock : item.getStocks()) {
@@ -117,7 +111,6 @@ public class ProductService implements ProductServiceImp {
             ProductEntity product = new ProductEntity();
             try {
                 product.setId(request.getId());
-
             } catch (Exception e) {
 
             }
@@ -128,14 +121,7 @@ public class ProductService implements ProductServiceImp {
             product.setCategory(category);
             product.setSoldQuantity(request.getSoldQuantity());
             productRepository.save(product);
-
             isSuccess = true;
-            if (isSuccess) {
-                System.out.println("da thanh cong");
-            } else {
-                System.out.println("da that bai");
-            }
-            List<ProductResponse> list = getAllProduct();
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         }
@@ -155,7 +141,6 @@ public class ProductService implements ProductServiceImp {
         }
         return isSuccess;
     }
-
     @Override
     public List<ProductResponse> getBestSellerProduct() {
         List<ProductResponse> listBestSeller = getAllProduct();

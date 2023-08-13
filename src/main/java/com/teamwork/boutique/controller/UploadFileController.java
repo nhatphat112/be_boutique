@@ -1,7 +1,9 @@
 package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
+import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.exception.CustomFileNotFoundException;
+import com.teamwork.boutique.payload.response.BaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,12 +30,10 @@ public class UploadFileController {
     //Path: chứa toàn bộ hàm hỗ trợ sẵn liên quan tới đường dẫn
     @Value("${path.root}")
     private String spath;
-
     @PostMapping("/uploadfile")
     public ResponseEntity<?> uploadFile(
-            @RequestParam MultipartFile file
-    ) {
-        boolean isSuccess = false;
+            @RequestParam MultipartFile file) {
+        logger.info("request:MultipartFile "+file);
         //Định nghĩa đường dẫn
         Path rootPath = Paths.get(spath);//nio library
         try{
@@ -42,18 +42,20 @@ public class UploadFileController {
             }
             String fileName = file.getOriginalFilename();
             Files.copy(file.getInputStream(),rootPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-            isSuccess = true;
         }
         catch(Exception e){
-            System.out.println("Loi" + e.getLocalizedMessage());
+            throw new CustomException("Error uploadFile "+e.getLocalizedMessage());
         }
-        return new ResponseEntity<>(isSuccess, HttpStatus.OK);
+        BaseResponse response = new BaseResponse();
+        response.setStatusCode(200);
+        response.setData(true);
+        response.setMessage("uploadFile");
+        logger.info("response:"+gson.toJson(response));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/downloadfile/{filename}")
     public ResponseEntity<?> downloadFile(
-            @PathVariable String filename
-    ) {
-        System.out.println("vao ham download file");
+            @PathVariable String filename) {
         try {
             Path rootPath = Paths.get(spath);
             Path file = rootPath.resolve(filename);
@@ -65,11 +67,11 @@ public class UploadFileController {
                         .body(file);
             }
             else{
-                throw new CustomFileNotFoundException(200,"File notfound");
+                throw new CustomFileNotFoundException(200,"File not found");
             }
         }
         catch(MalformedURLException e){
-            throw new CustomFileNotFoundException(200,"File notfound");
+            throw new CustomFileNotFoundException(200,"File not found");
         }
     }
 }
