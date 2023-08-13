@@ -28,10 +28,6 @@ public class OrderDetailController {
     @GetMapping("/user")
     public ResponseEntity<?> getByUserId(@RequestParam int id){
         logger.info("Request :"+id);
-//        List<FieldError> errors = result.getFieldErrors();
-//        for (FieldError item : errors){
-//            throw new CustomException(item.getDefaultMessage());
-//        }
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(orderDetailServiceImp.getByUserId(id));
         baseResponse.setStatusCode(200);

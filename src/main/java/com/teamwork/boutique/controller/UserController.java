@@ -1,7 +1,9 @@
 package com.teamwork.boutique.controller;
 
 import com.google.gson.Gson;
+import com.teamwork.boutique.exception.CustomException;
 import com.teamwork.boutique.payload.request.ChangePasswordRequest;
+import com.teamwork.boutique.payload.request.SignupRequest;
 import com.teamwork.boutique.payload.response.BaseResponse;
 import com.teamwork.boutique.service.imp.UserServiceImp;
 import org.slf4j.Logger;
@@ -9,7 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -54,8 +61,13 @@ public class UserController {
     }
 
     @PostMapping("/changepass")
-    public ResponseEntity<?> changePassword(ChangePasswordRequest request) {
+    public ResponseEntity<?> changePassword(@Valid ChangePasswordRequest request, BindingResult result) {
         logger.info("Request :" + gson.toJson(request));
+        List<FieldError> list = result.getFieldErrors();
+        for (FieldError data :
+                list) {
+            throw new CustomException(data.getDefaultMessage());
+        }
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setData(userServiceImp.changePassword(request));
         baseResponse.setMessage("change password");
